@@ -1,0 +1,4 @@
+- Topbar
+  - SearchBar - done
+- Suggestions(ListView)
+- Details View
