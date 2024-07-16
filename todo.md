@@ -1,4 +1,5 @@
 - Topbar
   - SearchBar - done
 - Suggestions(ListView)
+- Research API
 - Details View
