@@ -1,8 +1,6 @@
-- Input for Add word to Deck
-- Suggestions for Words
-  - include Part of speech and translation
-- List of Words already Added(Randomize)
-- Play Button
+- Navigation to Word Screen
+- Going back to Home Screen
+- Add word to deck
+- delete individual word from deck
+- Show Word status (learned, learning, not learned)
 
-- Play View 
-- Random words pop just like Anki

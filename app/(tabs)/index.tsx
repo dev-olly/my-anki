@@ -1,3 +1,6 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect } from 'react';
+
 import { Image, StyleSheet, Platform, View, TextInput, Alert, Button, Text, FlatList, SafeAreaView } from 'react-native';
 
 import { HelloWave } from '@/components/HelloWave';
@@ -15,7 +18,32 @@ const WordItem = ({word}: {word: string}) => {
 
 export default function HomeScreen() {
   const [word, setWord] = useState('')
-  const [words, setWords] = useState(['word1', 'word2', 'word3'])
+  const [words, setWords] = useState<string[]>([])
+
+  useEffect(() => {
+    loadWords();
+  }, []);
+
+  const loadWords = async () => {
+    try {
+      const savedWords = await AsyncStorage.getItem('words');
+      if (savedWords) setWords(JSON.parse(savedWords));
+    } catch (error) {
+      console.error('Error loading words:', error);
+    }
+  };
+
+  const addWord = async (word: string) => {
+    const newWords = [...words, word];
+    setWords(newWords);
+    setWord('');
+    try {
+      await AsyncStorage.setItem('words', JSON.stringify(newWords));
+    } catch (error) {
+      console.error('Error saving words:', error);
+    }
+  };
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ height: '15%', backgroundColor: 'white', paddingTop: '5%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'   }}>
@@ -27,7 +55,7 @@ export default function HomeScreen() {
         />
         <Button
           title="Add"
-          onPress={() => Alert.alert('Word: ' + word)}
+          onPress={() => addWord(word)}
         />
         </View>
         {words.length == 0 && <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '85%' }}>
