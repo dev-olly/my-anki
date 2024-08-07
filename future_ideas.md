@@ -1,0 +1,1 @@
+- Scrape DW vocabularies for nicos weg episodes per episodes 

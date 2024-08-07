@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Platform, View, TextInput } from 'react-native';
+import { Image, StyleSheet, Platform, View, TextInput, Alert, Button } from 'react-native';
 
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
@@ -10,15 +10,19 @@ export default function HomeScreen() {
   const [word, setWord] = useState('')
   return (
     <>
-    <View style={{ height: '15%', backgroundColor: 'white', paddingTop: '5%'   }}>
+    <View style={{ height: '15%', backgroundColor: 'white', paddingTop: '5%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'   }}>
       <TextInput
         style={styles.input}
         onChangeText={setWord}
         value={word}
         placeholder="search for a word"
       />
+      <Button
+        title="Add"
+        onPress={() => Alert.alert('Word: ' + word)}
+      />
       </View>
-    <ParallaxScrollView
+    {/* <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
       headerImage={
         <Image
@@ -47,7 +51,7 @@ export default function HomeScreen() {
           Tap the Explore tab to learn more about what's included in this starter app.
         </ThemedText>
       </ThemedView>
-    </ParallaxScrollView>
+    </ParallaxScrollView> */}
     
     </>
   );
@@ -75,5 +79,6 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 1,
     padding: 10,
+    width: '80%',
   },
 });

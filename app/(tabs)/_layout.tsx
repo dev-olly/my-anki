@@ -1,43 +1,46 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
 
+import { Tabs } from 'expo-router';
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
-// import { View } from 'react-native';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const tintColor = Colors[colorScheme ?? 'light'].tint;
+
+  const screenOptions = {
+    tabBarActiveTintColor: tintColor,
+    headerShown: false,
+  };
+
+  const tabScreens = [
+    {
+      name: 'index',
+      title: 'Home',
+      icon: { focused: 'home', unfocused: 'home-outline' },
+    },
+    {
+      name: 'explore',
+      title: 'Explore',
+      icon: { focused: 'code-slash', unfocused: 'code-slash-outline' },
+    },
+  ];
 
   return (
-    <>
-      {/* <View style={{ flex: 1, height: 100, width: 100, backgroundColor: 'red' }} /> */}
-
-      <Tabs
-        screenOptions={{
-          tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-          headerShown: false,
-        }}>
+    <Tabs screenOptions={screenOptions}>
+      {tabScreens.map((screen) => (
         <Tabs.Screen
-          name="index"
+          key={screen.name}
+          name={screen.name}
           options={{
-            title: 'Home',
+            title: screen.title,
             tabBarIcon: ({ color, focused }) => (
-              <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
+              <TabBarIcon name={focused ? screen.icon.focused : screen.icon.unfocused} color={color} />
             ),
           }}
         />
-        <Tabs.Screen
-          name="explore"
-          options={{
-            title: 'Explore',
-            tabBarIcon: ({ color, focused }) => (
-              <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
-            ),
-          }}
-        />
-      </Tabs>
-    
-    </>
+      ))}
+    </Tabs>
   );
 }
+
