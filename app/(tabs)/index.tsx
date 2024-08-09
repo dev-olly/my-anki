@@ -1,19 +1,25 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect } from 'react';
 
-import { Image, StyleSheet, Platform, View, TextInput, Alert, Button, Text, FlatList, SafeAreaView } from 'react-native';
+import { Image, StyleSheet, Platform, View, TextInput, Alert, Button, Text, FlatList, SafeAreaView, Pressable } from 'react-native';
 
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useState } from 'react';
+import { Link } from 'expo-router';
 
 const WordItem = ({word}: {word: string}) => {
   return (
-    <View style={{ padding: 16, backgroundColor: 'white', borderBottomWidth: 1, borderColor: 'gray' }}>
-      <Text>{word}</Text>
-    </View>)
+    <Link href={`/test`} asChild>
+      <Pressable>
+        <View style={{ padding: 16, backgroundColor: 'white', borderBottomWidth: 1, borderColor: 'gray', width: '100%' }}>
+            <Text>{word}</Text>
+        </View>
+      </Pressable>
+    </Link>
+  )
 }
 
 export default function HomeScreen() {
