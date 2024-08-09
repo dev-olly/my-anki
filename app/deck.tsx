@@ -2,10 +2,10 @@ import React from "react";
 import { Text, View } from 'react-native';
 
 
-export default function TestScreen() {
+export default function DeskScreen() {
   return (
     <View>
-      <Text>Test</Text>
+      <Text>Playground</Text>
     </View>
   )
 }

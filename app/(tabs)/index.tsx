@@ -12,11 +12,9 @@ import { Link } from 'expo-router';
 
 const WordItem = ({word}: {word: string}) => {
   return (
-    <Link href={`/test`} asChild>
-      <Pressable>
-        <View style={{ padding: 16, backgroundColor: 'white', borderBottomWidth: 1, borderColor: 'gray', width: '100%' }}>
+    <Link href={`/deck`} asChild>
+      <Pressable style={{ flex: 1, padding: 16, backgroundColor: 'white', borderBottomWidth: 1, borderColor: 'gray', width: '100%' }}>
             <Text>{word}</Text>
-        </View>
       </Pressable>
     </Link>
   )
