@@ -5,7 +5,7 @@ export const ModalForm = ({word, showModal, onClose, onSubmit}: {word: string, s
   const [translation, setTranslation] = useState('');
   return (
     <SafeAreaView>
-      <Modal animationType="slide" transparent={false} visible={showModal}>
+      <Modal animationType="slide" transparent={true} visible={showModal}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.modalTitle}>Nice! Almost there...</Text>
