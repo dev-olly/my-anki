@@ -83,7 +83,9 @@ export default function HomeScreen() {
           words.length > 0 && <View style={{ flex: 1, marginTop: 10}}>
             <View style={styles.listheader}>
               <Text style={{ fontSize: 16, fontWeight: 'semibold', marginBottom: 10, marginLeft: 10 }}>{words.length} words.</Text>
-              <Button title="Start" onPress={() => Alert.alert('Starting...')} />
+              <Link href={`/deck`} asChild>
+                <Text style={styles.startDeckButton}>Start Deck </Text>
+              </Link>
             </View>
             <FlatList data={words} renderItem={({item}) => <WordItem word={item.word} />} />    
           </View>
@@ -169,5 +171,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row', 
     justifyContent: 'space-between', 
     alignItems: 'center' 
+  },
+  startDeckButton: {
+    marginRight: 10,
+    fontSize: 16,
+    fontWeight: 'semibold',
+    color: 'black',
   }
 });
