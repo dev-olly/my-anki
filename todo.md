@@ -1,13 +1,15 @@
 - Navigation to Word Screen - done
 - Going back to Home Screen - done
 - Add word to deck - done
-- Show tranlation modal form when a word is added 
-- Word transitions on Word screen
+- Show tranlation modal form when a word is added  - done 
+- Word transitions on Word screen - done 
+- Spaced Learning Algorithm implementation
+
+
 - delete individual word from deck
+- Show
 - Show Word status (learned, learning, not learned)
 
-- Spaced Learning Algorithm implementation
-- Show
 
 - sync deck to server
 
