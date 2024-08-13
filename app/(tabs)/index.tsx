@@ -7,8 +7,12 @@ import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { ModalForm } from '@/components/ModalForm';
 import { useState } from 'react';
 import { Link } from 'expo-router';
+
+import { Word } from '@/types';
+
 
 const WordItem = ({word}: {word: string}) => {
   return (
@@ -22,7 +26,9 @@ const WordItem = ({word}: {word: string}) => {
 
 export default function HomeScreen() {
   const [word, setWord] = useState('')
-  const [words, setWords] = useState<string[]>([])
+  const [words, setWords] = useState<Word[]>([])
+
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     loadWords();
@@ -37,10 +43,17 @@ export default function HomeScreen() {
     }
   };
 
-  const addWord = async (word: string) => {
-    const newWords = [...words, word];
+  const initializeWord = (word: string) => {
+    setWord(word);
+    setShowModal(true);
+  }
+
+  const addWord = async (translation: string) => {
+
+    const newWords = [...words, {word, translation}];
     setWords(newWords);
     setWord('');
+    setShowModal(false);
     try {
       await AsyncStorage.setItem('words', JSON.stringify(newWords));
     } catch (error) {
@@ -50,7 +63,8 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ height: '15%', backgroundColor: 'white', paddingTop: '5%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'   }}>
+      <ModalForm word={word} showModal={showModal} onClose={() => setShowModal(false)} onSubmit={addWord}/>
+      <View style={styles.container}>
         <TextInput
           style={styles.input}
           onChangeText={setWord}
@@ -59,19 +73,19 @@ export default function HomeScreen() {
         />
         <Button
           title="Add"
-          onPress={() => addWord(word)}
+          onPress={() => initializeWord(word)}
         />
         </View>
-        {words.length == 0 && <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '85%' }}>
+        {words.length == 0 && <View style={styles.noText}>
           <Text>You have no words, add some words and start learning!</Text>
         </View>}
         {
           words.length > 0 && <View style={{ flex: 1, marginTop: 10}}>
-            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+            <View style={styles.listheader}>
               <Text style={{ fontSize: 16, fontWeight: 'semibold', marginBottom: 10, marginLeft: 10 }}>{words.length} words.</Text>
               <Button title="Start" onPress={() => Alert.alert('Starting...')} />
             </View>
-            <FlatList data={words} renderItem={({item}) => <WordItem word={item} />} />    
+            <FlatList data={words} renderItem={({item}) => <WordItem word={item.word} />} />    
           </View>
         }
 
@@ -111,6 +125,15 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
+  container: { 
+    height: '15%', 
+    backgroundColor: 'white', 
+    paddingTop: '5%', 
+    display: 'flex', 
+    flexDirection: 'row', 
+    justifyContent: 'space-between', 
+    alignItems: 'center'   
+  },
   titleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -134,4 +157,17 @@ const styles = StyleSheet.create({
     padding: 10,
     width: '80%',
   },
+  noText: { 
+    display: 'flex', 
+    flexDirection: 'column', 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    height: '85%' 
+  },
+  listheader: {
+    display: 'flex', 
+    flexDirection: 'row', 
+    justifyContent: 'space-between', 
+    alignItems: 'center' 
+  }
 });
