@@ -11,7 +11,10 @@ import { ModalForm } from '@/components/ModalForm';
 import { useState } from 'react';
 import { Link } from 'expo-router';
 
-import { Word } from '@/types';
+import { Deck, Word } from '@/types';
+import {UPPER_BOUND} from '@/utils/spaced-repetition';
+import {STORAGE_KEY} from '@/utils/keys';
+
 
 
 const WordItem = ({word}: {word: string}) => {
@@ -26,7 +29,9 @@ const WordItem = ({word}: {word: string}) => {
 
 export default function HomeScreen() {
   const [word, setWord] = useState('')
-  const [words, setWords] = useState<Word[]>([])
+  const [deck, setDeck] = useState<Deck>({})
+
+  const words = Object.keys(deck)
 
   const [showModal, setShowModal] = useState(false);
 
@@ -36,8 +41,8 @@ export default function HomeScreen() {
 
   const loadWords = async () => {
     try {
-      const savedWords = await AsyncStorage.getItem('words');
-      if (savedWords) setWords(JSON.parse(savedWords));
+      const savedWords = await AsyncStorage.getItem(STORAGE_KEY);
+      if (savedWords) setDeck(JSON.parse(savedWords));
     } catch (error) {
       console.error('Error loading words:', error);
     }
@@ -50,12 +55,12 @@ export default function HomeScreen() {
 
   const addWord = async (translation: string) => {
 
-    const newWords = [...words, {word, translation}];
-    setWords(newWords);
+    const newWords = {...deck, [word]: {translation, ease: UPPER_BOUND, interval: 1, lastReview: new Date().toISOString(), nextReview: new Date().toISOString()}};
+    setDeck(newWords);
     setWord('');
     setShowModal(false);
     try {
-      await AsyncStorage.setItem('words', JSON.stringify(newWords));
+      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(newWords));
     } catch (error) {
       console.error('Error saving words:', error);
     }
@@ -87,7 +92,7 @@ export default function HomeScreen() {
                 <Text style={styles.startDeckButton}>Start Deck </Text>
               </Link>
             </View>
-            <FlatList data={words} renderItem={({item}) => <WordItem word={item.word} />} />    
+            <FlatList data={words} renderItem={({item}) => <WordItem word={item} />} />    
           </View>
         }
 
