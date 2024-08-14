@@ -16,7 +16,7 @@ export const ModalForm = ({word, showModal, onClose, onSubmit}: {word: string, s
               value={translation}
               placeholder="The Man"
             />
-            <Pressable onPress={() => onSubmit(translation)}>
+            <Pressable onPress={() => {onSubmit(translation), setTranslation('')}}>
               <View style={styles.button}>
                 <Text style={styles.buttonText}>Add</Text>
               </View>
