@@ -1,19 +1,14 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useEffect } from 'react';
 
-import { Image, StyleSheet, Platform, View, TextInput, Alert, Button, Text, FlatList, SafeAreaView, Pressable } from 'react-native';
+import { Button, FlatList, Pressable, SafeAreaView, StyleSheet, Text, TextInput, View } from 'react-native';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
 import { ModalForm } from '@/components/ModalForm';
-import { useState } from 'react';
 import { Link } from 'expo-router';
+import { useState } from 'react';
 
-import { Deck, Word } from '@/types';
-import {UPPER_BOUND} from '@/utils/spaced-repetition';
-import {STORAGE_KEY} from '@/utils/keys';
+import { useDeck } from '@/hooks/useDeck';
+import { STORAGE_KEY } from '@/utils/keys';
+import { UPPER_BOUND } from '@/utils/spaced-repetition';
 
 
 
@@ -29,24 +24,12 @@ const WordItem = ({word}: {word: string}) => {
 
 export default function HomeScreen() {
   const [word, setWord] = useState('')
-  const [deck, setDeck] = useState<Deck>({})
+  const [deck, setDeck] = useDeck()
 
   const words = Object.keys(deck)
 
   const [showModal, setShowModal] = useState(false);
 
-  useEffect(() => {
-    loadWords();
-  }, []);
-
-  const loadWords = async () => {
-    try {
-      const savedWords = await AsyncStorage.getItem(STORAGE_KEY);
-      if (savedWords) setDeck(JSON.parse(savedWords));
-    } catch (error) {
-      console.error('Error loading words:', error);
-    }
-  };
 
   const initializeWord = (word: string) => {
     setWord(word);

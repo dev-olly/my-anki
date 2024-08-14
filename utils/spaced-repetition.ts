@@ -1,17 +1,11 @@
+import { Deck } from "@/types";
+
 export const UPPER_BOUND = 2.5;
 export const LOWER_BOUND = 1.3;
 
-const data = {
-  "Der Mann": {
-    "translation": "The Man",
-    "ease": UPPER_BOUND,
-    "interval": 1,
-    "lastReview": "2024-01-01",
-    "nextReview": "2024-01-01"
-  }
-}
 
-const updateData = (word, success) => {
+
+const updateData = (data: Deck, word: string, success: boolean) => {
   const current = data[word];
   const ease = current.ease;
   const interval = current.interval;
