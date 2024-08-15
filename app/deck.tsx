@@ -10,7 +10,6 @@ import { Level, updateData } from "@/utils/spaced-repetition";
 export default function DeskScreen() {
   const [index, setIndex] = useState(0)
   const [deck, setDeck] = useDeck();
-  console.log('deck', deck)
 
   // flatten deck to words array
   const words: Array<WordData & {word: string}> = Object.entries(deck).map(([word, data]) => ({
