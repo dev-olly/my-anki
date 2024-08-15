@@ -7,7 +7,6 @@ import { Link } from 'expo-router';
 import { useState } from 'react';
 
 import { useDeck } from '@/hooks/useDeck';
-import { STORAGE_KEY } from '@/utils/keys';
 import { UPPER_BOUND } from '@/utils/spaced-repetition';
 
 
