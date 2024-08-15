@@ -20,20 +20,27 @@ export default function DeskScreen() {
   words.sort((a, b) => a.interval - b.interval);
   
   const wordItem = words[index]
-  // console.log(wordItem, index)
   const presentWord = wordItem ? wordItem['word'] : ''
 
   const nextWord = (level: Level) => {
     const newDeck = updateData(deck, presentWord, level);
-    console.log(newDeck)
     setDeck(newDeck);
-    setIndex(index + 1)
+    const newIndex = index + 1;
+    if (newIndex < words.length) {
+      setIndex(newIndex);
+    }else {
+      setIndex(-1);
+    }
   }
   
   return (
     <View style={{ flex: 1, backgroundColor: 'white', height: '100%' }}>
       <Text style={{textAlign: 'center', fontSize: 14,  margin: 16 }}>A Step at a time</Text>
-      { wordItem && <Playground word={presentWord} data={deck[presentWord]} next={nextWord}/>}
+      { wordItem ? <Playground word={presentWord} data={deck[presentWord]} next={nextWord}/> : 
+        <Text style={{textAlign: 'center', fontSize: 16, fontWeight: 'semibold', margin: 16 }}>
+          Congratulations! You have finished the deck.
+        </Text>
+      }
     </View>
   )
 }
