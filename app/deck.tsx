@@ -17,7 +17,9 @@ export default function DeskScreen() {
     ...data
   }));
   // sort by interval
-  words.sort((a, b) => a.interval - b.interval);
+  words.sort((a, b) => a.ease - b.ease);
+
+  console.log(words)
   
   const wordItem = words[index]
   const presentWord = wordItem ? wordItem['word'] : ''
