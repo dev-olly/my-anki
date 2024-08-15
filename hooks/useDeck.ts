@@ -23,6 +23,7 @@ export const useDeck = (): [Deck, (words: Deck) => Promise<void>] => {
 
   const saveWords = async (words: Deck) => {
     try {
+      setDeck(words);
       await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(words));
     } catch (error) {
       console.error('Error saving words:', error);

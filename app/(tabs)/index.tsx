@@ -25,6 +25,7 @@ export default function HomeScreen() {
   const [word, setWord] = useState('')
   const [deck, setDeck] = useDeck()
 
+  console.log('deck', deck)
   const words = Object.keys(deck)
 
   const [showModal, setShowModal] = useState(false);
