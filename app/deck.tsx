@@ -4,13 +4,13 @@ import { Text, View } from 'react-native';
 import { Playground } from "@/components/Playground";
 import { WordData } from "@/types";
 import { useDeck } from '../hooks/useDeck';
-
+import { Level, updateData } from "@/utils/spaced-repetition";
 
 
 export default function DeskScreen() {
   const [index, setIndex] = useState(0)
-  const [deck] = useDeck();
-  
+  const [deck, setDeck] = useDeck();
+
   // flatten deck to words array
   const words: Array<WordData & {word: string}> = Object.entries(deck).map(([word, data]) => ({
     word,
@@ -19,11 +19,21 @@ export default function DeskScreen() {
   // sort by interval
   words.sort((a, b) => a.interval - b.interval);
   
+  const wordItem = words[index]
+  // console.log(wordItem, index)
+  const presentWord = wordItem ? wordItem['word'] : ''
+
+  const nextWord = (level: Level) => {
+    const newDeck = updateData(deck, presentWord, level);
+    console.log(newDeck)
+    setDeck(newDeck);
+    setIndex(index + 1)
+  }
   
   return (
     <View style={{ flex: 1, backgroundColor: 'white', height: '100%' }}>
       <Text style={{textAlign: 'center', fontSize: 14,  margin: 16 }}>A Step at a time</Text>
-      <Playground />
+      { wordItem && <Playground word={presentWord} data={deck[presentWord]} next={nextWord}/>}
     </View>
   )
 }
