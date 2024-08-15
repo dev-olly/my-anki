@@ -5,7 +5,7 @@ import { Deck } from '../types';
 import {STORAGE_KEY} from '../utils/keys';
 
 
-export const useDeck = (): [Deck, React.Dispatch<React.SetStateAction<Deck>>] => {
+export const useDeck = (): [Deck, (words: Deck) => Promise<void>] => {
   const [deck, setDeck] = useState<Deck>({});
 
   useEffect(() => {
@@ -21,5 +21,13 @@ export const useDeck = (): [Deck, React.Dispatch<React.SetStateAction<Deck>>] =>
     }
   };
 
-  return [deck, setDeck]
+  const saveWords = async (words: Deck) => {
+    try {
+      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(words));
+    } catch (error) {
+      console.error('Error saving words:', error);
+    }
+  }
+
+  return [deck, saveWords]
 }
