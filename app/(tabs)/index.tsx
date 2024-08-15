@@ -37,16 +37,10 @@ export default function HomeScreen() {
   }
 
   const addWord = async (translation: string) => {
-
     const newWords = {...deck, [word]: {translation, ease: UPPER_BOUND, interval: 1, lastReview: new Date().toISOString(), nextReview: new Date().toISOString()}};
     setDeck(newWords);
     setWord('');
     setShowModal(false);
-    try {
-      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(newWords));
-    } catch (error) {
-      console.error('Error saving words:', error);
-    }
   };
 
   return (

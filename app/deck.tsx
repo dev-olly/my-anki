@@ -10,6 +10,7 @@ import { Level, updateData } from "@/utils/spaced-repetition";
 export default function DeskScreen() {
   const [index, setIndex] = useState(0)
   const [deck, setDeck] = useDeck();
+  console.log('deck', deck)
 
   // flatten deck to words array
   const words: Array<WordData & {word: string}> = Object.entries(deck).map(([word, data]) => ({
@@ -17,15 +18,15 @@ export default function DeskScreen() {
     ...data
   }));
   // sort by interval
-  words.sort((a, b) => a.ease - b.ease);
+  words.sort((a, b) => a.interval - b.interval);
 
-  console.log(words)
   
   const wordItem = words[index]
   const presentWord = wordItem ? wordItem['word'] : ''
 
   const nextWord = (level: Level) => {
     const newDeck = updateData(deck, presentWord, level);
+    console.log('newDeck', newDeck)
     setDeck(newDeck);
     const newIndex = index + 1;
     if (newIndex < words.length) {
