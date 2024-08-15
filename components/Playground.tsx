@@ -5,7 +5,6 @@ import { Button, Text, View } from 'react-native';
 
 
 export const Playground = ({word, data, next}: {word: string, data: WordData, next: (level: Level) => void}) => {
-
   const [showAnswer, setShowAnswer] = useState(false);
 
   return (
@@ -16,9 +15,9 @@ export const Playground = ({word, data, next}: {word: string, data: WordData, ne
           {showAnswer && <Text style={{textAlign: 'center', fontSize: 16, fontWeight: 'semibold', margin: 16 }}>{data['translation']}</Text>}
           {!showAnswer ? (<Button title="Show answer" onPress={() => setShowAnswer(true)} /> ) :
           (<View style={{ display: 'flex', flexDirection: 'row', gap: 16, justifyContent: 'center'}}>
-            <Button onPress={() => next(Levels.easy) } title={Levels.easy}/>
-            <Button onPress={() => next(Levels.medium)} title={Levels.medium}/>
-            <Button onPress={() => next(Levels.hard)} title={Levels.hard}/>
+            <Button onPress={() => {next(Levels.easy), setShowAnswer(false)}} title={Levels.easy}/>
+            <Button onPress={() => {next(Levels.medium), setShowAnswer(false)}} title={Levels.medium}/>
+            <Button onPress={() => {next(Levels.hard), setShowAnswer(false)}} title={Levels.hard}/>
           </View>)
           }
         </View>
