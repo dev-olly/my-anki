@@ -13,15 +13,14 @@ export default function DeskScreen() {
 
   
   // flatten deck to words array
-  const words: Array<WordData & {word: string}> = useMemo(() => Object.entries(deck).map(([word, data]) => ({
-    word,
-    ...data
-  })).sort((a, b) => a.interval - b.interval), []);
-
-  console.log('words', words)
-  // // sort by interval
-  // words.sort((a, b) => a.interval - b.interval);
-
+  const words: Array<WordData & {word: string}> = useMemo(() => {
+    const wordsArray = Object.entries(deck).map(([word, data]) => ({
+      word,
+      ...data
+    }));
+    return wordsArray.sort((a, b) => a.interval - b.interval);
+  }, [deck]);
+  
   
   const wordItem = words[index]
   const presentWord = wordItem ? wordItem['word'] : ''
