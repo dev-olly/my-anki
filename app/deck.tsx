@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { Text, View } from 'react-native';
 
 import { Playground } from "@/components/Playground";
@@ -11,13 +11,16 @@ export default function DeskScreen() {
   const [index, setIndex] = useState(0)
   const [deck, setDeck] = useDeck();
 
+  
   // flatten deck to words array
-  const words: Array<WordData & {word: string}> = Object.entries(deck).map(([word, data]) => ({
+  const words: Array<WordData & {word: string}> = useMemo(() => Object.entries(deck).map(([word, data]) => ({
     word,
     ...data
-  }));
-  // sort by interval
-  words.sort((a, b) => a.interval - b.interval);
+  })).sort((a, b) => a.interval - b.interval), []);
+
+  console.log('words', words)
+  // // sort by interval
+  // words.sort((a, b) => a.interval - b.interval);
 
   
   const wordItem = words[index]
@@ -34,6 +37,7 @@ export default function DeskScreen() {
       setIndex(-1);
     }
   }
+
   
   return (
     <View style={{ flex: 1, backgroundColor: 'white', height: '100%' }}>
