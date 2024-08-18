@@ -7,9 +7,9 @@
 
 
 - delete individual word from deck
-- Show
-- Show Word status (learned, learning, not learned)
-
+- Add settings to determine how many words to show in deck
+- Create Deck categories
+- Add Deck categories to Home Screen
 
 - sync deck to server
 
