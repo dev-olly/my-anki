@@ -13,10 +13,10 @@ export const WordItem = ({word}: {word: string}) => {
     return (
       <View style={styles.optionContainer}>
         <RectButton style={styles.editButton}>
-          <Text>Edit</Text>
+          <Text style={styles.editButtonText}>Edit</Text>
         </RectButton>
         <RectButton style={styles.deleteButton}>
-          <Text>Delete</Text>
+          <Text style={styles.deleteButtonText}>Delete</Text>
         </RectButton>
       </View>
     )
@@ -49,17 +49,29 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     width: '40%',
+    borderBottomWidth: 1,
+    borderColor: 'gray',
   },
   deleteButton: {
     backgroundColor: 'red',
     justifyContent: 'center',
     alignItems: 'center',
     width: 75,
+    padding: 10,
+    height: '100%',
   },
   editButton: {
     backgroundColor: 'blue',
     justifyContent: 'center',
     alignItems: 'center',
     width: 75,
+    padding: 10,
+    height: '100%',
+  },
+  editButtonText: {
+    color: 'white',
+  },
+  deleteButtonText: {
+    color: 'white',
   }
 })
