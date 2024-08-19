@@ -1,5 +1,5 @@
 
-import { Button, FlatList, Pressable, SafeAreaView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, FlatList, SafeAreaView, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { ModalForm } from '@/components/ModalForm';
 import { Link } from 'expo-router';
@@ -7,18 +7,9 @@ import { useState } from 'react';
 
 import { useDeck } from '@/hooks/useDeck';
 import { LOWER_BOUND } from '@/utils/spaced-repetition';
+import { WordItem } from '@/components/WordItem';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-
-
-const WordItem = ({word}: {word: string}) => {
-  return (
-    <Link href={`/deck`} asChild>
-      <Pressable style={{ flex: 1, padding: 16, backgroundColor: 'white', borderBottomWidth: 1, borderColor: 'gray', width: '100%' }}>
-            <Text>{word}</Text>
-      </Pressable>
-    </Link>
-  )
-}
 
 export default function HomeScreen() {
   const [word, setWord] = useState('')
@@ -42,67 +33,69 @@ export default function HomeScreen() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <ModalForm word={word} showModal={showModal} onClose={() => setShowModal(false)} onSubmit={addWord}/>
-      <View style={styles.container}>
-        <TextInput
-          style={styles.input}
-          onChangeText={setWord}
-          value={word}
-          placeholder="search for a word"
-        />
-        <Button
-          title="Add"
-          onPress={() => initializeWord(word)}
-        />
-        </View>
-        {words.length == 0 && <View style={styles.noText}>
-          <Text>You have no words, add some words and start learning!</Text>
-        </View>}
-        {
-          words.length > 0 && <View style={{ flex: 1, marginTop: 10}}>
-            <View style={styles.listheader}>
-              <Text style={{ fontSize: 16, fontWeight: 'semibold', marginBottom: 10, marginLeft: 10 }}>{words.length} words.</Text>
-              <Link href={`/deck`} asChild>
-                <Text style={styles.startDeckButton}>Start Deck </Text>
-              </Link>
-            </View>
-            <FlatList data={words} renderItem={({item}) => <WordItem word={item} />} />    
-          </View>
-        }
-
-      {/* <ParallaxScrollView
-        headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-        headerImage={
-          <Image
-            source={require('@/assets/images/partial-react-logo.png')}
-            style={styles.reactLogo}
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1 }}>
+        <ModalForm word={word} showModal={showModal} onClose={() => setShowModal(false)} onSubmit={addWord}/>
+        <View style={styles.container}>
+          <TextInput
+            style={styles.input}
+            onChangeText={setWord}
+            value={word}
+            placeholder="search for a word"
           />
-        }>
-        <ThemedView style={styles.titleContainer}>
-          <ThemedText type="title">Welcome!</ThemedText>
-          <HelloWave />
-        </ThemedView>
-        <ThemedView style={styles.stepContainer}>
-          <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-          <ThemedText>
-            Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-            Press{' '}
-            <ThemedText type="defaultSemiBold">
-              {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-            </ThemedText>{' '}
-            to open developer tools.
-          </ThemedText>
-        </ThemedView>
-        <ThemedView style={styles.stepContainer}>
-          <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          <ThemedText>
-            Tap the Explore tab to learn more about what's included in this starter app.
-          </ThemedText>
-        </ThemedView>
-      </ParallaxScrollView> */}
-    
-    </SafeAreaView>
+          <Button
+            title="Add"
+            onPress={() => initializeWord(word)}
+          />
+          </View>
+          {words.length == 0 && <View style={styles.noText}>
+            <Text>You have no words, add some words and start learning!</Text>
+          </View>}
+          {
+            words.length > 0 && <View style={{ flex: 1, marginTop: 10}}>
+              <View style={styles.listheader}>
+                <Text style={{ fontSize: 16, fontWeight: 'semibold', marginBottom: 10, marginLeft: 10 }}>{words.length} words.</Text>
+                <Link href={`/deck`} asChild>
+                  <Text style={styles.startDeckButton}>Start Deck </Text>
+                </Link>
+              </View>
+              <FlatList data={words} renderItem={({item}) => <WordItem word={item} />} />    
+            </View>
+          }
+
+        {/* <ParallaxScrollView
+          headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
+          headerImage={
+            <Image
+              source={require('@/assets/images/partial-react-logo.png')}
+              style={styles.reactLogo}
+            />
+          }>
+          <ThemedView style={styles.titleContainer}>
+            <ThemedText type="title">Welcome!</ThemedText>
+            <HelloWave />
+          </ThemedView>
+          <ThemedView style={styles.stepContainer}>
+            <ThemedText type="subtitle">Step 1: Try it</ThemedText>
+            <ThemedText>
+              Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
+              Press{' '}
+              <ThemedText type="defaultSemiBold">
+                {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
+              </ThemedText>{' '}
+              to open developer tools.
+            </ThemedText>
+          </ThemedView>
+          <ThemedView style={styles.stepContainer}>
+            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
+            <ThemedText>
+              Tap the Explore tab to learn more about what's included in this starter app.
+            </ThemedText>
+          </ThemedView>
+        </ParallaxScrollView> */}
+      
+      </SafeAreaView>
+    </GestureHandlerRootView>
   );
 }
 
