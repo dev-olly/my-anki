@@ -32,6 +32,12 @@ export default function HomeScreen() {
     setShowModal(false);
   };
 
+  const deleteWord = (word: string) => {
+    const newWords = {...deck};
+    delete newWords[word];
+    setDeck(newWords);
+  }
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
@@ -59,7 +65,7 @@ export default function HomeScreen() {
                   <Text style={styles.startDeckButton}>Start Deck </Text>
                 </Link>
               </View>
-              <FlatList data={words} renderItem={({item}) => <WordItem word={item} />} />    
+              <FlatList data={words} renderItem={({item}) => <WordItem word={item} onDelete={deleteWord} />} />    
             </View>
           }
 

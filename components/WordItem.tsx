@@ -1,6 +1,6 @@
 
 import { Colors } from '@/constants/Colors';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Animated, Button, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { RectButton } from 'react-native-gesture-handler';
@@ -8,8 +8,8 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 
 
-export const WordItem = ({word}: {word: string}) => {
-
+export const WordItem = ({word, onDelete}: {word: string, onDelete: (word: string) => void}) => {
+  const [showModal, setShowModal] = useState(false);
   const swipeableRef = useRef<Swipeable>(null);
   
   const renderRightActions = (progress: any, dragX: any) => {
@@ -26,19 +26,20 @@ export const WordItem = ({word}: {word: string}) => {
           </RectButton>
         </Animated.View>
         <Animated.View style={{ flex:1, transform: [{ translateX: trans }] }}>
-            <RectButton style={styles.deleteButton}>
-            <Text style={styles.deleteButtonText}>Delete</Text>
-          </RectButton>
+            <RectButton style={styles.deleteButton} onPress={() => setShowModal(true)}>
+              <Text style={styles.deleteButtonText}>Delete</Text>
+            </RectButton>
         </Animated.View>
       </View>
     )
   }
+
   return (
     <Swipeable renderRightActions={renderRightActions} rightThreshold={20} ref={swipeableRef}>
       <View style={styles.wordItem}>
         <Text>{word}</Text>
       </View>
-      <Modal transparent={true} visible={true}>
+      <Modal transparent={true} visible={showModal}>
         <View style={styles.modalOverlay}>
           <View style={styles.popover}>
             <Text style={styles.title}>Are you sure you want to delete?</Text>
@@ -46,10 +47,10 @@ export const WordItem = ({word}: {word: string}) => {
               The word will be deleted from the deck and will not be available for review.
             </Text>
             <View style={styles.buttonContainer}>
-              <Pressable>
+              <Pressable onPress={() => {onDelete(word); swipeableRef.current?.close(); setShowModal(false); }}>
                 <Text style={styles.affirmativeButtonText}>Yes, delete</Text>
               </Pressable>
-              <Pressable>
+              <Pressable onPress={() => {setShowModal(false); swipeableRef.current?.close(); }}>
                 <Text style={styles.cancelText}>No, cancel</Text>
               </Pressable>
             </View>
@@ -136,7 +137,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   deleteButtonText: {
-    color: Colors.red[500],
+    color: 'white',
     fontSize: 14,
     
   },
