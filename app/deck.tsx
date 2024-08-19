@@ -20,14 +20,13 @@ export default function DeskScreen() {
     }));
     return wordsArray.sort((a, b) => a.interval - b.interval);
   }, [deck]);
-  
+
   
   const wordItem = words[index]
   const presentWord = wordItem ? wordItem['word'] : ''
 
   const nextWord = (level: Level) => {
     const newDeck = updateData(deck, presentWord, level);
-    console.log('newDeck', newDeck)
     setDeck(newDeck);
     const newIndex = index + 1;
     if (newIndex < words.length) {
