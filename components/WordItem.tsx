@@ -3,7 +3,7 @@ import { Colors } from '@/constants/Colors';
 import { useRef, useState } from 'react';
 import { Animated, Button, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { RectButton } from 'react-native-gesture-handler';
+import { RectButton, TextInput } from 'react-native-gesture-handler';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 
@@ -39,6 +39,8 @@ export const WordItem = ({word, onDelete}: {word: string, onDelete: (word: strin
       <View style={styles.wordItem}>
         <Text>{word}</Text>
       </View>
+
+      {/* Delete Modal */}
       <Modal transparent={true} visible={showModal}>
         <View style={styles.modalOverlay}>
           <View style={styles.popover}>
@@ -55,6 +57,37 @@ export const WordItem = ({word, onDelete}: {word: string, onDelete: (word: strin
               </Pressable>
             </View>
           </View>
+        </View>
+      </Modal>
+
+      {/* Edit Modal */}
+      <Modal transparent={true} visible={true}>
+        <View style={styles.modalOverlay}>
+          <View style={styles.popover}>
+            <Text style={styles.title}>Edit</Text>
+            <TextInput
+              value={word}
+              placeholder="search for a word"
+              style={styles.input}
+            />
+            <TextInput
+              value={word}
+              placeholder="search for a word"
+              style={styles.input}
+            />
+            <Pressable>
+              <View>
+                <Text style={styles.saveButtonText}>Save</Text>
+              </View>
+            </Pressable>
+
+            <Pressable>
+              <View>
+                <Text style={styles.cancelButtonText}>Cancel</Text>
+              </View>
+            </Pressable>
+          </View>
+
         </View>
       </Modal>
     </Swipeable>
@@ -147,6 +180,23 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   cancelText: {
+    fontSize: 14,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: 'gray',
+    padding: 10,
+    marginBottom: 10,
+  },
+  saveButtonText: {
+    color: Colors.blue[500],
+    textAlign: 'center',
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  cancelButtonText: {
+    color: Colors.red[500],
+    textAlign: 'center',
     fontSize: 14,
   },
 })
