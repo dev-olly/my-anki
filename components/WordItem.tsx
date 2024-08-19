@@ -8,9 +8,11 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 
 
-export const WordItem = ({word, translation, onDelete}: {word: string, translation : string, onDelete: (word: string) => void}) => {
+export const WordItem = ({word, translation, onDelete, editWord}: {word: string, translation : string, onDelete: (word: string) => void, editWord: (oldWord: string, word: string, translation  : string) => void}) => {
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [newWord, setNewWord] = useState(word);
+  const [newTranslation, setNewTranslation] = useState(translation);
   const swipeableRef = useRef<Swipeable>(null);
   
   const renderRightActions = (progress: any, dragX: any) => {
@@ -67,22 +69,24 @@ export const WordItem = ({word, translation, onDelete}: {word: string, translati
           <View style={styles.popover}>
             <Text style={styles.title}>Edit</Text>
             <TextInput
-              value={word}
-              placeholder="search for a word"
+              value={newWord}
+              placeholder="word"
               style={styles.input}
+              onChangeText={setNewWord}
             />
             <TextInput
-              value={translation}
-              placeholder="search for a word"
+              value={newTranslation}
+              placeholder="translation"
               style={styles.input}
+              onChangeText={setNewTranslation}
             />
-            <Pressable>
+            <Pressable onPress={() => {editWord(word, newWord, newTranslation); swipeableRef.current?.close(); setShowEditModal(false); }}>
               <View>
                 <Text style={styles.saveButtonText}>Save</Text>
               </View>
             </Pressable>
 
-            <Pressable>
+            <Pressable onPress={() => {swipeableRef.current?.close(); setShowEditModal(false); }}>
               <View>
                 <Text style={styles.cancelButtonText}>Cancel</Text>
               </View>

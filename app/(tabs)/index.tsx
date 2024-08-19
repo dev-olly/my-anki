@@ -38,6 +38,12 @@ export default function HomeScreen() {
     setDeck(newWords);
   }
 
+  const editWord = (oldWord: string, word: string, translation: string) => {
+    const newWords = {...deck, [word]: {translation, ease: LOWER_BOUND, interval: 1, lastReview: new Date().toISOString(), nextReview: new Date().toISOString()}};
+    delete newWords[oldWord];
+    setDeck(newWords);
+  }
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
@@ -65,7 +71,7 @@ export default function HomeScreen() {
                   <Text style={styles.startDeckButton}>Start Deck </Text>
                 </Link>
               </View>
-              <FlatList data={words} renderItem={({item}) => <WordItem word={item} translation={deck[item].translation} onDelete={deleteWord} />} />    
+              <FlatList data={words} renderItem={({item}) => <WordItem word={item} translation={deck[item].translation} onDelete={deleteWord} editWord={editWord} />} />    
             </View>
           }
 
