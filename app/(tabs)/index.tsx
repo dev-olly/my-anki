@@ -39,8 +39,9 @@ export default function HomeScreen() {
   }
 
   const editWord = (oldWord: string, word: string, translation: string) => {
+    
     const newWords = {...deck, [word]: {translation, ease: LOWER_BOUND, interval: 1, lastReview: new Date().toISOString(), nextReview: new Date().toISOString()}};
-    delete newWords[oldWord];
+    if(oldWord !== word) delete newWords[oldWord];
     setDeck(newWords);
   }
 
