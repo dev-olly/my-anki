@@ -6,11 +6,11 @@
 - Spaced Learning Algorithm implementation - done
 
 - change ease factor for new words - done 
-- delete individual word from deck
+- delete individual word from deck - 
 - edit individual word from deck
 - Add settings to determine how many words to show in deck
 - Create Deck categories
 - Add Deck categories to Home Screen
 
 - sync deck to server
-
+- the 
