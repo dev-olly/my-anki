@@ -8,8 +8,9 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 
 
-export const WordItem = ({word, onDelete}: {word: string, onDelete: (word: string) => void}) => {
+export const WordItem = ({word, translation, onDelete}: {word: string, translation : string, onDelete: (word: string) => void}) => {
   const [showModal, setShowModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const swipeableRef = useRef<Swipeable>(null);
   
   const renderRightActions = (progress: any, dragX: any) => {
@@ -21,7 +22,7 @@ export const WordItem = ({word, onDelete}: {word: string, onDelete: (word: strin
     return (
       <View style={styles.optionContainer}>
         <Animated.View style={{ flex:1, transform: [{ translateX: trans }] }}>
-          <RectButton style={styles.editButton}>
+          <RectButton style={styles.editButton} onPress={() => setShowEditModal(true) }>
             <Text style={styles.editButtonText}>Edit</Text>
           </RectButton>
         </Animated.View>
@@ -61,7 +62,7 @@ export const WordItem = ({word, onDelete}: {word: string, onDelete: (word: strin
       </Modal>
 
       {/* Edit Modal */}
-      <Modal transparent={true} visible={true}>
+      <Modal transparent={true} visible={showEditModal}>
         <View style={styles.modalOverlay}>
           <View style={styles.popover}>
             <Text style={styles.title}>Edit</Text>
@@ -71,7 +72,7 @@ export const WordItem = ({word, onDelete}: {word: string, onDelete: (word: strin
               style={styles.input}
             />
             <TextInput
-              value={word}
+              value={translation}
               placeholder="search for a word"
               style={styles.input}
             />

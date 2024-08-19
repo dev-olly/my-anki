@@ -65,7 +65,7 @@ export default function HomeScreen() {
                   <Text style={styles.startDeckButton}>Start Deck </Text>
                 </Link>
               </View>
-              <FlatList data={words} renderItem={({item}) => <WordItem word={item} onDelete={deleteWord} />} />    
+              <FlatList data={words} renderItem={({item}) => <WordItem word={item} translation={deck[item].translation} onDelete={deleteWord} />} />    
             </View>
           }
 
