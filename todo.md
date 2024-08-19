@@ -8,9 +8,16 @@
 - change ease factor for new words - done 
 - delete individual word from deck - done
 - edit individual word from deck - done
-- Add settings to determine how many words to show in deck
 - Create Deck categories
 - Add Deck categories to Home Screen
 
 - sync deck to server
-- the 
+- Test on real device
+- deploy on app store
+
+
+- Add audio pronunciation for words
+- Translation of hardcoded words 
+- settings to set default language
+- settings to set default deck
+- settings to set default number of words to show
