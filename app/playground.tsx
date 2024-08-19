@@ -7,7 +7,7 @@ import { useDeck } from '../hooks/useDeck';
 import { Level, updateData } from "@/utils/spaced-repetition";
 
 
-export default function DeskScreen() {
+export default function PlaygroundScreen() {
   const [index, setIndex] = useState(0)
   const [deck, setDeck] = useDeck();
 

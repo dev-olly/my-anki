@@ -68,7 +68,7 @@ export default function HomeScreen() {
             words.length > 0 && <View style={{ flex: 1, marginTop: 10}}>
               <View style={styles.listheader}>
                 <Text style={{ fontSize: 16, fontWeight: 'semibold', marginBottom: 10, marginLeft: 10 }}>{words.length} words.</Text>
-                <Link href={`/deck`} asChild>
+                <Link href={`/playground`} asChild>
                   <Text style={styles.startDeckButton}>Start Deck </Text>
                 </Link>
               </View>
