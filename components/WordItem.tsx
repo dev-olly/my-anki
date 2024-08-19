@@ -1,5 +1,7 @@
 
-import { StyleSheet, Text, View } from 'react-native';
+import { Colors } from '@/constants/Colors';
+import { useRef } from 'react';
+import { Animated, StyleSheet, Text, View } from 'react-native';
 
 import { RectButton } from 'react-native-gesture-handler';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
@@ -8,21 +10,31 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 export const WordItem = ({word}: {word: string}) => {
 
-  const renderRightActions = () => {
-    // const trans = 
+  const swipeableRef = useRef<Swipeable>(null);
+  
+  const renderRightActions = (progress: any, dragX: any) => {
+    const trans = dragX.interpolate({
+      inputRange: [-100, 0],
+      outputRange: [1, 0],
+      extrapolate: 'clamp',
+    });
     return (
       <View style={styles.optionContainer}>
-        <RectButton style={styles.editButton}>
-          <Text style={styles.editButtonText}>Edit</Text>
-        </RectButton>
-        <RectButton style={styles.deleteButton}>
-          <Text style={styles.deleteButtonText}>Delete</Text>
-        </RectButton>
+        <Animated.View style={{ flex:1, transform: [{ translateX: trans }] }}>
+          <RectButton style={styles.editButton}>
+            <Text style={styles.editButtonText}>Edit</Text>
+          </RectButton>
+        </Animated.View>
+        <Animated.View style={{ flex:1, transform: [{ translateX: trans }] }}>
+            <RectButton style={styles.deleteButton}>
+            <Text style={styles.deleteButtonText}>Delete</Text>
+          </RectButton>
+        </Animated.View>
       </View>
     )
   }
   return (
-    <Swipeable renderRightActions={renderRightActions}>
+    <Swipeable renderRightActions={renderRightActions} rightThreshold={20} ref={swipeableRef}>
       <View style={styles.wordItem}>
         <Text>{word}</Text>
       </View>
@@ -53,7 +65,7 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
   },
   deleteButton: {
-    backgroundColor: 'red',
+    backgroundColor: Colors.red[500],
     justifyContent: 'center',
     alignItems: 'center',
     width: 75,
@@ -61,7 +73,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   editButton: {
-    backgroundColor: 'blue',
+    backgroundColor: Colors.blue[500],
     justifyContent: 'center',
     alignItems: 'center',
     width: 75,
