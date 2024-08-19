@@ -1,4 +1,3 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Button, FlatList, Pressable, SafeAreaView, StyleSheet, Text, TextInput, View } from 'react-native';
 
@@ -7,7 +6,7 @@ import { Link } from 'expo-router';
 import { useState } from 'react';
 
 import { useDeck } from '@/hooks/useDeck';
-import { UPPER_BOUND } from '@/utils/spaced-repetition';
+import { LOWER_BOUND } from '@/utils/spaced-repetition';
 
 
 
@@ -36,7 +35,7 @@ export default function HomeScreen() {
   }
 
   const addWord = async (translation: string) => {
-    const newWords = {...deck, [word]: {translation, ease: UPPER_BOUND, interval: 1, lastReview: new Date().toISOString(), nextReview: new Date().toISOString()}};
+    const newWords = {...deck, [word]: {translation, ease: LOWER_BOUND, interval: 1, lastReview: new Date().toISOString(), nextReview: new Date().toISOString()}};
     setDeck(newWords);
     setWord('');
     setShowModal(false);

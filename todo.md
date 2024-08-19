@@ -5,7 +5,7 @@
 - Word transitions on Word screen - done 
 - Spaced Learning Algorithm implementation - done
 
-
+- change ease factor for new words
 - delete individual word from deck
 - Add settings to determine how many words to show in deck
 - Create Deck categories
