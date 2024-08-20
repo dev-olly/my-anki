@@ -11,10 +11,12 @@ import { WordItem } from '@/components/WordItem';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Colors } from '@/constants/Colors';
 import { ModalDeckForm } from '@/components/ModalDeckForm';
+import { Deck } from '@/types';
 
 
 export default function HomeScreen() {
-  const [decks, setDecks] = useState([]);
+  const [decks, setDecks] = useState<Deck[]>([]);
+  const [showModal, setShowModal] = useState(false);
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const bgColorAnim = useRef(new Animated.Value(0)).current;
 
@@ -43,18 +45,27 @@ export default function HomeScreen() {
     }).start();
   }
   const onPress = () => {
-    // Add your logic for adding a deck here
-    console.log('Add Deck pressed');
+    
+    setShowModal(true);
   };
 
   const buttonBgColor = bgColorAnim.interpolate({
     inputRange: [0, 1],
     outputRange: [Colors.light.tint, Colors.blue[500]]
   });
+  const onSubmit = (deckName: string) => {
+    const deck: Deck = {
+      name: deckName,
+      dateCreated: new Date().toISOString(),
+      words: {},
+    };
+    setDecks([...decks, deck]);
+    setShowModal(false);
+  }
 
   return (
       <SafeAreaView style={{ flex: 1 }}>
-        <ModalDeckForm />
+        <ModalDeckForm onSubmit={onSubmit} showModal={showModal} setShowModal={setShowModal} />
         <View style={styles.rectangle}></View>
         <View>
           {decks.length == 0 && <View>

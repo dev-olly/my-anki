@@ -2,11 +2,11 @@ import { View, Text, SafeAreaView, Modal, StyleSheet, TextInput, Pressable   } f
 import { useState } from "react";
 import { Colors } from "@/constants/Colors";
 
-export const ModalDeckForm = () => {
+export const ModalDeckForm = ({onSubmit, showModal, setShowModal}: {onSubmit: (deckName: string) => void, showModal: boolean, setShowModal: (showModal: boolean) => void}) => {
   const [deckName, setDeckName] = useState('');
   return (
     <SafeAreaView>
-      <Modal animationType="slide" transparent={true} visible={true}>
+      <Modal animationType="slide" transparent={true} visible={showModal}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.modalTitle}>Add Deck</Text>
@@ -19,12 +19,12 @@ export const ModalDeckForm = () => {
               value={deckName}
               placeholder="Nicos weg A2 episode 1"
             />
-            <Pressable>
+            <Pressable onPress={() => {onSubmit(deckName), setDeckName('')}} >
               <View style={styles.button}>
                 <Text style={styles.buttonText}>Add</Text>
               </View>
             </Pressable>
-            <Pressable>
+            <Pressable onPress={() => setShowModal(false)}>
               <Text style={styles.cancelButtonText}>Cancel</Text>
             </Pressable>
           </View>

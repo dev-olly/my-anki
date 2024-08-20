@@ -6,5 +6,9 @@ export type WordData = {
   nextReview: string;
 }
 
-export type Deck = Record<string, WordData>;
+export type Deck = {
+  name: string;
+  dateCreated: string;
+  words: Record<string, WordData>;
+};
 
