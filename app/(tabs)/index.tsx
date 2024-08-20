@@ -10,6 +10,7 @@ import { LOWER_BOUND } from '@/utils/spaced-repetition';
 import { WordItem } from '@/components/WordItem';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Colors } from '@/constants/Colors';
+import { ModalDeckForm } from '@/components/ModalDeckForm';
 
 
 export default function HomeScreen() {
@@ -53,6 +54,7 @@ export default function HomeScreen() {
 
   return (
       <SafeAreaView style={{ flex: 1 }}>
+        <ModalDeckForm />
         <View style={styles.rectangle}></View>
         <View>
           {decks.length == 0 && <View>

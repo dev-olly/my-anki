@@ -22,4 +22,8 @@
 - Translation of hardcoded words 
 - settings to set default language
 - settings to set default deck
-- settings to set default number of words to show
+
+
+- refactor modals 
+- build custom buttons
+- custom input component
