@@ -8,7 +8,6 @@ import { NEW_STORAGE_KEY } from '../utils/keys';
 export const useDeck = (deckName?: string) => {
   const [decks, setDecks] = useState<Deck[]>([]);
   
-  
   useEffect(() => {
     loadDecks();
   }, []);

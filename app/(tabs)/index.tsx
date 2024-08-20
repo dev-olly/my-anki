@@ -1,25 +1,15 @@
 
-import { Button, FlatList, Pressable, SafeAreaView, StyleSheet, Text, TextInput, View, Animated } from 'react-native';
+import { Animated, FlatList, Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 
-import { ModalForm } from '@/components/ModalForm';
-import { Link } from 'expo-router';
-import { useState, useRef } from 'react';
+import { useRef, useState } from 'react';
 
-import { useDeck } from '@/hooks/useDeck';
-import { LOWER_BOUND } from '@/utils/spaced-repetition';
-import { WordItem } from '@/components/WordItem';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { Colors } from '@/constants/Colors';
 import { ModalDeckForm } from '@/components/ModalDeckForm';
+import { Colors } from '@/constants/Colors';
+import { useDeck } from '@/hooks/useDeck';
 import { Deck } from '@/types';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { DeckItem } from '@/components/DeckItem';
 
-const DeckItem = ({deck}: {deck: Deck}) => {
-  return (
-    <View>
-      <Text>{deck.name}</Text>
-    </View>
-  );
-}
 
 export default function HomeScreen() {
   const {decks, saveDeck} = useDeck();
@@ -71,6 +61,7 @@ export default function HomeScreen() {
   }
 
   return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
         <ModalDeckForm onSubmit={onSubmit} showModal={showModal} setShowModal={setShowModal} />
         <View style={styles.rectangle}></View>
@@ -90,6 +81,7 @@ export default function HomeScreen() {
             </View>}
         </View>
       </SafeAreaView>
+    </GestureHandlerRootView>
   );
 }
 
