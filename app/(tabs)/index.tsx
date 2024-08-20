@@ -12,7 +12,7 @@ import { DeckItem } from '@/components/DeckItem';
 
 
 export default function HomeScreen() {
-  const {decks, saveDeck} = useDeck();
+  const {decks, saveDeck, deleteDeck, editDeck} = useDeck();
   const [showModal, setShowModal] = useState(false);
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const bgColorAnim = useRef(new Animated.Value(0)).current;
@@ -60,6 +60,14 @@ export default function HomeScreen() {
     setShowModal(false);
   }
 
+  const onDelete = (deckName: string) => {
+    deleteDeck(deckName);
+  }
+
+  const onEdit = (deckName: string, newDeckName: string) => {
+    editDeck(deckName, newDeckName);
+  }
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
@@ -77,7 +85,7 @@ export default function HomeScreen() {
             </Pressable>
           </View> : <View>
               <Text> You have {decks.length} decks</Text>
-              <FlatList data={decks} renderItem={({item}) => <DeckItem deck={item} />} />
+              <FlatList data={decks} renderItem={({item}) => <DeckItem deck={item} onDelete={onDelete} editDeck={onEdit} />} />
             </View>}
         </View>
       </SafeAreaView>

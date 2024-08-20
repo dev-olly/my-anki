@@ -46,10 +46,24 @@ export const useDeck = (deckName?: string) => {
     }
   }
 
+  const deleteDeck = async (deckName: string) => {
+    const newDecks = decks.filter((deck) => deck.name !== deckName);
+    setDecks(newDecks);
+    await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(newDecks));
+  }
+
+  const editDeck = async (deckName: string, newDeckName: string) => {
+    const newDecks = decks.map((deck) => deck.name === deckName ? { ...deck, name: newDeckName } : deck);
+    setDecks(newDecks);
+    await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(newDecks));
+  }
+
   return {
     decks,
     saveDeck,
     loadWords,
-    saveWords
+    saveWords,
+    deleteDeck,
+    editDeck
   }
 }
