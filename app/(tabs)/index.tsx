@@ -45,7 +45,6 @@ export default function HomeScreen() {
     }).start();
   }
   const onPress = () => {
-    
     setShowModal(true);
   };
 
@@ -89,7 +88,6 @@ const styles = StyleSheet.create({
     height: '45%',
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
-    // create a gradient from top to bottom
     backgroundColor: Colors.light.tint,
   },
   noText: {
