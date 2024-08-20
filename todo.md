@@ -11,7 +11,8 @@
 - Create Deck categories - done 
 - Delete Deck categories - done
 - Edit Deck categories - done
-- Add Deck categories to Home Screen
+
+- Link deck to individual deck
 
 - sync deck to server
 - Test on real device
