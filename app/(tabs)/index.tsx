@@ -13,6 +13,13 @@ import { Colors } from '@/constants/Colors';
 import { ModalDeckForm } from '@/components/ModalDeckForm';
 import { Deck } from '@/types';
 
+const DeckItem = ({deck}: {deck: Deck}) => {
+  return (
+    <View>
+      <Text>{deck.name}</Text>
+    </View>
+  );
+}
 
 export default function HomeScreen() {
   const {decks, saveDeck} = useDeck();
@@ -52,7 +59,7 @@ export default function HomeScreen() {
     inputRange: [0, 1],
     outputRange: [Colors.light.tint, Colors.blue[500]]
   });
-  
+
   const onSubmit = (deckName: string) => {
     const deck: Deck = {
       name: deckName,
@@ -68,7 +75,7 @@ export default function HomeScreen() {
         <ModalDeckForm onSubmit={onSubmit} showModal={showModal} setShowModal={setShowModal} />
         <View style={styles.rectangle}></View>
         <View>
-          {decks.length == 0 && <View>
+          {decks.length == 0 ? <View>
             <Text style={styles.noText}>Hola! You have no decks, add some decks and start learning!</Text>
             <Pressable onPressIn={onPressIn}
               onPressOut={onPressOut}
@@ -77,7 +84,10 @@ export default function HomeScreen() {
                 <Text style={styles.addDeckButtonText}>Add Deck</Text>
               </Animated.View>
             </Pressable>
-          </View>}
+          </View> : <View>
+              <Text> You have {decks.length} decks</Text>
+              <FlatList data={decks} renderItem={({item}) => <DeckItem deck={item} />} />
+            </View>}
         </View>
       </SafeAreaView>
   );

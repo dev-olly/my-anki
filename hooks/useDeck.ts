@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect, useState } from "react";
 
 import { Deck } from '../types';
-import {STORAGE_KEY, NEW_STORAGE_KEY} from '../utils/keys';
+import { NEW_STORAGE_KEY } from '../utils/keys';
 
 
 export const useDeck = (deckName?: string) => {
@@ -10,7 +10,6 @@ export const useDeck = (deckName?: string) => {
   
   
   useEffect(() => {
-    AsyncStorage.removeItem(STORAGE_KEY);
     loadDecks();
   }, []);
 
@@ -42,7 +41,7 @@ export const useDeck = (deckName?: string) => {
     if (itemDeck) {
       itemDeck.words = words;
       decks.map((deck) => deck.name === deckName ? itemDeck : deck);  
-      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(decks));
+      await AsyncStorage.setItem(NEW_STORAGE_KEY, JSON.stringify(decks));
       setDecks(decks);
     }
   }
