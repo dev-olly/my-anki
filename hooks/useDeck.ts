@@ -23,6 +23,12 @@ export const useDeck = (deckName?: string) => {
 
   const saveDeck = async (deck: Deck) => {
     try {
+      const deckName = deck.name;
+      const deckExists = decks.some((deck) => deck.name === deckName);
+      if (deckExists) {
+        console.error('Deck already exists');
+        return;
+      }
       const newDecks = [...decks, deck];  
       setDecks(newDecks);
       await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(newDecks));

@@ -12,6 +12,8 @@
 - Delete Deck categories - done
 - Edit Deck categories - done
 
+- prevent duplicate words from being added to deck - done
+
 - Link deck to individual deck
 
 - sync deck to server
