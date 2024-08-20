@@ -8,9 +8,9 @@
 - change ease factor for new words - done 
 - delete individual word from deck - done
 - edit individual word from deck - done
-- Create Deck categories
-- Delete Deck categories
-- Edit Deck categories 
+- Create Deck categories - done 
+- Delete Deck categories - done
+- Edit Deck categories - done
 - Add Deck categories to Home Screen
 
 - sync deck to server
