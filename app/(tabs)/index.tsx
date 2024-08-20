@@ -41,7 +41,7 @@ export default function HomeScreen() {
       useNativeDriver: true,
     }).start();
   }
-  const onPress = () => {
+  const openAddModal = () => {
     setShowModal(true);
   };
 
@@ -78,14 +78,21 @@ export default function HomeScreen() {
             <Text style={styles.noText}>Hola! You have no decks, add some decks and start learning!</Text>
             <Pressable onPressIn={onPressIn}
               onPressOut={onPressOut}
-              onPress={onPress}>
+              onPress={openAddModal}>
               <Animated.View style={[styles.addDeckButton, { transform: [{ scale: scaleAnim }], backgroundColor: buttonBgColor }]}>
                 <Text style={styles.addDeckButtonText}>Add Deck</Text>
               </Animated.View>
             </Pressable>
-          </View> : <View>
-              <Text> You have {decks.length} decks</Text>
-              <FlatList data={decks} renderItem={({item}) => <DeckItem deck={item} onDelete={onDelete} editDeck={onEdit} />} />
+          </View> : <View style={styles.container}>
+              <View style={styles.deckListTitleContainer}>
+                <Text style={styles.deckListTitle}> You have {decks.length} decks</Text>
+                <Pressable onPress={openAddModal}>
+                  <View style={styles.createDeckButton}>
+                    <Text style={styles.createDeckButtonText}>Create Deck</Text>
+                  </View>
+                </Pressable>
+              </View>
+              <FlatList data={decks} style={styles.deckList} renderItem={({item}) => <DeckItem deck={item} onDelete={onDelete} editDeck={onEdit} />} />
             </View>}
         </View>
       </SafeAreaView>
@@ -105,6 +112,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 20,
   },
+  container: {
+    marginTop: 16,
+  },
+  deckList: {
+    marginTop: 16,
+  },
+  deckListTitle: {
+    fontSize: 16,
+    marginLeft: 10,
+  },
   addDeckButton: {
     width: '80%',
     justifyContent: 'center',
@@ -117,6 +134,22 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   addDeckButtonText: {
+    color: Colors.light.background,
+  },
+  deckListTitleContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingRight: 10,
+    paddingLeft: 10,
+  },
+  createDeckButton: {
+    backgroundColor: Colors.light.tint,
+    padding: 10,
+    borderRadius: 10,
+  },
+  createDeckButtonText: {
     color: Colors.light.background,
   },
 });
