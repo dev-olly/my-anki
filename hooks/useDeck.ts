@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from "react";
 
 import { Deck } from '../types';
-import { NEW_STORAGE_KEY } from '../utils/keys';
+import { STORAGE_KEY } from '../utils/keys';
 
 
 export const useDeck = (deckName?: string) => {
@@ -14,7 +14,7 @@ export const useDeck = (deckName?: string) => {
 
   const loadDecks = async () => {
     try {
-      const savedDecks = await AsyncStorage.getItem(NEW_STORAGE_KEY);
+      const savedDecks = await AsyncStorage.getItem(STORAGE_KEY);
       if (savedDecks) setDecks(JSON.parse(savedDecks));
     } catch (error) {
       console.error('Error loading decks:', error);
@@ -23,8 +23,9 @@ export const useDeck = (deckName?: string) => {
 
   const saveDeck = async (deck: Deck) => {
     try {
-      setDecks([...decks, deck]);
-      await AsyncStorage.setItem(NEW_STORAGE_KEY, JSON.stringify(decks));
+      const newDecks = [...decks, deck];  
+      setDecks(newDecks);
+      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(newDecks));
     } catch (error) {
       console.error('Error saving deck:', error);
     }
@@ -40,7 +41,7 @@ export const useDeck = (deckName?: string) => {
     if (itemDeck) {
       itemDeck.words = words;
       decks.map((deck) => deck.name === deckName ? itemDeck : deck);  
-      await AsyncStorage.setItem(NEW_STORAGE_KEY, JSON.stringify(decks));
+      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(decks));
       setDecks(decks);
     }
   }
