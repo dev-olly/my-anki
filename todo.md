@@ -27,3 +27,4 @@
 - refactor modals 
 - build custom buttons
 - custom input component
+- Swipeable List item
