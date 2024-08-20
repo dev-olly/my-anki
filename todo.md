@@ -9,6 +9,8 @@
 - delete individual word from deck - done
 - edit individual word from deck - done
 - Create Deck categories
+- Delete Deck categories
+- Edit Deck categories 
 - Add Deck categories to Home Screen
 
 - sync deck to server

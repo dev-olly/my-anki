@@ -1,8 +1,3 @@
-export type Word = {
-  word: string;
-  translation: string;
-}
-
 export type WordData = {
   translation: string;
   ease: number;
@@ -12,3 +7,4 @@ export type WordData = {
 }
 
 export type Deck = Record<string, WordData>;
+
