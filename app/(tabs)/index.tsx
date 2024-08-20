@@ -15,7 +15,7 @@ import { Deck } from '@/types';
 
 
 export default function HomeScreen() {
-  const [decks, setDecks] = useState<Deck[]>([]);
+  const {decks, saveDeck} = useDeck();
   const [showModal, setShowModal] = useState(false);
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const bgColorAnim = useRef(new Animated.Value(0)).current;
@@ -52,13 +52,14 @@ export default function HomeScreen() {
     inputRange: [0, 1],
     outputRange: [Colors.light.tint, Colors.blue[500]]
   });
+  
   const onSubmit = (deckName: string) => {
     const deck: Deck = {
       name: deckName,
       dateCreated: new Date().toISOString(),
       words: {},
     };
-    setDecks([...decks, deck]);
+    saveDeck(deck);
     setShowModal(false);
   }
 
