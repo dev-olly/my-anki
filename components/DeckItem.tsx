@@ -1,6 +1,7 @@
 
 import { Colors } from '@/constants/Colors';
 import { Deck } from '@/types';
+import { Link } from 'expo-router';
 import { useRef, useState } from 'react';
 import { Animated, Button, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 
@@ -36,9 +37,13 @@ export const DeckItem = ({deck, onDelete, editDeck}: {deck: Deck, onDelete: (dec
   }
   return (
     <Swipeable renderRightActions={renderRightActions} rightThreshold={20} ref={swipeableRef}>
-      <View style={styles.wordItem}>
-        <Text>{deck.name}</Text>
-      </View>
+      <Link href={`/deck/${deck.name}`} asChild>
+        <Pressable>
+          <View style={styles.wordItem}>
+            <Text>{deck.name}</Text>
+          </View>
+        </Pressable>
+      </Link>
 
       {/* Delete Modal */}
       <Modal transparent={true} visible={showModal}>

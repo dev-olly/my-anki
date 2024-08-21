@@ -2,7 +2,7 @@
 import { Button, FlatList, SafeAreaView, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { ModalForm } from '@/components/ModalForm';
-import { Link } from 'expo-router';
+import { Link, router, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 
 import { useDeck } from '@/hooks/useDeck';
@@ -11,14 +11,24 @@ import { WordItem } from '@/components/WordItem';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 
-export default function DeskScreen() {
+export default function DeckScreen() {
   const [word, setWord] = useState('')
-  const [deck, setDeck] = useDeck()
+  const { deck: deckName } = useLocalSearchParams();
 
-  const words = Object.keys(deck)
+  console.log('deckName', deckName)
+  const {getDeck, saveWords, deleteDeck, editDeck} = useDeck(deckName as string)
+  
+
+  const deck = getDeck()
+  console.log('deck', deck)
+  // if(!deck) {
+  //   router.replace('/')
+  //   return
+  // }
+
+  const words = Object.keys(deck?.words || {})
 
   const [showModal, setShowModal] = useState(false);
-
 
   const initializeWord = (word: string) => {
     setWord(word);
@@ -26,23 +36,25 @@ export default function DeskScreen() {
   }
 
   const addWord = async (translation: string) => {
-    const newWords = {...deck, [word]: {translation, ease: LOWER_BOUND, interval: 1, lastReview: new Date().toISOString(), nextReview: new Date().toISOString()}};
-    setDeck(newWords);
+    if(!deck) return
+    const newWords = {...deck.words, [word]: {translation, ease: LOWER_BOUND, interval: 1, lastReview: new Date().toISOString(), nextReview: new Date().toISOString()}};
+    saveWords(newWords);
     setWord('');
     setShowModal(false);
   };
 
   const deleteWord = (word: string) => {
-    const newWords = {...deck};
+    if(!deck) return
+    const newWords = {...deck.words};
     delete newWords[word];
-    setDeck(newWords);
+    saveWords(newWords);
   }
 
   const editWord = (oldWord: string, word: string, translation: string) => {
-    
-    const newWords = {...deck, [word]: {translation, ease: LOWER_BOUND, interval: 1, lastReview: new Date().toISOString(), nextReview: new Date().toISOString()}};
+    if(!deck) return
+    const newWords = {...deck.words, [word]: {translation, ease: LOWER_BOUND, interval: 1, lastReview: new Date().toISOString(), nextReview: new Date().toISOString()}};
     if(oldWord !== word) delete newWords[oldWord];
-    setDeck(newWords);
+    saveWords(newWords);
   }
 
   return (
@@ -72,40 +84,9 @@ export default function DeskScreen() {
                   <Text style={styles.startDeckButton}>Start Deck </Text>
                 </Link>
               </View>
-              <FlatList data={words} renderItem={({item}) => <WordItem word={item} translation={deck[item].translation} onDelete={deleteWord} editWord={editWord} />} />    
+              {deck && <FlatList data={words} renderItem={({item}) => <WordItem word={item} translation={deck.words[item].translation} onDelete={deleteWord} editWord={editWord} />} /> }   
             </View>
           }
-
-        {/* <ParallaxScrollView
-          headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-          headerImage={
-            <Image
-              source={require('@/assets/images/partial-react-logo.png')}
-              style={styles.reactLogo}
-            />
-          }>
-          <ThemedView style={styles.titleContainer}>
-            <ThemedText type="title">Welcome!</ThemedText>
-            <HelloWave />
-          </ThemedView>
-          <ThemedView style={styles.stepContainer}>
-            <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-            <ThemedText>
-              Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-              Press{' '}
-              <ThemedText type="defaultSemiBold">
-                {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-              </ThemedText>{' '}
-              to open developer tools.
-            </ThemedText>
-          </ThemedView>
-          <ThemedView style={styles.stepContainer}>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-            <ThemedText>
-              Tap the Explore tab to learn more about what's included in this starter app.
-            </ThemedText>
-          </ThemedView>
-        </ParallaxScrollView> */}
       
       </SafeAreaView>
     </GestureHandlerRootView>

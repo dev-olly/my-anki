@@ -37,8 +37,9 @@ export const useDeck = (deckName?: string) => {
     }
   }
 
-  const loadWords = (deckName: string ): Deck | undefined => {
+  const getDeck = (): Deck | undefined => {
     const deck = decks.find((deck) => deck.name === deckName);
+    console.log('deck from getDeck', deck);
     return deck;
   };
 
@@ -67,7 +68,7 @@ export const useDeck = (deckName?: string) => {
   return {
     decks,
     saveDeck,
-    loadWords,
+    getDeck,
     saveWords,
     deleteDeck,
     editDeck
