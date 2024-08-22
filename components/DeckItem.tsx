@@ -37,7 +37,7 @@ export const DeckItem = ({deck, onDelete, editDeck}: {deck: Deck, onDelete: (dec
   }
   return (
     <Swipeable renderRightActions={renderRightActions} rightThreshold={20} ref={swipeableRef}>
-      <Link href={`/deck/${deck.name}`} asChild>
+      <Link href={`/decks/${deck.name}` as const} asChild>
         <Pressable>
           <View style={styles.wordItem}>
             <Text>{deck.name}</Text>

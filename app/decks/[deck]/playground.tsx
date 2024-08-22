@@ -1,10 +1,10 @@
+import { Playground } from "@/components/Playground";
+import { useDeck } from "@/hooks/useDeck";
+import { WordData } from "@/types";
+import { Level, updateData } from "@/utils/spaced-repetition";
 import React, { useState, useMemo } from "react";
 import { Text, View } from 'react-native';
 
-import { Playground } from "@/components/Playground";
-import { WordData } from "@/types";
-import { useDeck } from '../hooks/useDeck';
-import { Level, updateData } from "@/utils/spaced-repetition";
 
 
 export default function PlaygroundScreen() {

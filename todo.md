@@ -16,13 +16,15 @@
 
 - Link deck to individual deck - done 
 - link deck to Playground screen - done
-- fix Playground screen
+- fix Playground screen 
 
 - refactor modals 
 - build custom buttons
 - custom input component
 - Swipeable List item
 
+
+- Scrape Nico wegs words 
 
 - sync deck to server
 - Test on real device
