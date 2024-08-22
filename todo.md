@@ -18,6 +18,12 @@
 - link deck to Playground screen - done
 - fix Playground screen
 
+- refactor modals 
+- build custom buttons
+- custom input component
+- Swipeable List item
+
+
 - sync deck to server
 - Test on real device
 - deploy on app store
@@ -29,7 +35,3 @@
 - settings to set default deck
 
 
-- refactor modals 
-- build custom buttons
-- custom input component
-- Swipeable List item

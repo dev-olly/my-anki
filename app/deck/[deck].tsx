@@ -20,11 +20,6 @@ export default function DeckScreen() {
   
 
   const deck = getDeck()
-  console.log('deck', deck)
-  // if(!deck) {
-  //   router.replace('/')
-  //   return
-  // }
 
   const words = Object.keys(deck?.words || {})
 
