@@ -14,7 +14,9 @@
 
 - prevent duplicate words from being added to deck - done
 
-- Link deck to individual deck
+- Link deck to individual deck - done 
+- link deck to Playground screen - done
+- fix Playground screen
 
 - sync deck to server
 - Test on real device
