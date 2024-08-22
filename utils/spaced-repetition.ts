@@ -11,7 +11,7 @@ export const Levels = {
 
 export type Level = typeof Levels[keyof typeof Levels];
 
-export const updateData = (data: Deck, word: string, level: Level) => {
+export const updateData = (data: Deck['words'], word: string, level: Level) => {
   const current = data[word];
   const ease = current.ease;
   const interval = current.interval;
