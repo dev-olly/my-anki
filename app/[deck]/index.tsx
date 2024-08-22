@@ -75,7 +75,7 @@ export default function DeckScreen() {
             words.length > 0 && <View style={{ flex: 1, marginTop: 10}}>
               <View style={styles.listheader}>
                 <Text style={{ fontSize: 16, fontWeight: 'semibold', marginBottom: 10, marginLeft: 10 }}>{words.length} words.</Text>
-                <Link href={`/playground`} asChild>
+                <Link href={`/${deckName as string}/playground` as const} asChild>
                   <Text style={styles.startDeckButton}>Start Deck </Text>
                 </Link>
               </View>
