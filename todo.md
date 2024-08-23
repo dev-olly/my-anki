@@ -18,7 +18,7 @@
 - link deck to Playground screen - done
 - fix Playground screen  - done 
 
-- prevent modal from coming up when word is empty
+- prevent modal from coming up when word is empty - done
 
 - refactor modals 
 - build custom buttons
@@ -29,7 +29,7 @@
 - Scrape Nico wegs words 
 
 - sync deck to server
-- Test on real device
+- Test on re al device
 - deploy on app store
 
 
