@@ -15,8 +15,7 @@ export default function DeckScreen() {
   const [word, setWord] = useState('')
   const { deck: deckName } = useLocalSearchParams();
 
-  console.log('deckName', deckName)
-  const {getDeck, saveWords, deleteDeck, editDeck} = useDeck(deckName as string)
+  const {getDeck, saveWords} = useDeck(deckName as string)
   
 
   const deck = getDeck()
