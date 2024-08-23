@@ -16,7 +16,9 @@
 
 - Link deck to individual deck - done 
 - link deck to Playground screen - done
-- fix Playground screen 
+- fix Playground screen  - done 
+
+- prevent modal from coming up when word is empty
 
 - refactor modals 
 - build custom buttons

@@ -25,6 +25,7 @@ export default function DeckScreen() {
   const [showModal, setShowModal] = useState(false);
 
   const initializeWord = (word: string) => {
+    if(!word) return
     setWord(word);
     setShowModal(true);
   }

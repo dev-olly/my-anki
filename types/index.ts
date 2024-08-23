@@ -12,3 +12,5 @@ export type Deck = {
   words: Record<string, WordData>;
 };
 
+
+
