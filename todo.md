@@ -20,13 +20,15 @@
 
 - prevent modal from coming up when word is empty - done
 
-- refactor modals 
-- build custom buttons
-- custom input component
-- Swipeable List item
+
+- Explore page with Nico vocabs word
+- Search bar for Explore page
+- Level filters for Explore page
+- Add to deck button for Explore page
+- Vocab deck detail page
 
 
-- Scrape Nico wegs words 
+- Scrape Nico wegs words - done 
 
 - sync deck to server
 - Test on re al device
@@ -39,3 +41,8 @@
 - settings to set default deck
 
 
+REFACTORING
+- refactor modals 
+- build custom buttons
+- custom input component
+- Swipeable List item
