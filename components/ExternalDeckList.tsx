@@ -1,4 +1,6 @@
 import { Colors } from "@/constants/Colors";
+import { Ionicons } from "@expo/vector-icons";
+import React from "react";
 import { View,Text, Pressable, StyleSheet } from "react-native";
 
 const examples = [
@@ -27,7 +29,11 @@ const DeckItem = ({deck}: {deck: any}) => {
           <Text style={styles.deckItemLevel}>{deck.level}</Text>
           <Text style={styles.deckItemWordsCount}>|  {deck.words.length} words</Text>
         </View>
-
+      </View>
+      <View style={styles.deckItemActions}>
+        <View style={styles.deckItemAddButton}>
+          <Text><Ionicons name="add" size={16} color="black" /></Text>
+        </View>
       </View>
     </View>
   )
@@ -115,5 +121,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 8,
     marginTop: 4,
+  },
+  deckItemActions: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginLeft: 'auto',
+  },
+  deckItemAddButton: {
+    borderWidth: 1,
+    borderColor: Colors.gray[200], 
+    borderRadius: 30,
+    paddingHorizontal: 8,
+    paddingVertical: 8,
+    backgroundColor: Colors.gray[200],
   }
 })
