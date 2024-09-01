@@ -17,6 +17,22 @@ const LevelTab = ({level}: {level: string}) => {
  )
 }
 
+const DeckItem = ({deck}: {deck: any}) => {
+  return (
+    <View style={styles.deckItem}>
+      <View style={styles.deckItemImage}></View>
+      <View>
+        <Text style={styles.deckItemTitle}>Nicos weg - {deck.title}</Text>
+        <View style={styles.deckItemLevelContainer}>
+          <Text style={styles.deckItemLevel}>{deck.level}</Text>
+          <Text style={styles.deckItemWordsCount}>|  {deck.words.length} words</Text>
+        </View>
+
+      </View>
+    </View>
+  )
+}
+
 export default function ExternalDeckList() {
 
   return (
@@ -25,6 +41,11 @@ export default function ExternalDeckList() {
       <View style={styles.tabList}>
         {Levels.map((level) => (
           <LevelTab level={level} key={level} />
+        ))}
+      </View>
+      <View style={styles.deckList}>
+        {examples.map((deck) => (
+          <DeckItem deck={deck} key={deck.id} />
         ))}
       </View>
     </View>
@@ -38,6 +59,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 8,
     marginTop: 8,
+    marginBottom: 8,
   },
   tabButton: {
     borderWidth: 1,
@@ -49,5 +71,49 @@ const styles = StyleSheet.create({
   },
   tabButtonText: {
     color: Colors.gray[100],
+  },
+  deckList: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 8,
+    marginTop: 8,
+  },
+  deckItem: {
+    borderWidth: 1,
+    borderColor: Colors.gray[200], 
+    borderRadius: 6,
+    paddingHorizontal: 8,
+    paddingVertical: 8,
+    backgroundColor: Colors.light.background,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  deckItemImage: {
+    width: 40,
+    height: 40,
+    backgroundColor: Colors.gray[200],
+    borderRadius: 6,
+  },
+  deckItemTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  deckItemLevel: {
+    fontSize: 12,
+    color: Colors.gray[500],
+    fontWeight: 600,
+  },
+  deckItemWordsCount: {
+    fontSize: 12,
+    color: Colors.gray[500],
+  },
+  deckItemLevelContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginTop: 4,
   }
 })
