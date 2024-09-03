@@ -22,10 +22,15 @@
 
 
 - Explore page with Nico vocabs word
-- Search bar for Explore page
-- Level filters for Explore page
-- Add to deck button for Explore page
+  - Search bar for Explore page - done 
+  - Level filters for Explore page - done
+  - Add to deck button for Explore page - done
+  - Fetch Nico vocabs from server - 
+
 - Vocab deck detail page
+
+- Nico vocab's 
+
 
 
 - Scrape Nico wegs words - done 

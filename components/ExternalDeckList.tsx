@@ -1,7 +1,7 @@
 import { Colors } from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
-import { View,Text, Pressable, StyleSheet } from "react-native";
+import { View,Text, Pressable, StyleSheet, Image } from "react-native";
 
 const examples = [
   {"id":"0MYgXuh899ok9HPJzOfR","title":"Jahreszeiten","level":"A1","lessonUrl":"https://learngerman.dw.com/en/jahreszeiten/l-37651758","words":[{"german":"sonnig","audioSource":"/assets/audio/signal_sound_failure.mp3","translation":"sunny"},{"german":"nass","audioSource":"/assets/audio/signal_sound_failure.mp3","translation":"wet"},{"german":"trocken","audioSource":"/assets/audio/signal_sound_failure.mp3","translation":"dry"},{"german":"regnerisch","audioSource":"/assets/audio/signal_sound_failure.mp3","translation":"rainy"},{"german":"wie","audioSource":"/assets/audio/signal_sound_failure.mp3","translation":"as"},{"german":"schwer","audioSource":"/assets/audio/signal_sound_failure.mp3","translation":"heavy"},{"german":"frieren","audioSource":"/assets/audio/signal_sound_failure.mp3","translation":"to freeze; to be cold"},{"german":"die Jahreszeit, die Jahreszeiten","audioSource":"/assets/audio/signal_sound_failure.mp3","translation":"season"},{"german":"als","audioSource":"/assets/audio/signal_sound_failure.mp3","translation":"than"},{"german":"der Herbst, die Herbste","audioSource":"/assets/audio/signal_sound_failure.mp3","translation":"fall; autumn"},{"german":"schön","audioSource":"/assets/audio/signal_sound_failure.mp3","translation":"nice; beautiful; pretty"},{"german":"kalt","audioSource":"/assets/audio/signal_sound_failure.mp3","translation":"cold"},{"german":"spannend","audioSource":"/assets/audio/signal_sound_failure.mp3","translation":"exciting; gripping"},{"german":"heiß","audioSource":"/assets/audio/signal_sound_failure.mp3","translation":"hot"},{"german":"etwas/jemanden mit|nehmen","audioSource":"/assets/audio/signal_sound_failure.mp3","translation":"to take something/someone along"},{"german":"bekannt","audioSource":"/assets/audio/signal_sound_failure.mp3","translation":"famous"},{"german":"der Sommer, die Sommer","audioSource":"/assets/audio/signal_sound_failure.mp3","translation":"summer"},{"german":"grün","audioSource":"/assets/audio/signal_sound_failure.mp3","translation":"green"},{"german":"etwas verlieren","audioSource":"/assets/audio/signal_sound_failure.mp3","translation":"to lose something"},{"german":"Ski fahren","audioSource":"/assets/audio/signal_sound_failure.mp3","translation":"to ski"},{"german":"die Blume, die Blumen","audioSource":"/assets/audio/signal_sound_failure.mp3","translation":"flower"},{"german":"das Blatt, die Blätter","audioSource":"/assets/audio/signal_sound_failure.mp3","translation":"leaf"},{"german":"genauso","audioSource":"/assets/audio/signal_sound_failure.mp3","translation":"just as"},{"german":"der Frühling, die Frühlinge","audioSource":"/assets/audio/signal_sound_failure.mp3","translation":"spring"},{"german":"windig","audioSource":"/assets/audio/signal_sound_failure.mp3","translation":"windy"},{"german":"die Kälte","audioSource":"/assets/audio/signal_sound_failure.mp3","translation":"cold; coldness; cold weather"},{"german":"warm","audioSource":"/assets/audio/signal_sound_failure.mp3","translation":"warm"},{"german":"der Winter, die Winter","audioSource":"/assets/audio/signal_sound_failure.mp3","translation":"winter"},{"german":"schlimm","audioSource":"/assets/audio/signal_sound_failure.mp3","translation":"terrible"},{"german":"finden","audioSource":"/assets/audio/signal_sound_failure.mp3","translation":"to find"},{"german":"die Temperatur, die Temperaturen","audioSource":"/assets/audio/signal_sound_failure.mp3","translation":"temperature"}],"WordsCount":31}
@@ -22,7 +22,7 @@ const LevelTab = ({level}: {level: string}) => {
 const DeckItem = ({deck}: {deck: any}) => {
   return (
     <View style={styles.deckItem}>
-      <View style={styles.deckItemImage}></View>
+      <Image source={{uri: 'https://res.cloudinary.com/db5aqdx6s/image/upload/v1725405050/nicos_weg_cr1lj4.webp'}} style={styles.deckItemImage} />
       <View>
         <Text style={styles.deckItemTitle}>Nicos weg - {deck.title}</Text>
         <View style={styles.deckItemLevelContainer}>
@@ -40,7 +40,6 @@ const DeckItem = ({deck}: {deck: any}) => {
 }
 
 export default function ExternalDeckList() {
-
   return (
     <View>
       <Text>Deck List</Text>
@@ -103,11 +102,11 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   deckItemTitle: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 'bold',
   },
   deckItemLevel: {
-    fontSize: 12,
+    fontSize: 10,
     color: Colors.gray[500],
     fontWeight: 600,
   },

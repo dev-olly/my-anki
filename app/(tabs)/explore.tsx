@@ -15,7 +15,7 @@ export default function TabTwoScreen() {
       <ParallaxScrollView
         headerBackgroundColor={{ light: Colors.light.background, dark: Colors.dark.tint }}
         headerChildren={<View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-              <TextInput
+          <TextInput
             style={styles.input}
             placeholder="search episodes"
           />
