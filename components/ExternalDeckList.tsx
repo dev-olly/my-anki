@@ -39,7 +39,7 @@ const DeckItem = ({deck}: {deck: any}) => {
   )
 }
 
-export default function ExternalDeckList() {
+export default function ExternalDeckList({decks}: {decks: any}) {
   return (
     <View>
       <Text>Deck List</Text>
@@ -49,7 +49,7 @@ export default function ExternalDeckList() {
         ))}
       </View>
       <View style={styles.deckList}>
-        {examples.map((deck) => (
+        {decks.map((deck: any) => (
           <DeckItem deck={deck} key={deck.id} />
         ))}
       </View>
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   deckItemTitle: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: 'bold',
   },
   deckItemLevel: {

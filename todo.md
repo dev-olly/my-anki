@@ -26,8 +26,14 @@
   - Level filters for Explore page - done
   - Add to deck button for Explore page - done
   - Fetch Nico vocabs from server - 
+  - Add Loading state
+  - design empty state 
+  - Search for decks
+  - Level filters for Explore page
+
 
 - Vocab deck detail page
+
 
 - Nico vocab's 
 

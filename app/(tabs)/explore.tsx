@@ -8,8 +8,23 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Colors } from '@/constants/Colors';
 import ExternalDeckList from '@/components/ExternalDeckList';
+import { useEffect, useState } from 'react';
+
+
+const fetchDecks = async () => {
+  const response = await fetch('http://localhost:8080/api/vocabs');
+  const data = await response.json();
+  return data;
+}
 
 export default function TabTwoScreen() {
+  const [search, setSearch] = useState('');
+  const [decks, setDecks] = useState([]);
+  
+  useEffect(() => {
+    fetchDecks().then(setDecks);
+  }, [search]);
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ParallaxScrollView
@@ -19,11 +34,8 @@ export default function TabTwoScreen() {
             style={styles.input}
             placeholder="search episodes"
           />
-          <Button
-            title="Add"
-          />
           </View>}>
-          <ExternalDeckList />
+          <ExternalDeckList decks={decks} />
       </ParallaxScrollView>
     </SafeAreaView>
   );
@@ -45,6 +57,6 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 1,
     padding: 10,
-    width: '80%',
+    width: '90%',
   },
 });
