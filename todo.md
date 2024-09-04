@@ -26,8 +26,8 @@
   - Level filters for Explore page - done
   - Add to deck button for Explore page - done
   - Fetch Nico vocabs from server - done
-  - Add Loading state - 
-  - design empty state 
+  - Add Loading state - done
+  - design empty state - 
   - Search for decks 
   - handle errors
   - Save external deck to storage

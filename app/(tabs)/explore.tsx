@@ -8,6 +8,7 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Colors } from '@/constants/Colors';
 import ExternalDeckList from '@/components/ExternalDeckList';
+import SkeletonLoader from '@/components/SkeletonLoader';
 import { useEffect, useState } from 'react';
 
 
@@ -20,9 +21,13 @@ const fetchDecks = async () => {
 export default function TabTwoScreen() {
   const [search, setSearch] = useState('');
   const [decks, setDecks] = useState([]);
+  const [loading, setLoading] = useState(true);
   
   useEffect(() => {
-    fetchDecks().then(setDecks);
+    fetchDecks().then((decks) => {
+      setDecks(decks);
+      setLoading(false);
+    });
   }, [search]);
 
   return (
@@ -35,7 +40,7 @@ export default function TabTwoScreen() {
             placeholder="search episodes"
           />
           </View>}>
-          <ExternalDeckList decks={decks} />
+          {loading ? <SkeletonLoader /> : <ExternalDeckList decks={decks} />}
       </ParallaxScrollView>
     </SafeAreaView>
   );
