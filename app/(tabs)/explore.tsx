@@ -14,7 +14,6 @@ const fetchDecks = async () => {
 }
 
 
-
 export default function TabTwoScreen() {
   const [search, setSearch] = useState('');
   const [decks, setDecks] = useState([]);

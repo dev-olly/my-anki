@@ -27,7 +27,7 @@
   - Add to deck button for Explore page - done
   - Fetch Nico vocabs from server - done
   - Add Loading state - done
-  - design empty state - 
+  - design empty state - done
   - Search for decks 
   - handle errors
   - Save external deck to storage

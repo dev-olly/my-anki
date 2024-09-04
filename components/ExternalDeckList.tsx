@@ -48,11 +48,20 @@ export default function ExternalDeckList({decks}: {decks: any}) {
           <LevelTab level={level} key={level} />
         ))}
       </View>
-      <View style={styles.deckList}>
-        {decks.map((deck: any) => (
-          <DeckItem deck={deck} key={deck.id} />
-        ))}
-      </View>
+      {decks.length > 0 ? (
+        <View style={styles.deckList}>
+          {decks.map((deck: any) => (
+            <DeckItem deck={deck} key={deck.id} />
+            ))}
+          </View>
+        ) : (
+          <View style={styles.emptyState}>
+            <View style={styles.emptyCard}>
+              <Ionicons name="sad-outline" size={48} color={Colors.gray[500]} />
+              <Text style={styles.emptyCardText}>Sorry, we couldn't find any decks at the moment</Text>
+            </View>
+          </View>
+      )}
     </View>
   );
 }
@@ -135,5 +144,36 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 8,
     backgroundColor: Colors.gray[200],
+  },
+  emptyState: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100%',
+  },
+  emptyCard: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    width: '70%',
+    height: 120,
+    borderWidth: 1,
+    borderColor: Colors.gray[200], 
+    borderRadius: 6,
+    backgroundColor: Colors.light.background,
+    shadowColor: Colors.gray[200],
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 5,
+    padding: 16,
+  },
+  emptyCardText: {
+    fontSize: 14,
+    color: Colors.gray[500],
+    textAlign: 'center',
   }
 })
