@@ -11,10 +11,8 @@ const Levels = ["A1", "A2", "B1", "B2", "C1", "C2"]
 
 const LevelTab = ({level}: {level: string}) => {
  return (
-  <Pressable>
-    <View style={styles.tabButton}>
-      <Text style={styles.tabButtonText}>{level}</Text>
-    </View>
+  <Pressable style={({pressed}) => [styles.tabButton, (pressed) && styles.tabButtonPressed]}>
+      {({pressed}) => <Text style={[styles.tabButtonText, pressed && styles.tabButtonTextActive]}>{level}</Text>}
   </Pressable>
  )
 }
@@ -81,10 +79,16 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingHorizontal: 16,
     paddingVertical: 4,
+    backgroundColor: 'white',
+  },
+  tabButtonPressed: {
     backgroundColor: Colors.gray[500],
   },
   tabButtonText: {
-    color: Colors.gray[100],
+    color: Colors.gray[500],
+  },
+  tabButtonTextActive: {
+    color: 'white',
   },
   deckList: {
     display: 'flex',

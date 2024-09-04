@@ -28,8 +28,8 @@
   - Fetch Nico vocabs from server - done
   - Add Loading state - done
   - design empty state - done
-  - Search for decks 
-  - Level filters for Explore page
+  - Search for decks - done 
+  - Level filters for Explore page -
   - handle errors
   - Save external deck to storage
 
