@@ -1,14 +1,9 @@
-import Ionicons from '@expo/vector-icons/Ionicons';
-import { StyleSheet, Image, Platform, SafeAreaView, TextInput, Button, View } from 'react-native';
+import { SafeAreaView, StyleSheet, TextInput, View } from 'react-native';
 
-import { Collapsible } from '@/components/Collapsible';
-import { ExternalLink } from '@/components/ExternalLink';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { Colors } from '@/constants/Colors';
 import ExternalDeckList from '@/components/ExternalDeckList';
+import ParallaxScrollView from '@/components/ParallaxScrollView';
 import SkeletonLoader from '@/components/SkeletonLoader';
+import { Colors } from '@/constants/Colors';
 import { useEffect, useState } from 'react';
 
 
@@ -18,6 +13,8 @@ const fetchDecks = async () => {
   return data;
 }
 
+
+
 export default function TabTwoScreen() {
   const [search, setSearch] = useState('');
   const [decks, setDecks] = useState([]);
@@ -25,7 +22,7 @@ export default function TabTwoScreen() {
   
   useEffect(() => {
     fetchDecks().then((decks) => {
-      setDecks(decks);
+      setDecks([]);
       setLoading(false);
     });
   }, [search]);
