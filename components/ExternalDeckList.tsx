@@ -9,10 +9,10 @@ const examples = [
 
 const Levels = ["A1", "A2", "B1", "B2", "C1", "C2"]
 
-const LevelTab = ({level}: {level: string}) => {
+const LevelTab = ({level, onLevelPress, active}: {level: string, onLevelPress: (level: string) => void, active: boolean}) => {
  return (
-  <Pressable style={({pressed}) => [styles.tabButton, (pressed) && styles.tabButtonPressed]}>
-      {({pressed}) => <Text style={[styles.tabButtonText, pressed && styles.tabButtonTextActive]}>{level}</Text>}
+    <Pressable style={({pressed}) => [styles.tabButton, (pressed || active) && styles.tabButtonPressed]} onPress={() => onLevelPress(level)}>
+      {({pressed}) => <Text style={[styles.tabButtonText, (pressed || active) && styles.tabButtonTextActive]}>{level}</Text>}
   </Pressable>
  )
 }
@@ -37,13 +37,13 @@ const DeckItem = ({deck}: {deck: any}) => {
   )
 }
 
-export default function ExternalDeckList({decks}: {decks: any}) {
+export default function ExternalDeckList({decks,  onLevelPress, level}: {decks: any, onLevelPress: (level: string) => void, level: string }) {
   return (
     <View>
       <Text>Deck List</Text>
       <View style={styles.tabList}>
         {Levels.map((level) => (
-          <LevelTab level={level} key={level} />
+          <LevelTab level={level} key={level} onLevelPress={onLevelPress} active={level === level} />
         ))}
       </View>
       {decks.length > 0 ? (

@@ -31,6 +31,7 @@ export default function TabTwoScreen() {
   const [decks, setDecks] = useState<ExternalDeck[]>([]);
   const [loading, setLoading] = useState(true);
   const [filteredDecks, setFilteredDecks] = useState<ExternalDeck[]>([]);
+  const [level, setLevel] = useState<string>('');
   
   useEffect(() => {
     fetchDecks().then((decks) => {
@@ -50,6 +51,13 @@ export default function TabTwoScreen() {
     }, 1000);
   }
 
+  const onLevelPress = (level: string) => {
+    setLevel(level);
+    setLoading(true);
+    setFilteredDecks(decks.filter((deck) => deck.level === level));
+    setLoading(false);
+  }
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ParallaxScrollView
@@ -61,7 +69,7 @@ export default function TabTwoScreen() {
             onChangeText={onSearch}
           />
           </View>}>
-          {loading ? <SkeletonLoader /> : <ExternalDeckList decks={filteredDecks} />}
+          {loading ? <SkeletonLoader /> : <ExternalDeckList decks={filteredDecks} onLevelPress={onLevelPress} level={level} />}
       </ParallaxScrollView>
     </SafeAreaView>
   );
