@@ -5,11 +5,30 @@ import { useState } from 'react';
 
 import { DeckItem } from '@/components/DeckItem';
 import { ModalDeckForm } from '@/components/ModalDeckForm';
-import { PrimaryThemedButton } from '@/components/ThemedButton';
+import { GrayThemedButton, PrimaryThemedButton } from '@/components/ThemedButton';
 import { Colors } from '@/constants/Colors';
 import { useDeck } from '@/hooks/useDeck';
 import { Deck } from '@/types';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
+const NoDeck = ( {openAddModal}: {openAddModal: () => void}) => {
+  return (
+    <View style={{flex: 1}}>
+      <View style={styles.noDecksContainer}>
+        <Text style={styles.noTextTitle}>You don't have any decks yet.</Text>
+        <Text style={styles.noText}>Create a deck to get started</Text>
+        <GrayThemedButton onPress={openAddModal}>
+          <Text style={styles.addDeckButtonText}>Create Deck</Text>
+        </GrayThemedButton>
+      </View> 
+      <View>
+        <PrimaryThemedButton onPress={openAddModal}>
+          <Text style={{color: Colors.light.background}}>Create Deck</Text>
+        </PrimaryThemedButton>
+      </View>
+    </View>
+  )
+}
 
 
 export default function HomeScreen() {
@@ -44,14 +63,9 @@ export default function HomeScreen() {
         <ModalDeckForm onSubmit={onSubmit} showModal={showModal} setShowModal={setShowModal} />
         <View>
           <Text style={styles.tabTitle}>All decks</Text>
-          {decks.length == 0 ? <View style={styles.noDecksContainer}>
-
-            <Text style={styles.noTextTitle}>You don't have any decks yet.</Text>
-            <Text style={styles.noText}>Create a deck to get started</Text>
-            <PrimaryThemedButton onPress={openAddModal}>
-              <Text style={styles.addDeckButtonText}>Create Deck</Text>
-            </PrimaryThemedButton>
-          </View>  : <View style={styles.container}>
+          {decks.length == 0 ?
+          <NoDeck openAddModal={openAddModal} />
+          : <View style={styles.container}>
               <View style={styles.deckListTitleContainer}>
                 <Text style={styles.deckListTitle}> You have {decks.length} decks</Text>
                 <Pressable onPress={openAddModal}>
@@ -77,7 +91,7 @@ const styles = StyleSheet.create({
   tabTitle: {
     fontSize: 22,
     fontWeight: 'semibold',
-    marginLeft: 10,
+    marginLeft: 16,
     marginTop: 16,
   },
   container: {
@@ -120,13 +134,14 @@ const styles = StyleSheet.create({
   },
   noDecksContainer: {
     marginTop: 24,
+    marginBottom: 260,
     borderStyle: 'dashed',
     borderWidth: 1,
     borderColor: Colors.gray[400],
     borderRadius: 10,
     padding: 10,
     width: '90%',
-    height: 150,
+    height: 180,
     marginLeft: '5%',
     marginRight: '5%',
   },

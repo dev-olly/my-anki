@@ -3,7 +3,7 @@ import { useRef, useState } from 'react';
 import { Colors } from '@/constants/Colors';
 
 
-const defaultStyle = {
+const grayDefaultStyle = {
   justifyContent: 'center' as const,
   alignItems: 'center' as const,
   borderRadius: 40,
@@ -14,7 +14,19 @@ const defaultStyle = {
   width: 120,
 }
 
-export const  PrimaryThemedButton = ({ children, onPress, style = defaultStyle }: { children: React.ReactNode, onPress: () => void, style?: ViewStyle }) => {
+const primaryDefaultStyle = {
+  justifyContent: 'center' as const,
+  alignItems: 'center' as const,
+  borderRadius: 40,
+  padding: 12,
+  marginLeft: 'auto' as const,
+  marginRight: 'auto' as const,
+  marginTop: 16,
+  width: '90%' as const,
+  height: 40,
+}
+
+export const  GrayThemedButton = ({ children, onPress, style = grayDefaultStyle }: { children: React.ReactNode, onPress: () => void, style?: ViewStyle }) => {
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const bgColorAnim = useRef(new Animated.Value(0)).current;
   const buttonBgColor = bgColorAnim.interpolate({
@@ -52,6 +64,42 @@ export const  PrimaryThemedButton = ({ children, onPress, style = defaultStyle }
       onPressOut={onPressOut}
       onPress={onPress}>
       <Animated.View style={[style, { transform: [{ scale: scaleAnim }], backgroundColor: buttonBgColor }]}>
+        {children}
+      </Animated.View>
+    </Pressable>
+  );
+}
+
+
+export const  PrimaryThemedButton = ({ children, onPress, style = primaryDefaultStyle }: { children: React.ReactNode, onPress: () => void, style?: ViewStyle }) => {
+  const bgColorAnim = useRef(new Animated.Value(0)).current;
+  const buttonBgColor = bgColorAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [Colors.sky[700], Colors.sky[900]]
+  });
+
+  const onPressIn = () => {
+    Animated.parallel([
+      Animated.timing(bgColorAnim, {
+        toValue: 1,
+        duration: 150,
+        useNativeDriver: true,
+      })
+    ]).start();
+  }
+  const onPressOut = () => {
+    Animated.timing(bgColorAnim, {
+      toValue: 0,
+      duration: 150,
+      useNativeDriver: true,
+    }).start();
+  }
+  
+  return (
+    <Pressable onPressIn={onPressIn}
+      onPressOut={onPressOut}
+      onPress={onPress}>
+      <Animated.View style={[style, {  backgroundColor: buttonBgColor }]}>
         {children}
       </Animated.View>
     </Pressable>
