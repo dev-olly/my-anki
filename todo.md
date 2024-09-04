@@ -34,8 +34,8 @@
   - Save external deck to storage
 
 
-- Vocab deck detail page
 
+- Vocab deck detail page
 
 - Nico vocab's 
 
@@ -52,6 +52,15 @@
 - Translation of hardcoded words 
 - settings to set default language
 - settings to set default deck
+
+Design 
+ - Better and slick home screen 
+ - Better and slick explore screen 
+ - Better and slick deck detail screen 
+ - Better and slick word detail screen 
+ - Better and slick settings screen
+ - Better and slick forgot password screen 
+ - Better and slick reset password screen 
 
 
 REFACTORING

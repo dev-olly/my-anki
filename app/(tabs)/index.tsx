@@ -9,6 +9,7 @@ import { useDeck } from '@/hooks/useDeck';
 import { Deck } from '@/types';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { DeckItem } from '@/components/DeckItem';
+import { PrimaryThemedButton } from '@/components/ThemedButton';
 
 
 export default function HomeScreen() {
@@ -47,7 +48,7 @@ export default function HomeScreen() {
 
   const buttonBgColor = bgColorAnim.interpolate({
     inputRange: [0, 1],
-    outputRange: [Colors.light.tint, Colors.blue[500]]
+    outputRange: [Colors.gray[300], Colors.gray[500]]
   });
 
   const onSubmit = (deckName: string) => {
@@ -72,18 +73,16 @@ export default function HomeScreen() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
         <ModalDeckForm onSubmit={onSubmit} showModal={showModal} setShowModal={setShowModal} />
-        <View style={styles.rectangle}></View>
         <View>
-          {decks.length == 0 ? <View>
-            <Text style={styles.noText}>Hola! You have no decks, add some decks and start learning!</Text>
-            <Pressable onPressIn={onPressIn}
-              onPressOut={onPressOut}
-              onPress={openAddModal}>
-              <Animated.View style={[styles.addDeckButton, { transform: [{ scale: scaleAnim }], backgroundColor: buttonBgColor }]}>
-                <Text style={styles.addDeckButtonText}>Add Deck</Text>
-              </Animated.View>
-            </Pressable>
-          </View> : <View style={styles.container}>
+          <Text style={styles.tabTitle}>All decks</Text>
+          {decks.length == 0 ? <View style={styles.noDecksContainer}>
+
+            <Text style={styles.noTextTitle}>You don't have any decks yet.</Text>
+            <Text style={styles.noText}>Create a deck to get started</Text>
+            <PrimaryThemedButton onPress={openAddModal}>
+              <Text style={styles.addDeckButtonText}>Create Deck</Text>
+            </PrimaryThemedButton>
+          </View>  : <View style={styles.container}>
               <View style={styles.deckListTitleContainer}>
                 <Text style={styles.deckListTitle}> You have {decks.length} decks</Text>
                 <Pressable onPress={openAddModal}>
@@ -101,16 +100,16 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  rectangle: {
-    width: '100%',
-    height: '45%',
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
-    backgroundColor: Colors.light.tint,
-  },
   noText: {
     textAlign: 'center',
-    marginTop: 20,
+    marginTop: 10,
+    fontSize: 12,
+  },
+  tabTitle: {
+    fontSize: 22,
+    fontWeight: 'semibold',
+    marginLeft: 10,
+    marginTop: 16,
   },
   container: {
     marginTop: 16,
@@ -122,19 +121,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginLeft: 10,
   },
-  addDeckButton: {
-    width: '80%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10,
-    padding: 10,
-    // backgroundColor: Colors.light.tint,
-    marginLeft: '10%',
-    marginRight: '10%',
-    marginTop: 16,
-  },
   addDeckButtonText: {
-    color: Colors.light.background,
+    fontSize: 12,
+    fontWeight: 'bold',
+    color: Colors.gray[900],
   },
   deckListTitleContainer: {
     display: 'flex',
@@ -151,5 +141,24 @@ const styles = StyleSheet.create({
   },
   createDeckButtonText: {
     color: Colors.light.background,
+  },
+  noTextTitle: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    marginLeft: 10,
+    marginTop: 16,
+    textAlign: 'center',
+  },
+  noDecksContainer: {
+    marginTop: 24,
+    borderStyle: 'dashed',
+    borderWidth: 1,
+    borderColor: Colors.gray[400],
+    borderRadius: 10,
+    padding: 10,
+    width: '90%',
+    height: 150,
+    marginLeft: '5%',
+    marginRight: '5%',
   },
 });
