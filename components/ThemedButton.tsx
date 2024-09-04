@@ -22,8 +22,6 @@ export const  PrimaryThemedButton = ({ children, onPress, style = defaultStyle }
     outputRange: [Colors.gray[300], Colors.gray[500]]
   });
 
-
-
   const onPressIn = () => {
     Animated.parallel([
       Animated.spring(scaleAnim, {

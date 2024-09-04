@@ -54,7 +54,7 @@
 - settings to set default deck
 
 Design 
- - Better and slick home screen 
+ - Better and slick home screen - done
  - Better and slick explore screen 
  - Better and slick deck detail screen 
  - Better and slick word detail screen 
