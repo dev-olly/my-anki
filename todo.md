@@ -25,10 +25,10 @@
   - Search bar for Explore page - done 
   - Level filters for Explore page - done
   - Add to deck button for Explore page - done
-  - Fetch Nico vocabs from server - 
-  - Add Loading state
+  - Fetch Nico vocabs from server - done
+  - Add Loading state - 
   - design empty state 
-  - Search for decks
+  - Search for decks 
   - handle errors
   - Save external deck to storage
   - Level filters for Explore page
@@ -44,7 +44,7 @@
 - Scrape Nico wegs words - done 
 
 - sync deck to server
-- Test on re al device
+- Test on real device
 - deploy on app store
 
 
