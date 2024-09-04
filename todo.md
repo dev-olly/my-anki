@@ -29,9 +29,9 @@
   - Add Loading state - done
   - design empty state - done
   - Search for decks 
+  - Level filters for Explore page
   - handle errors
   - Save external deck to storage
-  - Level filters for Explore page
 
 
 - Vocab deck detail page

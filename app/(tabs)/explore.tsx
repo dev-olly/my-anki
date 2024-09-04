@@ -7,6 +7,18 @@ import { Colors } from '@/constants/Colors';
 import { useEffect, useState } from 'react';
 
 
+type ExternalDeck = {
+  id: string;
+  title: string;
+  level: string;
+  lessonUrl: string;
+  words: {
+    german: string;
+    translation: string;
+    audioSource: string;
+  }[];
+}
+
 const fetchDecks = async () => {
   const response = await fetch('http://localhost:8080/api/vocabs');
   const data = await response.json();
@@ -16,15 +28,27 @@ const fetchDecks = async () => {
 
 export default function TabTwoScreen() {
   const [search, setSearch] = useState('');
-  const [decks, setDecks] = useState([]);
+  const [decks, setDecks] = useState<ExternalDeck[]>([]);
   const [loading, setLoading] = useState(true);
+  const [filteredDecks, setFilteredDecks] = useState<ExternalDeck[]>([]);
   
   useEffect(() => {
     fetchDecks().then((decks) => {
       setDecks(decks);
+      setFilteredDecks(decks);
       setLoading(false);
     });
   }, [search]);
+
+  // chill until users stop typing and all decks are loaded 
+  const onSearch = (text: string) => {
+    setSearch(text);
+    setTimeout(() => {
+      setLoading(true);
+      setFilteredDecks(decks.filter((deck) => deck.title.toLowerCase().includes(text.toLowerCase())));
+      setLoading(false);
+    }, 1000);
+  }
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -34,9 +58,10 @@ export default function TabTwoScreen() {
           <TextInput
             style={styles.input}
             placeholder="search episodes"
+            onChangeText={onSearch}
           />
           </View>}>
-          {loading ? <SkeletonLoader /> : <ExternalDeckList decks={decks} />}
+          {loading ? <SkeletonLoader /> : <ExternalDeckList decks={filteredDecks} />}
       </ParallaxScrollView>
     </SafeAreaView>
   );
