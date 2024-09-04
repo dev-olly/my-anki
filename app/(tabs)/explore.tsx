@@ -21,7 +21,7 @@ export default function TabTwoScreen() {
   
   useEffect(() => {
     fetchDecks().then((decks) => {
-      setDecks([]);
+      setDecks(decks);
       setLoading(false);
     });
   }, [search]);
