@@ -152,9 +152,9 @@ const styles = StyleSheet.create({
   emptyState: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
     height: '100%',
+    alignItems: 'center',
+    marginTop: 30
   },
   emptyCard: {
     display: 'flex',

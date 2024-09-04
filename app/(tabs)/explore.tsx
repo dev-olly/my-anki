@@ -1,10 +1,11 @@
-import { SafeAreaView, StyleSheet, TextInput, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import ExternalDeckList from '@/components/ExternalDeckList';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import SkeletonLoader from '@/components/SkeletonLoader';
 import { Colors } from '@/constants/Colors';
 import { useEffect, useState } from 'react';
+import { Ionicons } from '@expo/vector-icons';
 
 
 type ExternalDeck = {
@@ -25,6 +26,14 @@ const fetchDecks = async () => {
   return data;
 }
 
+const ErrorMessage = () => {
+  return (
+    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <Ionicons name="sad-outline" size={48} color={Colors.gray[500]} />
+      <Text style={{fontSize: 20, fontWeight: 'bold'}}>Error, the server is not running</Text>
+    </View>
+  )
+}
 
 export default function TabTwoScreen() {
   const [search, setSearch] = useState('');
@@ -32,16 +41,20 @@ export default function TabTwoScreen() {
   const [loading, setLoading] = useState(true);
   const [filteredDecks, setFilteredDecks] = useState<ExternalDeck[]>([]);
   const [level, setLevel] = useState<string>('');
+  const [error, setError] = useState<string>('');
   
   useEffect(() => {
     fetchDecks().then((decks) => {
       setDecks(decks);
       setFilteredDecks(decks);
       setLoading(false);
+    }).catch((error) => {
+      console.error('Error fetching decks:', error);
+      setError(error.message);
+      setLoading(false);
     });
   }, [search]);
 
-  // chill until users stop typing and all decks are loaded 
   const onSearch = (text: string) => {
     setSearch(text);
     setTimeout(() => {
@@ -70,6 +83,7 @@ export default function TabTwoScreen() {
           />
           </View>}>
           {loading ? <SkeletonLoader /> : <ExternalDeckList decks={filteredDecks} onLevelPress={onLevelPress} level={level} />}
+          {error && <ErrorMessage />}
       </ParallaxScrollView>
     </SafeAreaView>
   );

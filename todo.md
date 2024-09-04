@@ -29,8 +29,8 @@
   - Add Loading state - done
   - design empty state - done
   - Search for decks - done 
-  - Level filters for Explore page -
-  - handle errors
+  - Level filters for Explore page -done
+  - handle errors - done 
   - Save external deck to storage
 
 
