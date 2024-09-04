@@ -1,71 +1,64 @@
-import { View, Text, SafeAreaView, Modal, StyleSheet, TextInput, Pressable   } from "react-native"
-import { useState } from "react";
 import { Colors } from "@/constants/Colors";
+import { Ionicons } from "@expo/vector-icons";
+import { useState } from "react";
+import { Modal, Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { ThemedInput } from "./ThemedInput";
+import { PrimaryThemedButton } from "./ThemedButton";
 
 export const ModalDeckForm = ({onSubmit, showModal, setShowModal}: {onSubmit: (deckName: string) => void, showModal: boolean, setShowModal: (showModal: boolean) => void}) => {
   const [deckName, setDeckName] = useState('');
   return (
-    <SafeAreaView>
-      <Modal animationType="slide" transparent={true} visible={showModal}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalTitle}>Add Deck</Text>
-            <Text style={styles.modalText}>
-              Create a new deck to store your words
-            </Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={setDeckName}
-              value={deckName}
-              placeholder="Nicos weg A2 episode 1"
-            />
-            <Pressable onPress={() => {onSubmit(deckName), setDeckName('')}} >
-              <View style={styles.button}>
-                <Text style={styles.buttonText}>Add</Text>
-              </View>
-            </Pressable>
+    <SafeAreaView style={styles.container}>
+      <Modal animationType="slide" transparent={false} visible={showModal}>
+        <View style={styles.modalView}>
+          <View style={styles.header}>
             <Pressable onPress={() => setShowModal(false)}>
-              <Text style={styles.cancelButtonText}>Cancel</Text>
+              <Ionicons name="close" size={24} color={Colors.gray[700]} />
             </Pressable>
+            <Text style={styles.modalTitle}>Create a new Deck</Text>
+          </View>
+          <View style={styles.content}>
+            <ThemedInput placeholder="Nicos weg A2 episode 1" onChangeText={setDeckName} value={deckName} />
+          </View>
+          <View style={styles.footer}>
+            <PrimaryThemedButton onPress={() => {onSubmit(deckName); setDeckName('')}} extraStyle={{width: '100%'}}>
+              <Text style={styles.buttonText}>Create</Text>
+            </PrimaryThemedButton>
           </View>
         </View>
       </Modal>
     </SafeAreaView>
   )
-  }
-
+}
 
 const styles = StyleSheet.create({
-  centeredView: {
+  container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22,
   },
   modalView: {
-    margin: 10,
-    width: '80%',
+    flex: 1,
     backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+    paddingTop: 24,
+    paddingHorizontal: 16,
+    borderWidth: 1,
+    borderColor: Colors.blue[400],
+  },
+  header: {
+    marginBottom: 12,
+  },
+  content: {
+    flex: 1,
+  },
+  footer: {
+    marginBottom: 16,
   },
   modalTitle: {
-    fontSize: 20,
-    fontWeight: 'semibold',
+    fontSize: 16,
+    fontWeight: 'bold',
     marginBottom: 12,
-    textAlign: 'center',
-  },
-  modalText: {
-    fontSize: 12,
-    marginBottom: 10,
+    marginTop: 12,
+    color: Colors.gray[700],
+    // textAlign: 'center',
   },
   input: {
     borderWidth: 1,
