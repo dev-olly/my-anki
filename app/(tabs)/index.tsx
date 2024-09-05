@@ -63,11 +63,11 @@ export default function HomeScreen() {
         : <View style={styles.container}>
             <View style={styles.deckListTitleContainer}>
               <Text style={styles.deckListTitle}> You have {decks.length} decks</Text>
-              {/* <Pressable onPress={openAddModal}>
+              <Pressable onPress={openAddModal}>
                 <View style={styles.createDeckButton}>
                   <Text style={styles.createDeckButtonText}>Create Deck</Text>
                 </View>
-              </Pressable> */}
+              </Pressable>
             </View>
             <FlatList data={decks} style={styles.deckList} renderItem={({ item }) => <DeckItem deck={item} onDelete={onDelete} editDeck={onEdit} />} />
           </View>}

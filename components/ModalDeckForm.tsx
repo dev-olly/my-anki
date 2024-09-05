@@ -58,7 +58,6 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     marginTop: 12,
     color: Colors.gray[700],
-    // textAlign: 'center',
   },
   input: {
     borderWidth: 1,
