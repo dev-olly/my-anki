@@ -5,7 +5,7 @@ import { Modal, Pressable, SafeAreaView, StyleSheet, Text, View } from "react-na
 import { ThemedInput } from "./ThemedInput";
 import { PrimaryThemedButton } from "./ThemedButton";
 
-export const ModalDeckForm = ({onSubmit, showModal, setShowModal, deckName, setDeckName}: {onSubmit: (deckName: string) => void, showModal: boolean, setShowModal: (showModal: boolean) => void, deckName: string, setDeckName: (deckName: string) => void}) => {
+export const ModalDeckForm = ({onSubmit, showModal, setShowModal, deckName, setDeckName, title}: {onSubmit: (deckName: string) => void, showModal: boolean, setShowModal: (showModal: boolean) => void, deckName: string, setDeckName: (deckName: string) => void, title: string}) => {
   return (
     <SafeAreaView style={styles.container}>
       <Modal animationType="slide" transparent={false} visible={showModal}>
@@ -14,13 +14,13 @@ export const ModalDeckForm = ({onSubmit, showModal, setShowModal, deckName, setD
             <Pressable onPress={() => setShowModal(false)}>
               <Ionicons name="close" size={24} color={Colors.gray[700]} />
             </Pressable>
-            <Text style={styles.modalTitle}>Create a new Deck</Text>
+            <Text style={styles.modalTitle}>{title}</Text>
           </View>
           <View style={styles.content}>
             <ThemedInput placeholder="Nicos weg A2 episode 1" onChangeText={setDeckName} value={deckName} />
           </View>
           <View style={styles.footer}>
-            <PrimaryThemedButton onPress={() => {onSubmit(deckName); setDeckName('')}} extraStyle={{width: '100%'}}>
+            <PrimaryThemedButton onPress={() => {onSubmit(deckName);}} extraStyle={{width: '100%'}}>
               <Text style={styles.buttonText}>Create</Text>
             </PrimaryThemedButton>
           </View>

@@ -46,6 +46,7 @@ export default function HomeScreen() {
     };
     saveDeck(deck);
     setShowModal(false);
+    setDeckName('');
   }
 
   const onDelete = (deckName: string) => {
@@ -74,7 +75,7 @@ export default function HomeScreen() {
             </View>
           </View>}
       </SafeAreaView>
-      {showModal && <ModalDeckForm onSubmit={onSubmit} showModal={showModal} setShowModal={setShowModal} deckName={deckName} setDeckName={setDeckName} />}
+      {showModal && <ModalDeckForm onSubmit={onSubmit} showModal={showModal} setShowModal={setShowModal} deckName={deckName} setDeckName={setDeckName} title="Create a new Deck" />}
     </GestureHandlerRootView>
   );
 }

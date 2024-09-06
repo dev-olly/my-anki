@@ -8,6 +8,7 @@ import { Animated, Button, Modal, Pressable, StyleSheet, Text, View } from 'reac
 
 import { RectButton, TextInput } from 'react-native-gesture-handler';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
+import { ModalDeckForm } from './ModalDeckForm';
 
 export const DeckItem = ({deck, onDelete, editDeck}: {deck: Deck, onDelete: (deckName: string) => void, editDeck: (deckName: string, newDeckName: string) => void}) => {
   const [showModal, setShowModal] = useState(false);
@@ -36,6 +37,13 @@ export const DeckItem = ({deck, onDelete, editDeck}: {deck: Deck, onDelete: (dec
       </View>
     )
   }
+
+  const onEdit = (deckName: string) => {
+    editDeck(deck.name, deckName);
+    setNewDeck(deckName);
+    setShowEditModal(false);
+  }
+
   return (
     <>
       <Swipeable renderRightActions={renderRightActions} rightThreshold={20} ref={swipeableRef}>
@@ -78,31 +86,7 @@ export const DeckItem = ({deck, onDelete, editDeck}: {deck: Deck, onDelete: (dec
       </Modal>
 
       {/* Edit Modal */}
-      <Modal transparent={false} visible={showEditModal}>
-        <View style={styles.modalOverlay}>
-          <View style={styles.popover}>
-            <Text style={styles.title}>Edit</Text>
-            <TextInput
-              value={newDeck}
-              placeholder="deck name"
-              style={styles.input}
-              onChangeText={setNewDeck}
-            />
-            <Pressable onPress={() => {editDeck(deck.name, newDeck); swipeableRef.current?.close(); setShowEditModal(false); }}>
-              <View>
-                <Text style={styles.saveButtonText}>Save</Text>
-              </View>
-            </Pressable>
-
-            <Pressable onPress={() => {swipeableRef.current?.close(); setShowEditModal(false); }}>
-              <View>
-                <Text style={styles.cancelButtonText}>Cancel</Text>
-              </View>
-            </Pressable>
-          </View>
-
-        </View>
-      </Modal>
+      {showEditModal && <ModalDeckForm onSubmit={onEdit} showModal={showEditModal} setShowModal={setShowEditModal} deckName={newDeck} setDeckName={setNewDeck} title="Edit Deck" />}
     </>
   );
 }
