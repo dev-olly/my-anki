@@ -9,6 +9,7 @@ import { Colors } from '@/constants/Colors';
 import { useDeck } from '@/hooks/useDeck';
 import { Deck } from '@/types';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import ParallaxScrollView from '@/components/ParallaxScrollView';
 
 const NoDeck = ({ openAddModal }: { openAddModal: () => void }) => {
   return (
@@ -68,10 +69,12 @@ export default function HomeScreen() {
                 <Text style={styles.addDeckButtonText}>Create Deck</Text>
               </GrayThemedButton>
             </View>
-            <FlatList data={decks} style={styles.deckList} renderItem={({ item }) => <DeckItem deck={item} onDelete={onDelete} editDeck={onEdit} />} />
+            <View style={styles.deckList}>
+              <FlatList data={decks} renderItem={({ item }) => <DeckItem deck={item} onDelete={onDelete} editDeck={onEdit} />} />
+            </View>
           </View>}
       </SafeAreaView>
-      <ModalDeckForm onSubmit={onSubmit} showModal={showModal} setShowModal={setShowModal} deckName={deckName} setDeckName={setDeckName} />
+      {showModal && <ModalDeckForm onSubmit={onSubmit} showModal={showModal} setShowModal={setShowModal} deckName={deckName} setDeckName={setDeckName} />}
     </GestureHandlerRootView>
   );
 }
@@ -89,11 +92,13 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   container: {
+    flex: 1,
     marginTop: 16,
     marginHorizontal: 16,
   },
   deckList: {
     marginTop: 16,
+    height: '100%',
   },
   deckListTitle: {
     fontSize: 14,
