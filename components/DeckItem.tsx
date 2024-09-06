@@ -1,6 +1,7 @@
 
 import { Colors } from '@/constants/Colors';
 import { Deck } from '@/types';
+import { Ionicons } from '@expo/vector-icons';
 import { Link } from 'expo-router';
 import { useRef, useState } from 'react';
 import { Animated, Button, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
@@ -40,7 +41,11 @@ export const DeckItem = ({deck, onDelete, editDeck}: {deck: Deck, onDelete: (dec
       <Link href={`/decks/${deck.name}` as const} asChild>
         <Pressable>
           <View style={styles.wordItem}>
-            <Text>{deck.name}</Text>
+            <Text style={styles.deckName}>{deck.name}</Text>
+            <View style={styles.actions}>
+              <Text style={{marginRight: 10}}><Ionicons name="pencil" size={14} color="black" /></Text>
+              <Text><Ionicons name="trash" size={14} color="black" /></Text>
+            </View>
           </View>
         </Pressable>
       </Link>
@@ -137,14 +142,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 16,
     backgroundColor: 'white',
-    borderBottomWidth: 1,
-    borderColor: 'gray',
     width: '100%',
+    borderRadius: 10,
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 1,
+    elevation: 1,
+    marginBottom: 10,
+  },
+  deckName: {
+    fontSize: 14,
+  },
+  actions: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   optionContainer: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     width: '40%',
     borderBottomWidth: 1,

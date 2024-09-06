@@ -26,7 +26,7 @@ const primaryDefaultStyle = {
   height: 40,
 }
 
-export const  GrayThemedButton = ({ children, onPress, style = grayDefaultStyle }: { children: React.ReactNode, onPress: () => void, style?: ViewStyle }) => {
+export const  GrayThemedButton = ({ children, onPress, style = grayDefaultStyle, extraStyle = {} }: { children: React.ReactNode, onPress: () => void, style?: ViewStyle, extraStyle?: ViewStyle }) => {
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const bgColorAnim = useRef(new Animated.Value(0)).current;
   const buttonBgColor = bgColorAnim.interpolate({
@@ -63,7 +63,7 @@ export const  GrayThemedButton = ({ children, onPress, style = grayDefaultStyle 
     <Pressable onPressIn={onPressIn}
       onPressOut={onPressOut}
       onPress={onPress}>
-      <Animated.View style={[style, { transform: [{ scale: scaleAnim }], backgroundColor: buttonBgColor }]}>
+      <Animated.View style={[style, extraStyle, { transform: [{ scale: scaleAnim }], backgroundColor: buttonBgColor }]}>
         {children}
       </Animated.View>
     </Pressable>

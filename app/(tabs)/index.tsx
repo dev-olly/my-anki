@@ -62,12 +62,10 @@ export default function HomeScreen() {
           <NoDeck openAddModal={openAddModal} />
         : <View style={styles.container}>
             <View style={styles.deckListTitleContainer}>
-              <Text style={styles.deckListTitle}> You have {decks.length} decks</Text>
-              <Pressable onPress={openAddModal}>
-                <View style={styles.createDeckButton}>
-                  <Text style={styles.createDeckButtonText}>Create Deck</Text>
-                </View>
-              </Pressable>
+              <Text style={styles.deckListTitle}>{decks.length} decks</Text>
+              <GrayThemedButton onPress={openAddModal} extraStyle={{marginTop: 0}}>
+                <Text style={styles.addDeckButtonText}>Create Deck</Text>
+              </GrayThemedButton>
             </View>
             <FlatList data={decks} style={styles.deckList} renderItem={({ item }) => <DeckItem deck={item} onDelete={onDelete} editDeck={onEdit} />} />
           </View>}
@@ -90,15 +88,15 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   container: {
-    // flex: 1,
     marginTop: 16,
+    marginHorizontal: 16,
   },
   deckList: {
     marginTop: 16,
   },
   deckListTitle: {
-    fontSize: 16,
-    marginLeft: 10,
+    fontSize: 14,
+    fontWeight: 'semibold',
   },
   addDeckButtonText: {
     fontSize: 12,
@@ -110,8 +108,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingRight: 10,
-    paddingLeft: 10,
+    marginLeft: 16,
+    marginRight: 16,
   },
   createDeckButton: {
     backgroundColor: Colors.light.tint,
