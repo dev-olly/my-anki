@@ -108,8 +108,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginLeft: 16,
-    marginRight: 16,
   },
   createDeckButton: {
     backgroundColor: Colors.light.tint,
