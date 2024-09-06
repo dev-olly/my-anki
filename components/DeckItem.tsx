@@ -37,24 +37,27 @@ export const DeckItem = ({deck, onDelete, editDeck}: {deck: Deck, onDelete: (dec
     )
   }
   return (
-    <Swipeable renderRightActions={renderRightActions} rightThreshold={20} ref={swipeableRef}>
-      <Link href={`/decks/${deck.name}` as const} asChild>
-        <Pressable>
-          <View style={styles.wordItem}>
-            <Text style={styles.deckName}>{deck.name}</Text>
-            <View style={styles.actions}>
-              <Pressable onPress={() => setShowEditModal(true)}>
-                <Text style={{marginRight: 10}}><Ionicons name="pencil" size={14} color={Colors.gray[600]} /></Text>
-              </Pressable>
-              <Pressable onPress={() => setShowModal(true)}>
-                <Text><Ionicons name="trash" size={14} color={Colors.gray[600]}/></Text>
-              </Pressable>
+    <>
+      <Swipeable renderRightActions={renderRightActions} rightThreshold={20} ref={swipeableRef}>
+        <Link href={`/decks/${deck.name}` as const} asChild>
+          <Pressable>
+            <View style={styles.wordItem}>
+              <Text style={styles.deckName}>{deck.name}</Text>
+              <View style={styles.actions}>
+                <Pressable onPress={() => setShowEditModal(true)}>
+                  <Text style={{marginRight: 10}}><Ionicons name="pencil" size={14} color={Colors.gray[600]} /></Text>
+                </Pressable>
+                <Pressable onPress={() => setShowModal(true)}>
+                  <Text><Ionicons name="trash" size={14} color={Colors.gray[600]}/></Text>
+                </Pressable>
+              </View>
             </View>
-          </View>
-        </Pressable>
-      </Link>
+          </Pressable>
+        </Link>
 
-      {/* Delete Modal */}
+        
+      </Swipeable>
+        {/* Delete Modal */}
       <Modal transparent={true} visible={showModal}>
         <View style={styles.modalOverlay}>
           <View style={styles.popover}>
@@ -75,7 +78,7 @@ export const DeckItem = ({deck, onDelete, editDeck}: {deck: Deck, onDelete: (dec
       </Modal>
 
       {/* Edit Modal */}
-      <Modal transparent={true} visible={showEditModal}>
+      <Modal transparent={false} visible={showEditModal}>
         <View style={styles.modalOverlay}>
           <View style={styles.popover}>
             <Text style={styles.title}>Edit</Text>
@@ -100,7 +103,7 @@ export const DeckItem = ({deck, onDelete, editDeck}: {deck: Deck, onDelete: (dec
 
         </View>
       </Modal>
-    </Swipeable>
+    </>
   );
 }
 

@@ -32,6 +32,7 @@ const NoDeck = ({ openAddModal }: { openAddModal: () => void }) => {
 export default function HomeScreen() {
   const { decks, saveDeck, deleteDeck, editDeck } = useDeck();
   const [showModal, setShowModal] = useState(false);
+  const [deckName, setDeckName] = useState('');
   const openAddModal = () => {
     setShowModal(true);
   };
@@ -70,7 +71,7 @@ export default function HomeScreen() {
             <FlatList data={decks} style={styles.deckList} renderItem={({ item }) => <DeckItem deck={item} onDelete={onDelete} editDeck={onEdit} />} />
           </View>}
       </SafeAreaView>
-      <ModalDeckForm onSubmit={onSubmit} showModal={showModal} setShowModal={setShowModal} />
+      <ModalDeckForm onSubmit={onSubmit} showModal={showModal} setShowModal={setShowModal} deckName={deckName} setDeckName={setDeckName} />
     </GestureHandlerRootView>
   );
 }

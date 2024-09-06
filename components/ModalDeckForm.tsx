@@ -5,8 +5,7 @@ import { Modal, Pressable, SafeAreaView, StyleSheet, Text, View } from "react-na
 import { ThemedInput } from "./ThemedInput";
 import { PrimaryThemedButton } from "./ThemedButton";
 
-export const ModalDeckForm = ({onSubmit, showModal, setShowModal}: {onSubmit: (deckName: string) => void, showModal: boolean, setShowModal: (showModal: boolean) => void}) => {
-  const [deckName, setDeckName] = useState('');
+export const ModalDeckForm = ({onSubmit, showModal, setShowModal, deckName, setDeckName}: {onSubmit: (deckName: string) => void, showModal: boolean, setShowModal: (showModal: boolean) => void, deckName: string, setDeckName: (deckName: string) => void}) => {
   return (
     <SafeAreaView style={styles.container}>
       <Modal animationType="slide" transparent={false} visible={showModal}>
