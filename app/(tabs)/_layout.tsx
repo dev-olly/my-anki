@@ -6,7 +6,7 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
-  const tintColor = Colors[colorScheme ?? 'light'].tint;
+  const tintColor = Colors.sky[600];
 
   const screenOptions = {
     tabBarActiveTintColor: tintColor,
@@ -22,7 +22,7 @@ export default function TabLayout() {
     {
       name: 'explore',
       title: 'Explore',
-      icon: { focused: 'code-slash', unfocused: 'code-slash-outline' },
+      icon: { focused: 'library', unfocused: 'library-outline' },
     },
   ];
 
