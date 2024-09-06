@@ -43,8 +43,12 @@ export const DeckItem = ({deck, onDelete, editDeck}: {deck: Deck, onDelete: (dec
           <View style={styles.wordItem}>
             <Text style={styles.deckName}>{deck.name}</Text>
             <View style={styles.actions}>
-              <Text style={{marginRight: 10}}><Ionicons name="pencil" size={14} color="black" /></Text>
-              <Text><Ionicons name="trash" size={14} color="black" /></Text>
+              <Pressable onPress={() => setShowEditModal(true)}>
+                <Text style={{marginRight: 10}}><Ionicons name="pencil" size={14} color={Colors.gray[600]} /></Text>
+              </Pressable>
+              <Pressable onPress={() => setShowModal(true)}>
+                <Text><Ionicons name="trash" size={14} color={Colors.gray[600]}/></Text>
+              </Pressable>
             </View>
           </View>
         </Pressable>
