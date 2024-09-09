@@ -1,15 +1,35 @@
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 
-import { Button, FlatList, SafeAreaView, StyleSheet, Text, TextInput, View } from 'react-native';
-
-import { ModalForm } from '@/components/ModalForm';
-import { Link, router, useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 
+import { GrayThemedButton, PrimaryThemedButton } from '@/components/ThemedButton';
+import { Colors } from '@/constants/Colors';
 import { useDeck } from '@/hooks/useDeck';
 import { LOWER_BOUND } from '@/utils/spaced-repetition';
-import { WordItem } from '@/components/WordItem';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
+
+const NoWords = () => {
+  return (
+    <View style={styles.noWordContainer}>
+      <View style={styles.noWordsContent}>
+        <View>
+          <Text style={styles.noTextTitle}>You don't have any words yet.</Text>
+        </View>
+        <View>
+          <Text style={styles.noText}>Add some words and start learning!</Text>
+        </View>
+        <View style={styles.buttonContainer}>
+
+          <PrimaryThemedButton onPress={() => undefined} extraStyle={{width: 250}}>
+            <Text style={{ color: Colors.light.background }}>Create Words</Text>
+        </PrimaryThemedButton>
+        </View>
+      </View>
+    </View>
+  )
+}
 
 export default function DeckScreen() {
   const [word, setWord] = useState('')
@@ -55,8 +75,11 @@ export default function DeckScreen() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
-        <ModalForm word={word} showModal={showModal} onClose={() => setShowModal(false)} onSubmit={addWord}/>
-        <View style={styles.container}>
+        {words.length == 0 && <NoWords />}
+
+        {/* <Text style={styles.tabTitle}>{deckName} Words</Text> */}
+        {/* <ModalForm word={word} showModal={showModal} onClose={() => setShowModal(false)} onSubmit={addWord}/> */}
+        {/* <View>
           <TextInput
             style={styles.input}
             onChangeText={setWord}
@@ -67,11 +90,8 @@ export default function DeckScreen() {
             title="Add"
             onPress={() => initializeWord(word)}
           />
-          </View>
-          {words.length == 0 && <View style={styles.noText}>
-            <Text>You have no words, add some words and start learning!</Text>
-          </View>}
-          {
+          </View> */}
+          {/* {
             words.length > 0 && <View style={{ flex: 1, marginTop: 10}}>
               <View style={styles.listheader}>
                 <Text style={{ fontSize: 16, fontWeight: 'semibold', marginBottom: 10, marginLeft: 10 }}>{words.length} words.</Text>
@@ -81,7 +101,7 @@ export default function DeckScreen() {
               </View>
               {deck && <FlatList data={words} renderItem={({item}) => <WordItem word={item} translation={deck.words[item].translation} onDelete={deleteWord} editWord={editWord} />} /> }   
             </View>
-          }
+          } */}
       
       </SafeAreaView>
     </GestureHandlerRootView>
@@ -89,6 +109,40 @@ export default function DeckScreen() {
 }
 
 const styles = StyleSheet.create({
+  tabTitle: {
+    fontSize: 16,
+    fontWeight: 'semibold',
+    marginLeft: 16,
+    marginTop: 16,
+  },
+  noWordContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  noWordsContent: {
+    alignItems: 'center',
+    // gap: 16,
+    // padding: 20, // Add some padding
+    flex: 0,
+  },
+  buttonContainer: {
+    // marginTop: 24,
+  },
+  noTextTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'black', // Ensure text is visible
+  },
+  noText: {
+    fontSize: 14,
+    color: 'black', // Ensure text is visible
+  },
+  addDeckButtonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'black', // Ensure text is visible
+  },
   container: { 
     height: '15%', 
     backgroundColor: 'white', 
