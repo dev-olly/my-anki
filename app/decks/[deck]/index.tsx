@@ -70,6 +70,7 @@ export default function DeckScreen() {
   }
 
   const editWord = (oldWord: string, word: string, translation: string) => {
+    console.log('edit word', oldWord, word, translation)
     if(!deck) return
     const newWords = {...deck.words, [word]: {translation, ease: LOWER_BOUND, interval: 1, lastReview: new Date().toISOString(), nextReview: new Date().toISOString()}};
     if(oldWord !== word) delete newWords[oldWord];
@@ -83,31 +84,23 @@ export default function DeckScreen() {
 
         
         {showModal && <ModalForm word={word} translation={translation} showModal={showModal} setShowModal={setShowModal} setWord={setWord} setTranslation={setTranslation} onSubmit={addWord} title="Add Word"/>}
-        {/* <View>
-          <TextInput
-            style={styles.input}
-            onChangeText={setWord}
-            value={word}
-            placeholder="search for a word"
-          />
-          <Button
-            title="Add"
-            onPress={() => initializeWord(word)}
-          />
-          </View> */}
           {
             words.length > 0 && <View style={{ flex: 1, marginTop: 16, marginHorizontal: 16}}>
               <View style={styles.listheader}>
                 <Text >{words.length} words.</Text>
-                <Link href={`/decks/${deckName}/playground`} asChild>
-                  {/* <Text style={styles.startDeckButton}>Start Deck </Text> */}
-                  <GrayThemedButton onPress={() => undefined} extraStyle={{marginTop: 0}}>
-                    <Text style={{fontSize: 12, fontWeight: 'bold', color: Colors.gray[900]}}>Start Deck</Text>
-                  </GrayThemedButton>
-                </Link>
+                <GrayThemedButton onPress={() => setShowModal(true)} extraStyle={{marginTop: 0}}>
+                  <Text style={{fontSize: 12, fontWeight: 'bold', color: Colors.gray[900]}}>Add Word</Text>
+                </GrayThemedButton>
               </View>
-              <View style={{marginTop: 16, height: '100%'}}>
+              <View style={{marginTop: 16, height: '80%'}}>
                 {deck && <FlatList data={words} renderItem={({item}) => <WordItem word={item} translation={deck.words[item].translation} onDelete={deleteWord} editWord={editWord} />} /> }   
+              </View>
+              <View style={{height: '20%'}}>
+                <Link href={`/decks/${deckName}/playground`} asChild>
+                  <PrimaryThemedButton onPress={() => undefined} extraStyle={{width: '100%', marginTop: 0}}>
+                    <Text style={{ color: Colors.light.background }}>Start Deck</Text>
+                  </PrimaryThemedButton>
+                </Link>
               </View>
             </View>
           }

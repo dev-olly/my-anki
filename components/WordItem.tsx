@@ -6,6 +6,7 @@ import { Animated, Button, Modal, Pressable, StyleSheet, Text, View } from 'reac
 
 import { RectButton, TextInput } from 'react-native-gesture-handler';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
+import { ModalForm } from './ModalForm';
 
 
 
@@ -61,10 +62,10 @@ export const WordItem = ({word, translation, onDelete, editWord}: {word: string,
               The word will be deleted from the deck and will not be available for review.
             </Text>
             <View style={styles.buttonContainer}>
-              <Pressable onPress={() => {onDelete(word); swipeableRef.current?.close(); setShowModal(false); }}>
+              <Pressable onPress={() => {onDelete(word);  setShowModal(false); }}>
                 <Text style={styles.affirmativeButtonText}>Yes, delete</Text>
               </Pressable>
-              <Pressable onPress={() => {setShowModal(false); swipeableRef.current?.close(); }}>
+              <Pressable onPress={() => {setShowModal(false); }}>
                 <Text style={styles.cancelText}>No, cancel</Text>
               </Pressable>
             </View>
@@ -73,7 +74,7 @@ export const WordItem = ({word, translation, onDelete, editWord}: {word: string,
       </Modal>
 
       {/* Edit Modal */}
-      <Modal transparent={true} visible={showEditModal}>
+      {/* <Modal transparent={true} visible={showEditModal}>
         <View style={styles.modalOverlay}>
           <View style={styles.popover}>
             <Text style={styles.title}>Edit</Text>
@@ -103,7 +104,8 @@ export const WordItem = ({word, translation, onDelete, editWord}: {word: string,
           </View>
 
         </View>
-      </Modal>
+      </Modal> */}
+      {showEditModal && <ModalForm word={newWord} translation={translation} showModal={showEditModal} setShowModal={setShowEditModal} setWord={setNewWord} setTranslation={setNewTranslation} onSubmit={(word, translation) => editWord(word, newWord, translation)} title="Edit Word"/>}
     </Swipeable>
   )
 }
