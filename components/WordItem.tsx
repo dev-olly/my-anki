@@ -1,5 +1,6 @@
 
 import { Colors } from '@/constants/Colors';
+import { Ionicons } from '@expo/vector-icons';
 import { useRef, useState } from 'react';
 import { Animated, Button, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 
@@ -40,7 +41,15 @@ export const WordItem = ({word, translation, onDelete, editWord}: {word: string,
   return (
     <Swipeable renderRightActions={renderRightActions} rightThreshold={20} ref={swipeableRef}>
       <View style={styles.wordItem}>
-        <Text>{word}</Text>
+        <Text style={{fontSize: 14}}>{word}</Text>
+        <View style={styles.actions}>
+          <Pressable onPress={() => setShowEditModal(true)}>
+            <Text style={{marginRight: 10}}><Ionicons name="pencil" size={14} color={Colors.gray[600]} /></Text>
+          </Pressable>
+          <Pressable onPress={() => setShowModal(true)}>
+            <Text><Ionicons name="trash" size={14} color={Colors.gray[600]}/></Text>
+          </Pressable>
+        </View>
       </View>
 
       {/* Delete Modal */}
@@ -135,6 +144,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 10, 
   },
+  actions: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   wordItem: {
     display: 'flex',
     flexDirection: 'row',
@@ -142,9 +157,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 16,
     backgroundColor: 'white',
-    borderBottomWidth: 1,
-    borderColor: 'gray',
     width: '100%',
+    borderRadius: 10,
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 1,
+    elevation: 1,
+    marginBottom: 10,
   },
   optionContainer: {
     display: 'flex',

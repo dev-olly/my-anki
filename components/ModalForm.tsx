@@ -1,29 +1,29 @@
-import React, { useState } from "react"
-import { View, Text, SafeAreaView, Modal, StyleSheet, TextInput, Button, Pressable } from "react-native"
+import { Colors } from "@/constants/Colors";
+import { Ionicons } from "@expo/vector-icons";
+import { useState } from "react";
+import { Modal, Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { ThemedInput } from "./ThemedInput";
+import { PrimaryThemedButton } from "./ThemedButton";
 
-export const ModalForm = ({word, showModal, onClose, onSubmit}: {word: string, showModal: boolean, onClose: () => void, onSubmit: (translation: string) => void}) => {
-  const [translation, setTranslation] = useState('');
+export const ModalForm = ({onSubmit, showModal, setShowModal, word, setWord, translation, setTranslation, title}: {onSubmit: (word: string, translation: string) => void, showModal: boolean, setShowModal: (showModal: boolean) => void, word: string, setWord: (word: string) => void, translation: string, setTranslation: (translation: string) => void, title: string}) => {
   return (
-    <SafeAreaView>
-      <Modal animationType="slide" transparent={true} visible={showModal}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalTitle}>Nice! Almost there...</Text>
-            <Text style={styles.modalText}> Add a translation for <Text style={styles.modalTextBold}>{word}</Text>:</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={setTranslation}
-              value={translation}
-              placeholder="The Man"
-            />
-            <Pressable onPress={() => {onSubmit(translation), setTranslation('')}}>
-              <View style={styles.button}>
-                <Text style={styles.buttonText}>Add</Text>
-              </View>
+    <SafeAreaView style={styles.container}>
+      <Modal animationType="slide" transparent={false} visible={showModal}>
+        <View style={styles.modalView}>
+          <View style={styles.header}>
+            <Pressable onPress={() => setShowModal(false)}>
+              <Ionicons name="close" size={24} color={Colors.gray[700]} />
             </Pressable>
-            <Pressable onPress={onClose}>
-              <Text style={styles.cancelButtonText}>Close</Text>
-            </Pressable>
+            <Text style={styles.modalTitle}>{title}</Text>
+          </View>
+          <View style={styles.content}>
+            <ThemedInput placeholder="Enter Word" onChangeText={setWord} value={word} />
+            <ThemedInput placeholder="Enter Translation" onChangeText={setTranslation} value={translation} />
+          </View>
+          <View style={styles.footer}>
+            <PrimaryThemedButton onPress={() => {onSubmit(word, translation);}} extraStyle={{width: '100%'}}>
+              <Text style={styles.buttonText}>Create</Text>
+            </PrimaryThemedButton>
           </View>
         </View>
       </Modal>
@@ -32,51 +32,45 @@ export const ModalForm = ({word, showModal, onClose, onSubmit}: {word: string, s
 }
 
 const styles = StyleSheet.create({
-  centeredView: {
+  container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22,
   },
   modalView: {
-    margin: 10,
-    width: '80%',
+    flex: 1,
     backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+    paddingTop: 24,
+    paddingHorizontal: 16,
+    borderWidth: 1,
+    borderColor: Colors.blue[400],
+  },
+  header: {
+    marginBottom: 12,
+  },
+  content: {
+    flex: 1,
+    gap: 16,
+  },
+  footer: {
+    marginBottom: 16,
+  },
+  modalTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 12,
+    marginTop: 12,
+    color: Colors.gray[700],
   },
   input: {
     borderWidth: 1,
     padding: 10,
     width: '100%',
   },
-  modalTitle: {
-    fontSize: 20,
-    fontWeight: 'semibold',
-    marginBottom: 16,
-    textAlign: 'center',
-  },
-  modalText: {
-    fontSize: 12,
-    marginBottom: 10,
-  },
-  modalTextBold: {
-    fontWeight: 'bold',
-  },
   button: {
     marginTop: 16,
     borderRadius: 10,
     padding: 10,
     width: '100%',
-    backgroundColor: 'gray',
+    backgroundColor: Colors.blue[500],
   },
   buttonText: {
     color: 'white',
@@ -85,7 +79,7 @@ const styles = StyleSheet.create({
   },
   cancelButtonText: {
     marginTop: 16,
-    color: 'gray',
+    color: Colors.red[500],
     textAlign: 'center',
   }
 });
