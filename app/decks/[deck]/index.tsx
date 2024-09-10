@@ -1,7 +1,7 @@
 import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 
 import { Link, useLocalSearchParams } from 'expo-router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { GrayThemedButton, PrimaryThemedButton } from '@/components/ThemedButton';
 import { ModalForm } from '@/components/ModalForm';
@@ -40,19 +40,13 @@ export default function DeckScreen() {
 
   const { deck: deckName } = useLocalSearchParams();
 
-  const {getDeck, saveWords} = useDeck(deckName as string)
-  
-
-  const deck = getDeck()
+  const {currentDeck:deck , saveWords} = useDeck(deckName as string)
 
   const words = Object.keys(deck?.words || {})
 
-
-  const initializeWord = (word: string) => {
-    if(!word) return
-    setWord(word);
-    setShowModal(true);
-  }
+  useEffect(() => {
+    // This effect will run when the component mounts and whenever currentDeck changes
+  }, [deck]);
 
   const addWord = async () => {
     if(!deck) return
@@ -83,7 +77,6 @@ export default function DeckScreen() {
         {words.length == 0 && <NoWords openModal={() => setShowModal(true)} />}
 
         
-        {showModal && <ModalForm word={word} translation={translation} showModal={showModal} setShowModal={setShowModal} setWord={setWord} setTranslation={setTranslation} onSubmit={addWord} title="Add Word"/>}
           {
             words.length > 0 && <View style={{ flex: 1, marginTop: 16, marginHorizontal: 16}}>
               <View style={styles.listheader}>
@@ -105,6 +98,8 @@ export default function DeckScreen() {
             </View>
           }
       
+        {showModal && <ModalForm word={word} translation={translation} showModal={showModal} setShowModal={setShowModal} setWord={setWord} setTranslation={setTranslation} onSubmit={addWord} title="Add Word"/>}
+
       </SafeAreaView>
     </GestureHandlerRootView>
   );

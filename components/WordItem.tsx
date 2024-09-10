@@ -40,7 +40,8 @@ export const WordItem = ({word, translation, onDelete, editWord}: {word: string,
   }
 
   return (
-    <Swipeable renderRightActions={renderRightActions} rightThreshold={20} ref={swipeableRef}>
+    <>
+
       <View style={styles.wordItem}>
         <Text style={{fontSize: 14}}>{word}</Text>
         <View style={styles.actions}>
@@ -72,41 +73,8 @@ export const WordItem = ({word, translation, onDelete, editWord}: {word: string,
           </View>
         </View>
       </Modal>
-
-      {/* Edit Modal */}
-      {/* <Modal transparent={true} visible={showEditModal}>
-        <View style={styles.modalOverlay}>
-          <View style={styles.popover}>
-            <Text style={styles.title}>Edit</Text>
-            <TextInput
-              value={newWord}
-              placeholder="word"
-              style={styles.input}
-              onChangeText={setNewWord}
-            />
-            <TextInput
-              value={newTranslation}
-              placeholder="translation"
-              style={styles.input}
-              onChangeText={setNewTranslation}
-            />
-            <Pressable onPress={() => {editWord(word, newWord, newTranslation); swipeableRef.current?.close(); setShowEditModal(false); }}>
-              <View>
-                <Text style={styles.saveButtonText}>Save</Text>
-              </View>
-            </Pressable>
-
-            <Pressable onPress={() => {swipeableRef.current?.close(); setShowEditModal(false); }}>
-              <View>
-                <Text style={styles.cancelButtonText}>Cancel</Text>
-              </View>
-            </Pressable>
-          </View>
-
-        </View>
-      </Modal> */}
       {showEditModal && <ModalForm word={newWord} translation={translation} showModal={showEditModal} setShowModal={setShowEditModal} setWord={setNewWord} setTranslation={setNewTranslation} onSubmit={(word, translation) => editWord(word, newWord, translation)} title="Edit Word"/>}
-    </Swipeable>
+    </>
   )
 }
 

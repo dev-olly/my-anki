@@ -7,10 +7,26 @@ import { STORAGE_KEY } from '../utils/keys';
 
 export const useDeck = (deckName?: string) => {
   const [decks, setDecks] = useState<Deck[]>([]);
-  
+  const [currentDeck, setCurrentDeck] = useState<Deck | undefined>();
+
   useEffect(() => {
     loadDecks();
   }, []);
+
+  useEffect(() => {
+    if(deckName) {
+      console.log('Effect is working', deckName)
+      getDeck();
+    }
+  }, [decks, deckName]);
+
+  const getDeck = (): Deck | undefined => {
+    const deck = decks.find((deck) => deck.name === deckName);
+    setCurrentDeck(deck);
+    console.log('deck from getDeck', deck)
+    return deck;
+  };
+
 
   const loadDecks = async () => {
     try {
@@ -20,6 +36,7 @@ export const useDeck = (deckName?: string) => {
       console.error('Error loading decks:', error);
     }
   }
+
 
   const saveDeck = async (deck: Deck) => {
     try {
@@ -37,20 +54,13 @@ export const useDeck = (deckName?: string) => {
     }
   }
 
-  const getDeck = (): Deck | undefined => {
-    const deck = decks.find((deck) => deck.name === deckName);
-    console.log('deck from getDeck', deck);
-    return deck;
-  };
-
   const saveWords = async (words: Deck['words']) => {
-    const itemDeck = decks.find((deck) => deck.name === deckName);
-    if (itemDeck) {
-      itemDeck.words = words;
-      decks.map((deck) => deck.name === deckName ? itemDeck : deck);  
-      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(decks));
-      setDecks(decks);
-    }
+    const updatedDecks = decks.map((deck) => 
+      deck.name === deckName ? { ...deck, words } : deck
+    );
+    setDecks(updatedDecks);
+    setCurrentDeck(updatedDecks.find(deck => deck.name === deckName));
+    await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updatedDecks));
   }
 
   const deleteDeck = async (deckName: string) => {
@@ -67,6 +77,7 @@ export const useDeck = (deckName?: string) => {
 
   return {
     decks,
+    currentDeck,
     saveDeck,
     getDeck,
     saveWords,
