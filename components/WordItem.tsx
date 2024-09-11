@@ -8,7 +8,7 @@ import { ModalForm } from './ModalForm';
 
 
 
-export const WordItem = ({word, translation, onDelete, editWord}: {word: string, translation : string, onDelete: (word: string) => void, editWord: (oldWord: string, word: string, translation  : string) => void}) => {
+export const WordItem = ({word, translation, onDelete, editWord}: {word: string, translation : string, onDelete: (word: string) => void, editWord: (newWord: string, translation: string) => void}) => {
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [newWord, setNewWord] = useState(word);
@@ -48,7 +48,7 @@ export const WordItem = ({word, translation, onDelete, editWord}: {word: string,
           </View>
         </View>
       </Modal>
-      {showEditModal && <ModalForm word={newWord} translation={translation} showModal={showEditModal} setShowModal={setShowEditModal} setWord={setNewWord} setTranslation={setNewTranslation} onSubmit={(word, translation) => editWord(word, newWord, translation)} title="Edit Word" buttonText="Save"/>}
+      {showEditModal && <ModalForm word={newWord} translation={translation} showModal={showEditModal} setShowModal={setShowEditModal} setWord={setNewWord} setTranslation={setNewTranslation} onSubmit={() => {editWord(newWord, translation); setShowEditModal(false);}} title="Edit Word" buttonText="Save"/>}
     </>
   )
 }

@@ -63,10 +63,10 @@ export default function DeckScreen() {
     saveWords(newWords);
   }
 
-  const editWord = (oldWord: string, word: string, translation: string) => {
-    console.log('edit word', oldWord, word, translation)
+  const editWord = (oldWord: string) => (newWord: string, translation: string) => {
+    console.log('edit word', oldWord, newWord, translation)
     if(!deck) return
-    const newWords = {...deck.words, [word]: {translation, ease: LOWER_BOUND, interval: 1, lastReview: new Date().toISOString(), nextReview: new Date().toISOString()}};
+    const newWords = {...deck.words, [newWord]: {translation, ease: LOWER_BOUND, interval: 1, lastReview: new Date().toISOString(), nextReview: new Date().toISOString()}};
     if(oldWord !== word) delete newWords[oldWord];
     saveWords(newWords);
   }
@@ -85,7 +85,7 @@ export default function DeckScreen() {
                 </GrayThemedButton>
               </View>
               <View style={{marginTop: 16, height: '80%'}}>
-                {deck && <FlatList data={words} renderItem={({item}) => <WordItem word={item} translation={deck.words[item].translation} onDelete={deleteWord} editWord={editWord} />} /> }   
+                {deck && <FlatList data={words} renderItem={({item}) => <WordItem word={item} translation={deck.words[item].translation} onDelete={deleteWord} editWord={editWord(item)} />} /> }   
               </View>
               <View style={{height: '20%'}}>
                 <Link href={`/decks/${deckName}/playground`} asChild>
