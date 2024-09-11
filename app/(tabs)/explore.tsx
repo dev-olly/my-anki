@@ -71,10 +71,16 @@ export default function TabTwoScreen() {
     }, 1000);
   }
 
-  const onLevelPress = (level: string) => {
-    setLevel(level);
+  const onLevelPress = (newLevel: string) => {
+    // set to empty if level is equal to current level
     setLoading(true);
-    setFilteredDecks(decks.filter((deck) => deck.level === level));
+    if(level === newLevel) {
+      setLevel('');
+      setFilteredDecks(decks);
+    } else {
+      setLevel(newLevel);
+      setFilteredDecks(decks.filter((deck) => deck.level === newLevel));
+    }
     setLoading(false);
   }
 
