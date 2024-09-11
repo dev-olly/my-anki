@@ -15,7 +15,6 @@ export const useDeck = (deckName?: string) => {
 
   useEffect(() => {
     if(deckName) {
-      console.log('Effect is working', deckName)
       getDeck();
     }
   }, [decks, deckName]);
@@ -23,7 +22,6 @@ export const useDeck = (deckName?: string) => {
   const getDeck = (): Deck | undefined => {
     const deck = decks.find((deck) => deck.name === deckName);
     setCurrentDeck(deck);
-    console.log('deck from getDeck', deck)
     return deck;
   };
 

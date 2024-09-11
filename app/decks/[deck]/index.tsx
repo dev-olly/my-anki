@@ -64,7 +64,6 @@ export default function DeckScreen() {
   }
 
   const editWord = (oldWord: string) => (newWord: string, translation: string) => {
-    console.log('edit word', oldWord, newWord, translation)
     if(!deck) return
     const newWords = {...deck.words, [newWord]: {translation, ease: LOWER_BOUND, interval: 1, lastReview: new Date().toISOString(), nextReview: new Date().toISOString()}};
     if(oldWord !== newWord) delete newWords[oldWord];

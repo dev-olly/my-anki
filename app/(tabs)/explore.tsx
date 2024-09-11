@@ -7,6 +7,7 @@ import { Colors } from '@/constants/Colors';
 import { useEffect, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { ThemedInput } from '@/components/ThemedInput';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 type ExternalDeck = {
@@ -22,8 +23,13 @@ type ExternalDeck = {
 }
 
 const fetchDecks = async () => {
+  // fetch from storage first
+  const storageDecks = await AsyncStorage.getItem('decks');
+  if(storageDecks) return JSON.parse(storageDecks);
+
   const response = await fetch('http://localhost:8080/api/vocabs');
   const data = await response.json();
+  await AsyncStorage.setItem('decks', JSON.stringify(data));
   return data;
 }
 
