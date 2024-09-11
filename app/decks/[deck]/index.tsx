@@ -75,7 +75,6 @@ export default function DeckScreen() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
         {words.length == 0 && <NoWords openModal={() => setShowModal(true)} />}
-
         
           {
             words.length > 0 && <View style={{ flex: 1, marginTop: 16, marginHorizontal: 16}}>
@@ -98,7 +97,7 @@ export default function DeckScreen() {
             </View>
           }
       
-        {showModal && <ModalForm word={word} translation={translation} showModal={showModal} setShowModal={setShowModal} setWord={setWord} setTranslation={setTranslation} onSubmit={addWord} title="Add Word"/>}
+        {showModal && <ModalForm word={word} translation={translation} showModal={showModal} setShowModal={setShowModal} setWord={setWord} setTranslation={setTranslation} onSubmit={addWord} title="Add Word" buttonText="Create" />}
 
       </SafeAreaView>
     </GestureHandlerRootView>

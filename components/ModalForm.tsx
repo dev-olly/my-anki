@@ -5,7 +5,7 @@ import { Modal, Pressable, SafeAreaView, StyleSheet, Text, View } from "react-na
 import { ThemedInput } from "./ThemedInput";
 import { PrimaryThemedButton } from "./ThemedButton";
 
-export const ModalForm = ({onSubmit, showModal, setShowModal, word, setWord, translation, setTranslation, title}: {onSubmit: (word: string, translation: string) => void, showModal: boolean, setShowModal: (showModal: boolean) => void, word: string, setWord: (word: string) => void, translation: string, setTranslation: (translation: string) => void, title: string}) => {
+export const ModalForm = ({onSubmit, showModal, setShowModal, word, setWord, translation, setTranslation, title, buttonText}: {onSubmit: (word: string, translation: string) => void, showModal: boolean, setShowModal: (showModal: boolean) => void, word: string, setWord: (word: string) => void, translation: string, setTranslation: (translation: string) => void, title: string, buttonText: string}) => {
   return (
     <SafeAreaView style={styles.container}>
       <Modal animationType="slide" transparent={false} visible={showModal}>
@@ -22,7 +22,7 @@ export const ModalForm = ({onSubmit, showModal, setShowModal, word, setWord, tra
           </View>
           <View style={styles.footer}>
             <PrimaryThemedButton onPress={() => {onSubmit(word, translation);}} extraStyle={{width: '100%'}}>
-              <Text style={styles.buttonText}>Create</Text>
+              <Text style={styles.buttonText}>{buttonText}</Text>
             </PrimaryThemedButton>
           </View>
         </View>
