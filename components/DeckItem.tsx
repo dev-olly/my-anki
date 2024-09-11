@@ -3,40 +3,15 @@ import { Colors } from '@/constants/Colors';
 import { Deck } from '@/types';
 import { Ionicons } from '@expo/vector-icons';
 import { Link } from 'expo-router';
-import { useRef, useState } from 'react';
-import { Animated, Button, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+import {  Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { RectButton, TextInput } from 'react-native-gesture-handler';
-import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { ModalDeckForm } from './ModalDeckForm';
 
 export const DeckItem = ({deck, onDelete, editDeck}: {deck: Deck, onDelete: (deckName: string) => void, editDeck: (deckName: string, newDeckName: string) => void}) => {
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [newDeck, setNewDeck] = useState(deck.name);
-  const swipeableRef = useRef<Swipeable>(null);
-  
-  const renderRightActions = (progress: any, dragX: any) => {
-    const trans = dragX.interpolate({
-      inputRange: [-100, 0],
-      outputRange: [1, 0],
-      extrapolate: 'clamp',
-    });
-    return (
-      <View style={styles.optionContainer}>
-        <Animated.View style={{ flex:1, transform: [{ translateX: trans }] }}>
-          <RectButton style={styles.editButton} onPress={() => setShowEditModal(true) }>
-            <Text style={styles.editButtonText}>Edit</Text>
-          </RectButton>
-        </Animated.View>
-        <Animated.View style={{ flex:1, transform: [{ translateX: trans }] }}>
-            <RectButton style={styles.deleteButton} onPress={() => setShowModal(true)}>
-              <Text style={styles.deleteButtonText}>Delete</Text>
-            </RectButton>
-        </Animated.View>
-      </View>
-    )
-  }
 
   const onEdit = (deckName: string) => {
     editDeck(deck.name, deckName);
@@ -46,25 +21,22 @@ export const DeckItem = ({deck, onDelete, editDeck}: {deck: Deck, onDelete: (dec
 
   return (
     <>
-      <Swipeable renderRightActions={renderRightActions} rightThreshold={20} ref={swipeableRef}>
-        <Link href={`/decks/${deck.name}` as const} asChild>
-          <Pressable>
-            <View style={styles.wordItem}>
-              <Text style={styles.deckName}>{deck.name}</Text>
-              <View style={styles.actions}>
-                <Pressable onPress={() => setShowEditModal(true)}>
-                  <Text style={{marginRight: 10}}><Ionicons name="pencil" size={14} color={Colors.gray[600]} /></Text>
-                </Pressable>
-                <Pressable onPress={() => setShowModal(true)}>
-                  <Text><Ionicons name="trash" size={14} color={Colors.gray[600]}/></Text>
-                </Pressable>
-              </View>
+      <Link href={`/decks/${deck.name}` as const} asChild>
+        <Pressable>
+          <View style={styles.wordItem}>
+            <Text style={styles.deckName}>{deck.name}</Text>
+            <View style={styles.actions}>
+              <Pressable onPress={() => setShowEditModal(true)}>
+                <Text style={{marginRight: 10}}><Ionicons name="pencil" size={14} color={Colors.gray[600]} /></Text>
+              </Pressable>
+              <Pressable onPress={() => setShowModal(true)}>
+                <Text><Ionicons name="trash" size={14} color={Colors.gray[600]}/></Text>
+              </Pressable>
             </View>
-          </Pressable>
-        </Link>
+          </View>
+        </Pressable>
+      </Link>
 
-        
-      </Swipeable>
         {/* Delete Modal */}
       <Modal transparent={true} visible={showModal}>
         <View style={styles.modalOverlay}>
@@ -74,10 +46,10 @@ export const DeckItem = ({deck, onDelete, editDeck}: {deck: Deck, onDelete: (dec
               The word will be deleted from the deck and will not be available for review.
             </Text>
             <View style={styles.buttonContainer}>
-              <Pressable onPress={() => {onDelete(deck.name); swipeableRef.current?.close(); setShowModal(false); }}>
+              <Pressable onPress={() => {onDelete(deck.name); setShowModal(false); }}>
                 <Text style={styles.affirmativeButtonText}>Yes, delete</Text>
               </Pressable>
-              <Pressable onPress={() => {setShowModal(false); swipeableRef.current?.close(); }}>
+              <Pressable onPress={() => {setShowModal(false); }}>
                 <Text style={styles.cancelText}>No, cancel</Text>
               </Pressable>
             </View>
