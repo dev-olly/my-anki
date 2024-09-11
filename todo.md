@@ -55,9 +55,9 @@
 
 Design 
  - Better and slick home screen - done
- - Better and slick explore screen 
- - Better and slick deck detail screen 
- - Better and slick word detail screen 
+ - Better and slick explore screen - done
+ - Better and slick deck detail screen - done 
+ - Better and slick word detail screen - done
  - Better and slick settings screen
  - Better and slick forgot password screen 
  - Better and slick reset password screen 

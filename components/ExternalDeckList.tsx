@@ -1,6 +1,6 @@
 import { Colors } from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
-import React from "react";
+import React, { useState } from "react";
 import { View,Text, Pressable, StyleSheet, Image } from "react-native";
 
 const examples = [
@@ -13,7 +13,7 @@ const LevelTab = ({level, onLevelPress, active}: {level: string, onLevelPress: (
  return (
     <Pressable style={({pressed}) => [styles.tabButton, (pressed || active) && styles.tabButtonPressed]} onPress={() => onLevelPress(level)}>
       {({pressed}) => <Text style={[styles.tabButtonText, (pressed || active) && styles.tabButtonTextActive]}>{level}</Text>}
-  </Pressable>
+    </Pressable>
  )
 }
 
@@ -38,12 +38,13 @@ const DeckItem = ({deck}: {deck: any}) => {
 }
 
 export default function ExternalDeckList({decks,  onLevelPress, level}: {decks: any, onLevelPress: (level: string) => void, level: string }) {
+  const [activeLevel, setActiveLevel] = useState('');
   return (
-    <View>
+    <View style={{marginTop: 6}}>
       <Text>Deck List</Text>
       <View style={styles.tabList}>
         {Levels.map((level) => (
-          <LevelTab level={level} key={level} onLevelPress={onLevelPress} active={level === level} />
+          <LevelTab level={level} key={level} onLevelPress={onLevelPress} active={activeLevel === level} />
         ))}
       </View>
       {decks.length > 0 ? (
@@ -69,15 +70,17 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     gap: 8,
     marginTop: 8,
     marginBottom: 8,
+    overflow: 'scroll',
   },
   tabButton: {
     borderWidth: 1,
     borderColor: Colors.gray[500], 
     borderRadius: 20,
-    paddingHorizontal: 16,
+    paddingHorizontal: 14,
     paddingVertical: 4,
     backgroundColor: 'white',
   },
@@ -85,6 +88,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.gray[500],
   },
   tabButtonText: {
+    fontSize: 12,
     color: Colors.gray[500],
   },
   tabButtonTextActive: {

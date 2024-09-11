@@ -6,6 +6,7 @@ import SkeletonLoader from '@/components/SkeletonLoader';
 import { Colors } from '@/constants/Colors';
 import { useEffect, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
+import { ThemedInput } from '@/components/ThemedInput';
 
 
 type ExternalDeck = {
@@ -76,11 +77,8 @@ export default function TabTwoScreen() {
       <ParallaxScrollView
         headerBackgroundColor={{ light: Colors.light.background, dark: Colors.dark.tint }}
         headerChildren={<View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-          <TextInput
-            style={styles.input}
-            placeholder="search episodes"
-            onChangeText={onSearch}
-          />
+          
+          <ThemedInput placeholder="Enter search" onChangeText={onSearch} value={search} />
           </View>}>
           {loading ? <SkeletonLoader /> : <ExternalDeckList decks={filteredDecks} onLevelPress={onLevelPress} level={level} />}
           {error && <ErrorMessage />}
