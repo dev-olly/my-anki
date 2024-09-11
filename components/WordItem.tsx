@@ -1,11 +1,9 @@
 
 import { Colors } from '@/constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
-import { useRef, useState } from 'react';
-import { Animated, Button, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { RectButton, TextInput } from 'react-native-gesture-handler';
-import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { ModalForm } from './ModalForm';
 
 
@@ -15,29 +13,6 @@ export const WordItem = ({word, translation, onDelete, editWord}: {word: string,
   const [showEditModal, setShowEditModal] = useState(false);
   const [newWord, setNewWord] = useState(word);
   const [newTranslation, setNewTranslation] = useState(translation);
-  const swipeableRef = useRef<Swipeable>(null);
-  
-  const renderRightActions = (progress: any, dragX: any) => {
-    const trans = dragX.interpolate({
-      inputRange: [-100, 0],
-      outputRange: [1, 0],
-      extrapolate: 'clamp',
-    });
-    return (
-      <View style={styles.optionContainer}>
-        <Animated.View style={{ flex:1, transform: [{ translateX: trans }] }}>
-          <RectButton style={styles.editButton} onPress={() => setShowEditModal(true) }>
-            <Text style={styles.editButtonText}>Edit</Text>
-          </RectButton>
-        </Animated.View>
-        <Animated.View style={{ flex:1, transform: [{ translateX: trans }] }}>
-            <RectButton style={styles.deleteButton} onPress={() => setShowModal(true)}>
-              <Text style={styles.deleteButtonText}>Delete</Text>
-            </RectButton>
-        </Animated.View>
-      </View>
-    )
-  }
 
   return (
     <>
@@ -73,7 +48,7 @@ export const WordItem = ({word, translation, onDelete, editWord}: {word: string,
           </View>
         </View>
       </Modal>
-      {showEditModal && <ModalForm word={newWord} translation={translation} showModal={showEditModal} setShowModal={setShowEditModal} setWord={setNewWord} setTranslation={setNewTranslation} onSubmit={(word, translation) => editWord(word, newWord, translation)} title="Edit Word"/>}
+      {showEditModal && <ModalForm word={newWord} translation={translation} showModal={showEditModal} setShowModal={setShowEditModal} setWord={setNewWord} setTranslation={setNewTranslation} onSubmit={(word, translation) => editWord(word, newWord, translation)} title="Edit Word" buttonText="Save"/>}
     </>
   )
 }
