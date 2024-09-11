@@ -38,13 +38,12 @@ const DeckItem = ({deck}: {deck: any}) => {
 }
 
 export default function ExternalDeckList({decks,  onLevelPress, level}: {decks: any, onLevelPress: (level: string) => void, level: string }) {
-  const [activeLevel, setActiveLevel] = useState('');
   return (
     <View style={{marginTop: 6}}>
       <Text>Deck List</Text>
       <View style={styles.tabList}>
-        {Levels.map((level) => (
-          <LevelTab level={level} key={level} onLevelPress={onLevelPress} active={activeLevel === level} />
+        {Levels.map((item) => (
+          <LevelTab level={item} key={item} onLevelPress={onLevelPress} active={level === item} />
         ))}
       </View>
       {decks.length > 0 ? (
