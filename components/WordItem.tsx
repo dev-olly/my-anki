@@ -48,7 +48,7 @@ export const WordItem = ({word, translation, onDelete, editWord}: {word: string,
           </View>
         </View>
       </Modal>
-      {showEditModal && <ModalForm word={newWord} translation={translation} showModal={showEditModal} setShowModal={setShowEditModal} setWord={setNewWord} setTranslation={setNewTranslation} onSubmit={() => {editWord(newWord, translation); setShowEditModal(false);}} title="Edit Word" buttonText="Save"/>}
+      {showEditModal && <ModalForm word={newWord} translation={newTranslation} showModal={showEditModal} setShowModal={setShowEditModal} setWord={setNewWord} setTranslation={setNewTranslation} onSubmit={() => {editWord(newWord, newTranslation); setShowEditModal(false);}} title="Edit Word" buttonText="Save"/>}
     </>
   )
 }
