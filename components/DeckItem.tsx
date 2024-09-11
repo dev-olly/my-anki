@@ -1,4 +1,3 @@
-
 import { Colors } from '@/constants/Colors';
 import { Deck } from '@/types';
 import { Ionicons } from '@expo/vector-icons';
