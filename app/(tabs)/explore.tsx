@@ -42,25 +42,30 @@ const ErrorMessage = () => {
   )
 }
 
-export default function TabTwoScreen() {
-  const [search, setSearch] = useState('');
+const useFetchDecks = () => {
   const [decks, setDecks] = useState<ExternalDeck[]>([]);
   const [loading, setLoading] = useState(true);
-  const [filteredDecks, setFilteredDecks] = useState<ExternalDeck[]>([]);
-  const [level, setLevel] = useState<string>('');
   const [error, setError] = useState<string>('');
-  
+
   useEffect(() => {
     fetchDecks().then((decks) => {
       setDecks(decks);
-      setFilteredDecks(decks);
-      setLoading(false);
     }).catch((error) => {
       console.error('Error fetching decks:', error);
       setError(error.message);
       setLoading(false);
     });
-  }, [search]);
+  }, []);
+
+  return { decks, loading, setLoading,  error };
+}
+
+export default function TabTwoScreen() {
+  const [search, setSearch] = useState('');
+  const [filteredDecks, setFilteredDecks] = useState<ExternalDeck[]>([]);
+  const [level, setLevel] = useState<string>('');
+
+  const { decks, loading, setLoading, error } = useFetchDecks();
 
   const onSearch = (text: string) => {
     setSearch(text);
