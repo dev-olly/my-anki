@@ -34,7 +34,7 @@
   - Save external deck to storage - done
 
 
-- Absstract external decks to hooks
+- Absstract external decks to hooks - done 
 - Create External deck detail page
 - Add External to user's decks
 

@@ -7,31 +7,8 @@ import { Colors } from '@/constants/Colors';
 import { useEffect, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { ThemedInput } from '@/components/ThemedInput';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ExternalDeck, useFetchDecks } from '@/hooks/useFetchDecks';
 
-
-type ExternalDeck = {
-  id: string;
-  title: string;
-  level: string;
-  lessonUrl: string;
-  words: {
-    german: string;
-    translation: string;
-    audioSource: string;
-  }[];
-}
-
-const fetchDecks = async () => {
-  // fetch from storage first
-  const storageDecks = await AsyncStorage.getItem('decks');
-  if(storageDecks) return JSON.parse(storageDecks);
-
-  const response = await fetch('http://localhost:8080/api/vocabs');
-  const data = await response.json();
-  await AsyncStorage.setItem('decks', JSON.stringify(data));
-  return data;
-}
 
 const ErrorMessage = () => {
   return (
@@ -42,30 +19,13 @@ const ErrorMessage = () => {
   )
 }
 
-const useFetchDecks = () => {
-  const [decks, setDecks] = useState<ExternalDeck[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string>('');
-
-  useEffect(() => {
-    fetchDecks().then((decks) => {
-      setDecks(decks);
-    }).catch((error) => {
-      console.error('Error fetching decks:', error);
-      setError(error.message);
-      setLoading(false);
-    });
-  }, []);
-
-  return { decks, loading, setLoading,  error };
-}
 
 export default function TabTwoScreen() {
   const [search, setSearch] = useState('');
-  const [filteredDecks, setFilteredDecks] = useState<ExternalDeck[]>([]);
+  const { decks, loading, setLoading, error } = useFetchDecks();
+  const [filteredDecks, setFilteredDecks] = useState<ExternalDeck[]>([...decks]);
   const [level, setLevel] = useState<string>('');
 
-  const { decks, loading, setLoading, error } = useFetchDecks();
 
   const onSearch = (text: string) => {
     setSearch(text);
@@ -88,6 +48,10 @@ export default function TabTwoScreen() {
     }
     setLoading(false);
   }
+
+  useEffect(() => {
+    setFilteredDecks([...decks]);
+  }, [decks]);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
