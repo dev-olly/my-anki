@@ -3,7 +3,7 @@ import { useDeck } from "@/hooks/useDeck";
 import { WordData } from "@/types";
 import { Level, updateData } from "@/utils/spaced-repetition";
 import { useLocalSearchParams } from "expo-router";
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { Text, View } from 'react-native';
 
 
@@ -12,18 +12,12 @@ export default function PlaygroundScreen() {
   const [index, setIndex] = useState(0)
   const { deck: deckName } = useLocalSearchParams();
 
-  const {getDeck, saveWords} = useDeck(deckName as string);
+  const {currentDeck:deck , saveWords, flattenedWords: words} = useDeck(deckName as string);
 
-  const deck = getDeck()
-  // flatten deck to words array
-  const words: Array<WordData & {word: string}> = useMemo(() => {
-    if (!deck) return [];
-    const wordsArray = Object.entries(deck.words).map(([word, data]) => ({
-      word,
-      ...data
-    }));
-    return wordsArray.sort((a, b) => a.interval - b.interval);
+  useEffect(() => {
+    // This effect will run when the component mounts and whenever currentDeck changes
   }, [deck]);
+  
 
   
   const wordItem = words[index]

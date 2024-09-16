@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { Deck } from '../types';
 import { STORAGE_KEY } from '../utils/keys';
@@ -9,17 +9,26 @@ export const useDeck = (deckName?: string) => {
   const [decks, setDecks] = useState<Deck[]>([]);
   const [currentDeck, setCurrentDeck] = useState<Deck | undefined>();
 
-  useEffect(() => {
-    loadDecks();
-  }, []);
 
   useEffect(() => {
-    if(deckName) {
-      getDeck();
-    }
-  }, [decks, deckName]);
+    const loadDecksAndGetDeck = async () => {
+      const loadedDecks = await loadDecks();
+      if (deckName) {
+        getDeck(loadedDecks);
+      }
+    };
 
-  const getDeck = (): Deck | undefined => {
+    loadDecksAndGetDeck();
+  }, [deckName]);
+
+  const flattenedWords = useMemo(() => {
+    if (!currentDeck) return [];
+    return Object.entries(currentDeck.words)
+      .map(([word, data]) => ({ word, ...data }))
+      .sort((a, b) => a.interval - b.interval);
+  }, [currentDeck]);
+
+  const getDeck = (decks: Deck[]): Deck | undefined => {
     const deck = decks.find((deck) => deck.name === deckName);
     setCurrentDeck(deck);
     return deck;
@@ -29,9 +38,15 @@ export const useDeck = (deckName?: string) => {
   const loadDecks = async () => {
     try {
       const savedDecks = await AsyncStorage.getItem(STORAGE_KEY);
-      if (savedDecks) setDecks(JSON.parse(savedDecks));
+      if (savedDecks) {
+        const parsedDecks = await JSON.parse(savedDecks);
+        await setDecks(parsedDecks);
+        return parsedDecks;
+      }
+      return [];
     } catch (error) {
       console.error('Error loading decks:', error);
+      return [];
     }
   }
 
@@ -57,6 +72,14 @@ export const useDeck = (deckName?: string) => {
       deck.name === deckName ? { ...deck, words } : deck
     );
     setDecks(updatedDecks);
+    await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updatedDecks));
+  }
+
+  const saveAndSetCurrentDeck = async (words: Deck['words']) => {
+    const updatedDecks = decks.map((deck) => 
+      deck.name === deckName ? { ...deck, words } : deck
+    );
+    setDecks(updatedDecks);
     setCurrentDeck(updatedDecks.find(deck => deck.name === deckName));
     await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updatedDecks));
   }
@@ -76,7 +99,9 @@ export const useDeck = (deckName?: string) => {
   return {
     decks,
     currentDeck,
+    flattenedWords,
     saveDeck,
+    saveAndSetCurrentDeck,
     getDeck,
     saveWords,
     deleteDeck,

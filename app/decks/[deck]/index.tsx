@@ -40,7 +40,7 @@ export default function DeckScreen() {
 
   const { deck: deckName } = useLocalSearchParams();
 
-  const {currentDeck:deck , saveWords} = useDeck(deckName as string)
+  const {currentDeck:deck , saveAndSetCurrentDeck} = useDeck(deckName as string)
 
   const words = Object.keys(deck?.words || {})
 
@@ -51,8 +51,9 @@ export default function DeckScreen() {
   const addWord = async () => {
     if(!deck) return
     const newWords = {...deck.words, [word]: {translation, ease: LOWER_BOUND, interval: 1, lastReview: new Date().toISOString(), nextReview: new Date().toISOString()}};
-    saveWords(newWords);
+    saveAndSetCurrentDeck(newWords);
     setWord('');
+    setTranslation('');
     setShowModal(false);
   };
 
@@ -60,18 +61,17 @@ export default function DeckScreen() {
     if(!deck) return
     const newWords = {...deck.words};
     delete newWords[word];
-    saveWords(newWords);
+    saveAndSetCurrentDeck(newWords);
   }
 
-  const editWord = (oldWord: string) => (newWord: string, translation: string) => {
+  const editWord = (oldWord: string) => (newWord: string, newTranslation: string) => {
     if(!deck) return
-    const newWords = {...deck.words, [newWord]: {translation, ease: LOWER_BOUND, interval: 1, lastReview: new Date().toISOString(), nextReview: new Date().toISOString()}};
+    const newWords = {...deck.words, [newWord]: {translation: newTranslation, ease: LOWER_BOUND, interval: 1, lastReview: new Date().toISOString(), nextReview: new Date().toISOString()}};
     if(oldWord !== newWord) delete newWords[oldWord];
-    saveWords(newWords);
+    saveAndSetCurrentDeck(newWords);
   }
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
         {words.length == 0 && <NoWords openModal={() => setShowModal(true)} />}
         
@@ -99,7 +99,6 @@ export default function DeckScreen() {
         {showModal && <ModalForm word={word} translation={translation} showModal={showModal} setShowModal={setShowModal} setWord={setWord} setTranslation={setTranslation} onSubmit={addWord} title="Add Word" buttonText="Create" />}
 
       </SafeAreaView>
-    </GestureHandlerRootView>
   );
 }
 

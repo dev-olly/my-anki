@@ -31,7 +31,7 @@
   - Search for decks - done 
   - Level filters for Explore page -done
   - handle errors - done 
-  - Save external deck to storage
+  - Save external deck to storage - done
 
 
 
@@ -58,13 +58,8 @@ Design
  - Better and slick explore screen - done
  - Better and slick deck detail screen - done 
  - Better and slick word detail screen - done
- - Better and slick settings screen
+ - Better and slick settings screen 
  - Better and slick forgot password screen 
  - Better and slick reset password screen 
 
 
-REFACTORING
-- refactor modals 
-- build custom buttons
-- custom input component
-- Swipeable List item
