@@ -1,15 +1,40 @@
 import { GrayThemedButton, PrimaryThemedButton } from "@/components/ThemedButton";
-import { useFetchDecks } from "@/hooks/useFetchDecks";
-import { useLocalSearchParams } from "expo-router";
+import { useDeck } from "@/hooks/useDeck";
+import { ExternalDeck, useFetchDecks } from "@/hooks/useFetchDecks";
+import { Deck, WordData } from "@/types";
+import { router, useLocalSearchParams } from "expo-router";
 import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
 
 export default function ExternalDeckScreen() {
   const {id} = useLocalSearchParams();
+  const {saveDeck} = useDeck();
   const {decks} = useFetchDecks();
   const deck = decks.find((deck) => deck.id === id);
 
   if(!deck) {
     return <Text>Oops not found!</Text>
+  }
+
+  const onSaveDeck = (deck: ExternalDeck) => {
+    const newDeck: Deck = {
+      name: deck.title,
+      dateCreated: new Date().toISOString(),
+      words: deck.words.reduce<Record<string, WordData>>((acc, word) => {
+        acc[word.german] = {
+          translation: word.translation,
+          ease: 0,
+          interval: 0,
+          lastReview: new Date().toISOString(),
+          nextReview: new Date().toISOString(),
+        };
+        return acc;
+      }, {}),
+    };
+    
+    saveDeck(newDeck);
+    // router.push(`/decks/${newDeck.name}`);
+    router.push(`/`);
+
   }
   return (
     <ScrollView>
@@ -22,7 +47,7 @@ export default function ExternalDeckScreen() {
               <Text style={{fontSize: 12, fontWeight: 'bold'}}> {deck.level}</Text>
               <Text style={{marginLeft: 10, fontSize: 12}}>|   {deck.words.length} words</Text>
             </View>
-            <GrayThemedButton onPress={() => {}} extraStyle={{marginTop: 0, width: 100, padding: 8, height: 30}}>
+            <GrayThemedButton onPress={() => onSaveDeck(deck)} extraStyle={{marginTop: 0, width: 100, padding: 8, height: 30}}>
               <Text style={{fontSize: 12, fontWeight: 'bold'}}>Add to deck</Text>
             </GrayThemedButton>
           </View>
@@ -38,7 +63,7 @@ export default function ExternalDeckScreen() {
         </View>
 
         <View>
-          <PrimaryThemedButton onPress={() => {}}>
+          <PrimaryThemedButton onPress={() => onSaveDeck(deck)}>
             <Text style={{fontSize: 14, fontWeight: 'bold', color: 'white'}}>Add to deck</Text>
           </PrimaryThemedButton>
         </View>

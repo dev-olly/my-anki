@@ -35,9 +35,8 @@
 
 
 - Absstract external decks to hooks - done 
-- Create External deck detail page
-- Add External to user's decks
-
+- Create External deck detail page - done
+- Add External to user's decks - done
 
 - Vocab deck detail page
 
