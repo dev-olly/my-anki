@@ -1,5 +1,7 @@
 import { Colors } from "@/constants/Colors";
+import { ExternalDeck } from "@/hooks/useFetchDecks";
 import { Ionicons } from "@expo/vector-icons";
+import { Link } from "expo-router";
 import React, { useState } from "react";
 import { View,Text, Pressable, StyleSheet, Image } from "react-native";
 
@@ -17,27 +19,29 @@ const LevelTab = ({level, onLevelPress, active}: {level: string, onLevelPress: (
  )
 }
 
-const DeckItem = ({deck}: {deck: any}) => {
+const DeckItem = ({deck}: {deck: ExternalDeck}) => {
   return (
-    <View style={styles.deckItem}>
-      <Image source={{uri: 'https://res.cloudinary.com/db5aqdx6s/image/upload/v1725405050/nicos_weg_cr1lj4.webp'}} style={styles.deckItemImage} />
-      <View>
-        <Text style={styles.deckItemTitle}>Nicos weg - {deck.title}</Text>
-        <View style={styles.deckItemLevelContainer}>
-          <Text style={styles.deckItemLevel}>{deck.level}</Text>
-          <Text style={styles.deckItemWordsCount}>|  {deck.words.length} words</Text>
+    <Link href={`/external/${deck.id}`}>
+      <View style={styles.deckItem}>
+        <Image source={{uri: 'https://res.cloudinary.com/db5aqdx6s/image/upload/v1725405050/nicos_weg_cr1lj4.webp'}} style={styles.deckItemImage} />
+        <View>
+          <Text style={styles.deckItemTitle}>Nicos weg - {deck.title}</Text>
+          <View style={styles.deckItemLevelContainer}>
+            <Text style={styles.deckItemLevel}>{deck.level}</Text>
+            <Text style={styles.deckItemWordsCount}>|  {deck.words.length} words</Text>
+          </View>
+        </View>
+        <View style={styles.deckItemActions}>
+          <View style={styles.deckItemAddButton}>
+            <Text><Ionicons name="add" size={16} color="black" /></Text>
+          </View>
         </View>
       </View>
-      <View style={styles.deckItemActions}>
-        <View style={styles.deckItemAddButton}>
-          <Text><Ionicons name="add" size={16} color="black" /></Text>
-        </View>
-      </View>
-    </View>
+    </Link>
   )
 }
 
-export default function ExternalDeckList({decks,  onLevelPress, level}: {decks: any, onLevelPress: (level: string) => void, level: string }) {
+export default function ExternalDeckList({decks,  onLevelPress, level}: {decks: ExternalDeck[], onLevelPress: (level: string) => void, level: string }) {
   return (
     <View style={{marginTop: 6}}>
       <Text>Deck List</Text>
@@ -100,6 +104,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   deckItem: {
+    width: '100%',
     borderWidth: 1,
     borderColor: Colors.gray[200], 
     borderRadius: 6,
