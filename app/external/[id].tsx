@@ -1,4 +1,4 @@
-import { GrayThemedButton } from "@/components/ThemedButton";
+import { GrayThemedButton, PrimaryThemedButton } from "@/components/ThemedButton";
 import { View, Text, Image, StyleSheet } from "react-native";
 
 export default function ExternalDeckScreen() {
@@ -16,6 +16,19 @@ export default function ExternalDeckScreen() {
             <Text style={{fontSize: 12, fontWeight: 'bold'}}>Add to deck</Text>
           </GrayThemedButton>
         </View>
+      </View>
+
+      <View style={{paddingHorizontal: 16, marginTop: 8}}>
+        <View style={{backgroundColor: 'white', padding: 12, borderRadius: 10}}>
+          <Text style={{fontSize: 14, fontWeight: 'bold'}}>Der Mann</Text>
+          <Text style={{fontSize: 12, color: 'gray', marginTop: 4}}>The Man</Text>
+        </View>
+      </View>
+
+      <View>
+        <PrimaryThemedButton onPress={() => {}}>
+          <Text style={{fontSize: 14, fontWeight: 'bold', color: 'white'}}>Add to deck</Text>
+        </PrimaryThemedButton>
       </View>
     </View>
   )
