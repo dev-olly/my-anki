@@ -38,7 +38,7 @@
 - Create External deck detail page - done
 - Add External to user's decks - done
 
-- Vocab deck detail page
+- Vocab deck detail page - done 
 
 - Nico vocab's 
 

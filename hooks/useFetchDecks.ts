@@ -20,7 +20,7 @@ const fetchDecks = async () => {
   const storageDecks = await AsyncStorage.getItem(EXTERNAL_DECKS_STORAGE_KEY);
   if(storageDecks) return JSON.parse(storageDecks);
 
-  const response = await fetch('http://localhost:8080/api/vocabs');
+  const response = await fetch('https://my-anki-e4bed32d7f5d.herokuapp.com/api/vocabs');
   const data = await response.json();
   await AsyncStorage.setItem(EXTERNAL_DECKS_STORAGE_KEY, JSON.stringify(data));
   return data;
