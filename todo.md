@@ -40,7 +40,7 @@
 
 - Vocab deck detail page - done 
 
-- Nico vocab's 
+- Nico vocab's -
 
 
 
