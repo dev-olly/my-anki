@@ -3,14 +3,15 @@ import { useDeck } from "@/hooks/useDeck";
 import { ExternalDeck, useFetchDecks } from "@/hooks/useFetchDecks";
 import { Deck, WordData } from "@/types";
 import { router, useLocalSearchParams } from "expo-router";
-import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
+import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 
 export default function ExternalDeckScreen() {
   const {id} = useLocalSearchParams();
   const {saveDeck} = useDeck();
   const {decks} = useFetchDecks();
   const deck = decks.find((deck) => deck.id === id);
-
+  
+  
   if(!deck) {
     return <Text>Oops not found!</Text>
   }

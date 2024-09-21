@@ -8,6 +8,8 @@ import { useEffect, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { ThemedInput } from '@/components/ThemedInput';
 import { ExternalDeck, useFetchDecks } from '@/hooks/useFetchDecks';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { EXTERNAL_DECKS_STORAGE_KEY } from '@/utils/keys';
 
 
 const ErrorMessage = () => {
@@ -49,7 +51,12 @@ export default function TabTwoScreen() {
     setLoading(false);
   }
 
+  // useEffect(() => {
+  //   AsyncStorage.removeItem(EXTERNAL_DECKS_STORAGE_KEY)
+  // }, [])
+
   useEffect(() => {
+    console.log('first decks', decks[0]);
     setFilteredDecks([...decks]);
   }, [decks]);
 

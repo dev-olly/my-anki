@@ -14,16 +14,23 @@ export type ExternalDeck = {
     audioSource: string;
   }[];
 }
+//  https://my-anki-e4bed32d7f5d.herokuapp.com
 
 const fetchDecks = async () => {
   // fetch from storage first
   const storageDecks = await AsyncStorage.getItem(EXTERNAL_DECKS_STORAGE_KEY);
   if(storageDecks) return JSON.parse(storageDecks);
+  let allData: ExternalDeck[] = [];
+  
+  // Loop through start indices 0 to 7
+  for (let start = 0; start <= 7; start++) {
+    const response = await fetch(`https://my-anki-e4bed32d7f5d.herokuapp.com/api/vocabs?start=${start}`);
+    const data: {lessons: ExternalDeck[]} = await response.json();
+    allData = [...allData, ...data.lessons];
+  }
 
-  const response = await fetch('https://my-anki-e4bed32d7f5d.herokuapp.com/api/vocabs');
-  const data = await response.json();
-  await AsyncStorage.setItem(EXTERNAL_DECKS_STORAGE_KEY, JSON.stringify(data));
-  return data;
+  await AsyncStorage.setItem(EXTERNAL_DECKS_STORAGE_KEY, JSON.stringify(allData));
+  return allData;
 }
 
 
@@ -32,10 +39,13 @@ export const useFetchDecks = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>('');
 
+
   useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000)
     fetchDecks().then((decks) => {
       setDecks(decks);
-      setLoading(false);
 
     }).catch((error) => {
       console.error('Error fetching decks:', error);
