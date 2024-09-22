@@ -1,15 +1,13 @@
-import { SafeAreaView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 
 import ExternalDeckList from '@/components/ExternalDeckList';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import SkeletonLoader from '@/components/SkeletonLoader';
-import { Colors } from '@/constants/Colors';
-import { useEffect, useState } from 'react';
-import { Ionicons } from '@expo/vector-icons';
 import { ThemedInput } from '@/components/ThemedInput';
+import { Colors } from '@/constants/Colors';
 import { ExternalDeck, useFetchDecks } from '@/hooks/useFetchDecks';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { EXTERNAL_DECKS_STORAGE_KEY } from '@/utils/keys';
+import { Ionicons } from '@expo/vector-icons';
+import { useEffect, useState } from 'react';
 
 
 const ErrorMessage = () => {
@@ -51,12 +49,8 @@ export default function TabTwoScreen() {
     setLoading(false);
   }
 
-  // useEffect(() => {
-  //   AsyncStorage.removeItem(EXTERNAL_DECKS_STORAGE_KEY)
-  // }, [])
 
   useEffect(() => {
-    console.log('first decks', decks[0]);
     setFilteredDecks([...decks]);
   }, [decks]);
 

@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 
 export type ExternalDeck = {
-  id: string;
+  id: number;
   title: string;
   level: string;
   lessonUrl: string;
@@ -14,7 +14,6 @@ export type ExternalDeck = {
     audioSource: string;
   }[];
 }
-//  https://my-anki-e4bed32d7f5d.herokuapp.com
 
 const fetchDecks = async () => {
   // fetch from storage first

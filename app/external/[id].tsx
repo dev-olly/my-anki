@@ -9,13 +9,8 @@ export default function ExternalDeckScreen() {
   const {id} = useLocalSearchParams();
   const {saveDeck} = useDeck();
   const {decks} = useFetchDecks();
-  const deck = decks.find((deck) => deck.id === id);
+  const deck = decks.find((deck) => deck.id === Number(id));
   
-  
-  if(!deck) {
-    return <Text>Oops not found!</Text>
-  }
-
   const onSaveDeck = (deck: ExternalDeck) => {
     const newDeck: Deck = {
       name: deck.title,
@@ -33,13 +28,12 @@ export default function ExternalDeckScreen() {
     };
     
     saveDeck(newDeck);
-    // router.push(`/decks/${newDeck.name}`);
     router.push(`/`);
-
   }
+
   return (
     <ScrollView>
-      <View>
+      {deck ? <View>
         <Image source={{uri: 'https://res.cloudinary.com/db5aqdx6s/image/upload/v1725405050/nicos_weg_cr1lj4.webp'}} style={styles.deckItemImage} />
         <View style={{padding: 16}}>
           <Text style={{fontSize: 20, fontWeight: 'bold'}}>Nicos weg - {deck.title}</Text>
@@ -68,7 +62,7 @@ export default function ExternalDeckScreen() {
             <Text style={{fontSize: 14, fontWeight: 'bold', color: 'white'}}>Add to deck</Text>
           </PrimaryThemedButton>
         </View>
-      </View>
+      </View> : <Text>Oops not found!</Text>}
     </ScrollView>
   )
 }
