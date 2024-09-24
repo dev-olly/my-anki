@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { Platform, SafeAreaView, StatusBar, StyleSheet, Text, View } from 'react-native';
 
 import ExternalDeckList from '@/components/ExternalDeckList';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
@@ -55,7 +55,7 @@ export default function TabTwoScreen() {
   }, [decks]);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={styles.AndroidSafeArea}>
       <ParallaxScrollView
         headerBackgroundColor={{ light: Colors.light.background, dark: Colors.dark.tint }}
         headerChildren={<View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
@@ -70,6 +70,11 @@ export default function TabTwoScreen() {
 }
 
 const styles = StyleSheet.create({
+  AndroidSafeArea: {
+    flex: 1,
+    backgroundColor: "white",
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
+  },
   headerImage: {
     color: '#808080',
     bottom: -90,

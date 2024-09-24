@@ -66,3 +66,8 @@ Design
  - Better and slick reset password screen 
 
 
+Errors
+- Refs warning on DeckScreen - 
+- SafeAreaview on Android
+- External deck detail screen not showing up on Android
+- Overflowing button on Playground screen

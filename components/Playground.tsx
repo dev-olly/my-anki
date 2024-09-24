@@ -11,7 +11,7 @@ export const Playground = ({word, data, next}: {word: string, data: WordData, ne
     <View>
         <Text style={{textAlign: 'center', fontSize: 24, fontWeight: 'bold', margin: 16 }}>{word}</Text>
 
-        <View>
+        <View style={{paddingHorizontal: 8}}>
           {showAnswer && <Text style={{textAlign: 'center', fontSize: 16, fontWeight: 'semibold', margin: 16 }}>{data['translation']}</Text>}
           {!showAnswer ? (<Button title="Show answer" onPress={() => setShowAnswer(true)} /> ) :
           (<View style={{ display: 'flex', flexDirection: 'row', gap: 16, justifyContent: 'center'}}>

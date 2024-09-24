@@ -1,7 +1,7 @@
 import { Colors } from "@/constants/Colors";
 import { ExternalDeck } from "@/hooks/useFetchDecks";
 import { Ionicons } from "@expo/vector-icons";
-import { Link } from "expo-router";
+import { Link, useNavigation } from "expo-router";
 import React, { useState } from "react";
 import { View,Text, Pressable, StyleSheet, Image } from "react-native";
 
@@ -16,23 +16,26 @@ const LevelTab = ({level, onLevelPress, active}: {level: string, onLevelPress: (
 }
 
 const DeckItem = ({deck}: {deck: ExternalDeck}) => {
+  const navigation = useNavigation();
   return (
-    <Link href={`/external/${deck.id}`}>
-      <View style={styles.deckItem}>
-        <Image source={{uri: 'https://res.cloudinary.com/db5aqdx6s/image/upload/v1725405050/nicos_weg_cr1lj4.webp'}} style={styles.deckItemImage} />
-        <View>
-          <Text style={styles.deckItemTitle}>Nicos weg - {deck.title}</Text>
-          <View style={styles.deckItemLevelContainer}>
-            <Text style={styles.deckItemLevel}>{deck.level}</Text>
-            <Text style={styles.deckItemWordsCount}>|  {deck.words.length} words</Text>
+    <Link href={`/external/${deck.id}`} asChild>
+      <Pressable>
+        <View style={styles.deckItem}>
+          <Image source={{uri: 'https://res.cloudinary.com/db5aqdx6s/image/upload/v1725405050/nicos_weg_cr1lj4.webp'}} style={styles.deckItemImage} />
+          <View>
+            <Text style={styles.deckItemTitle}>Nicos weg - {deck.title}</Text>
+            <View style={styles.deckItemLevelContainer}>
+              <Text style={styles.deckItemLevel}>{deck.level}</Text>
+              <Text style={styles.deckItemWordsCount}>|  {deck.words.length} words</Text>
+            </View>
+          </View>
+          <View style={styles.deckItemActions}>
+            <View style={styles.deckItemAddButton}>
+              <Text><Ionicons name="add" size={16} color="black" /></Text>
+            </View>
           </View>
         </View>
-        <View style={styles.deckItemActions}>
-          <View style={styles.deckItemAddButton}>
-            <Text><Ionicons name="add" size={16} color="black" /></Text>
-          </View>
-        </View>
-      </View>
+      </Pressable>
     </Link>
   )
 }
@@ -125,7 +128,6 @@ const styles = StyleSheet.create({
   deckItemLevel: {
     fontSize: 10,
     color: Colors.gray[500],
-    fontWeight: 600,
   },
   deckItemWordsCount: {
     fontSize: 12,

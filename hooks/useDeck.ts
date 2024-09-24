@@ -14,7 +14,8 @@ export const useDeck = (deckName?: string) => {
     const loadDecksAndGetDeck = async () => {
       const loadedDecks = await loadDecks();
       if (deckName) {
-        getDeck(loadedDecks);
+        const deck = loadedDecks.find((deck: Deck) => deck.name === deckName);
+        setCurrentDeck(deck);
       }
     };
 
@@ -27,12 +28,6 @@ export const useDeck = (deckName?: string) => {
       .map(([word, data]) => ({ word, ...data }))
       .sort((a, b) => a.interval - b.interval);
   }, [currentDeck]);
-
-  const getDeck = (decks: Deck[]): Deck | undefined => {
-    const deck = decks.find((deck) => deck.name === deckName);
-    setCurrentDeck(deck);
-    return deck;
-  };
 
 
   const loadDecks = async () => {
@@ -102,7 +97,6 @@ export const useDeck = (deckName?: string) => {
     flattenedWords,
     saveDeck,
     saveAndSetCurrentDeck,
-    getDeck,
     saveWords,
     deleteDeck,
     editDeck

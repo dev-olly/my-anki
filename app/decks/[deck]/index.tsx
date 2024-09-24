@@ -1,15 +1,14 @@
-import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Platform, SafeAreaView, StatusBar, StyleSheet, Text, View } from 'react-native';
 
 import { Link, useLocalSearchParams } from 'expo-router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import { GrayThemedButton, PrimaryThemedButton } from '@/components/ThemedButton';
 import { ModalForm } from '@/components/ModalForm';
+import { GrayThemedButton, PrimaryThemedButton } from '@/components/ThemedButton';
+import { WordItem } from '@/components/WordItem';
 import { Colors } from '@/constants/Colors';
 import { useDeck } from '@/hooks/useDeck';
 import { LOWER_BOUND } from '@/utils/spaced-repetition';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { WordItem } from '@/components/WordItem';
 
 
 const NoWords = ({openModal}: {openModal: () => void}) => {
@@ -44,10 +43,6 @@ export default function DeckScreen() {
 
   const words = Object.keys(deck?.words || {})
 
-  useEffect(() => {
-    // This effect will run when the component mounts and whenever currentDeck changes
-  }, [deck]);
-
   const addWord = async () => {
     if(!deck) return
     const newWords = {...deck.words, [word]: {translation, ease: LOWER_BOUND, interval: 1, lastReview: new Date().toISOString(), nextReview: new Date().toISOString()}};
@@ -72,7 +67,7 @@ export default function DeckScreen() {
   }
 
   return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={styles.AndroidSafeArea}>
         {words.length == 0 && <NoWords openModal={() => setShowModal(true)} />}
         
           {
@@ -103,6 +98,11 @@ export default function DeckScreen() {
 }
 
 const styles = StyleSheet.create({
+  AndroidSafeArea: {
+    flex: 1,
+    backgroundColor: "white",
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
+  },
   tabTitle: {
     fontSize: 16,
     fontWeight: 'semibold',
