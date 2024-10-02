@@ -1,5 +1,4 @@
-import { FlatList, Platform, SafeAreaView, StatusBar, StyleSheet, Text, View } from 'react-native';
-
+import { FlatList, Platform, SafeAreaView, StatusBar, StyleSheet, View } from 'react-native';
 import { Link, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 
@@ -9,26 +8,23 @@ import { WordItem } from '@/components/WordItem';
 import { Colors } from '@/constants/Colors';
 import { useDeck } from '@/hooks/useDeck';
 import { LOWER_BOUND } from '@/utils/spaced-repetition';
-
+import { ThemedView } from '@/components/ThemedView';
+import { ThemedText } from '@/components/ThemedText';
+import { ThemedSafeAreaView } from '@/components/ThemedSafeAreaView';
 
 const NoWords = ({openModal}: {openModal: () => void}) => {
   return (
-    <View style={styles.noWordContainer}>
-      <View style={styles.noWordsContent}>
-        <View>
-          <Text style={styles.noTextTitle}>You don't have any words yet.</Text>
-        </View>
-        <View style={{marginTop: 8}}>
-          <Text style={styles.noText}>Add some words and start learning!</Text>
-        </View>
-        <View style={styles.buttonContainer}>
-
+    <ThemedView lightColor={Colors.light.background} darkColor={Colors.dark.background} style={styles.noWordContainer}>
+      <ThemedView lightColor={Colors.light.background} darkColor={Colors.dark.background} style={styles.noWordsContent}>
+        <ThemedText lightColor={Colors.light.text} darkColor={Colors.gray[300]} style={styles.noTextTitle}>You don't have any words yet.</ThemedText>
+        <ThemedText lightColor={Colors.light.text} darkColor={Colors.gray[300]} style={styles.noTextContent}>Add some words and start learning!</ThemedText>
+        <View style={styles.noTextButtonContainer}>
           <PrimaryThemedButton onPress={openModal} extraStyle={{width: 250, marginTop: 0}}>
-            <Text style={{ color: Colors.light.background }}>Create Words</Text>
-        </PrimaryThemedButton>
+            <ThemedText lightColor={Colors.light.background} darkColor={Colors.dark.background}>Create Words</ThemedText>
+          </PrimaryThemedButton>
         </View>
-      </View>
-    </View>
+      </ThemedView>
+    </ThemedView>
   )
 }
 
@@ -67,40 +63,39 @@ export default function DeckScreen() {
   }
 
   return (
-      <SafeAreaView style={styles.AndroidSafeArea}>
-        {words.length == 0 && <NoWords openModal={() => setShowModal(true)} />}
-        
-          {
-            words.length > 0 && <View style={{ flex: 1, marginTop: 16, marginHorizontal: 16}}>
-              <View style={styles.listheader}>
-                <Text >{words.length} words.</Text>
-                <GrayThemedButton onPress={() => setShowModal(true)} extraStyle={{marginTop: 0}}>
-                  <Text style={{fontSize: 12, fontWeight: 'bold', color: Colors.gray[900]}}>Add Word</Text>
-                </GrayThemedButton>
-              </View>
-              <View style={{marginTop: 16, height: '80%'}}>
-                {deck && <FlatList data={words} renderItem={({item}) => <WordItem word={item} translation={deck.words[item].translation} onDelete={deleteWord} editWord={editWord(item)} />} /> }   
-              </View>
-              <View style={{height: '20%'}}>
-                <Link href={`/decks/${deckName}/playground`} asChild>
-                  <PrimaryThemedButton onPress={() => undefined} extraStyle={{width: '100%', marginTop: 0}}>
-                    <Text style={{ color: Colors.light.background }}>Start Deck</Text>
-                  </PrimaryThemedButton>
-                </Link>
-              </View>
-            </View>
-          }
+    <ThemedSafeAreaView lightColor={Colors.light.background} darkColor={Colors.dark.background} style={styles.AndroidSafeArea}>
+      {words.length == 0 && <NoWords openModal={() => setShowModal(true)} />}
       
-        {showModal && <ModalForm word={word} translation={translation} showModal={showModal} setShowModal={setShowModal} setWord={setWord} setTranslation={setTranslation} onSubmit={addWord} title="Add Word" buttonText="Create" />}
-
-      </SafeAreaView>
+      {words.length > 0 && (
+        <ThemedView lightColor={Colors.light.background} darkColor={Colors.dark.background} style={{ flex: 1, marginTop: 16, marginHorizontal: 16}}>
+          <ThemedView lightColor={Colors.light.background} darkColor={Colors.dark.background} style={styles.listheader}>
+            <ThemedText lightColor={Colors.light.text} darkColor={Colors.dark.text}>{words.length} words.</ThemedText>
+            <GrayThemedButton onPress={() => setShowModal(true)} extraStyle={{marginTop: 0}}>
+              <ThemedText lightColor={Colors.light.text} darkColor={Colors.gray[800]} style={{fontSize: 12, fontWeight: 'bold'}}>Add Word</ThemedText>
+            </GrayThemedButton>
+          </ThemedView>
+          <ThemedView lightColor={Colors.light.background} darkColor={Colors.dark.background} style={{marginTop: 16, height: '80%'}}>
+            {deck && <FlatList data={words} renderItem={({item}) => <WordItem word={item} translation={deck.words[item].translation} onDelete={deleteWord} editWord={editWord(item)} />} />}   
+          </ThemedView>
+          <ThemedView lightColor={Colors.light.background} darkColor={Colors.dark.background} style={{height: '20%'}}>
+            <Link href={`/decks/${deckName}/playground`} asChild>
+              <PrimaryThemedButton onPress={() => undefined} extraStyle={{width: '100%', marginTop: 0}}>
+                <ThemedText lightColor={Colors.light.background} darkColor={Colors.dark.background}>Start Deck</ThemedText>
+              </PrimaryThemedButton>
+            </Link>
+          </ThemedView>
+        </ThemedView>
+      )}
+    
+      {showModal && <ModalForm word={word} translation={translation} showModal={showModal} setShowModal={setShowModal} setWord={setWord} setTranslation={setTranslation} onSubmit={addWord} title="Add Word" buttonText="Create" />}
+    </ThemedSafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   AndroidSafeArea: {
     flex: 1,
-    backgroundColor: "white",
+    // backgroundColor: "white",
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
   },
   tabTitle: {
@@ -111,28 +106,22 @@ const styles = StyleSheet.create({
   },
   noWordContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   noWordsContent: {
     alignItems: 'center',
-    // gap: 16,
-    // padding: 20, // Add some padding
     flex: 0,
-  },
-  buttonContainer: {
-    // marginTop: 24,
   },
   noTextTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: 'black', // Ensure text is visible
     paddingTop: 16,
   },
-  noText: {
-    paddingTop: 16,
-    fontSize: 14,
-    color: 'black', // Ensure text is visible
+  noTextContent: {
+    marginTop: 4,
+    fontSize: 12,
+  },
+  noTextButtonContainer: {
+    marginTop: 16,
   },
   addDeckButtonText: {
     fontSize: 16,
@@ -170,13 +159,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     width: '80%',
-  },
-  noText: { 
-    display: 'flex', 
-    flexDirection: 'column', 
-    justifyContent: 'center', 
-    alignItems: 'center', 
-    height: '85%' 
   },
   listheader: {
     display: 'flex', 
