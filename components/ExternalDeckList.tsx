@@ -1,9 +1,9 @@
 import { Colors } from "@/constants/Colors";
 import { ExternalDeck } from "@/hooks/useFetchDecks";
 import { Ionicons } from "@expo/vector-icons";
-import { Link, useNavigation } from "expo-router";
-import React, { useState } from "react";
-import { View,Text, Pressable, StyleSheet, Image } from "react-native";
+import { Link } from "expo-router";
+import React from "react";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
 const Levels = ["A1", "A2", "B1", "B2", "C1", "C2"]
 
@@ -16,7 +16,6 @@ const LevelTab = ({level, onLevelPress, active}: {level: string, onLevelPress: (
 }
 
 const DeckItem = ({deck}: {deck: ExternalDeck}) => {
-  const navigation = useNavigation();
   return (
     <Link href={`/external/${deck.id}`} asChild>
       <Pressable>
