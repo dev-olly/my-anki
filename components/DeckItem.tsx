@@ -1,11 +1,13 @@
-import { Colors } from '@/constants/Colors';
 import { Deck } from '@/types';
 import { Ionicons } from '@expo/vector-icons';
 import { Link } from 'expo-router';
 import { useState } from 'react';
-import {  Modal, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Modal, Pressable, StyleSheet, View } from 'react-native';
 
 import { ModalDeckForm } from './ModalDeckForm';
+import { ThemedView } from '@/components/ThemedView';
+import { ThemedText } from '@/components/ThemedText';
+import { Colors } from '@/constants/Colors';
 
 export const DeckItem = ({deck, onDelete, editDeck}: {deck: Deck, onDelete: (deckName: string) => void, editDeck: (deckName: string, newDeckName: string) => void}) => {
   const [showModal, setShowModal] = useState(false);
@@ -22,37 +24,41 @@ export const DeckItem = ({deck, onDelete, editDeck}: {deck: Deck, onDelete: (dec
     <>
       <Link href={`/decks/${deck.name}` as const} asChild>
         <Pressable>
-          <View style={styles.wordItem}>
-            <Text style={styles.deckName}>{deck.name}</Text>
+          <ThemedView lightColor={Colors.light.background} darkColor={Colors.gray[800]} style={styles.wordItem}>
+            <ThemedText lightColor={Colors.light.text} darkColor={Colors.dark.text} style={styles.deckName}>{deck.name}</ThemedText>
             <View style={styles.actions}>
               <Pressable onPress={() => setShowEditModal(true)}>
-                <Text style={{marginRight: 10}}><Ionicons name="pencil" size={14} color={Colors.gray[600]} /></Text>
+                <ThemedText lightColor={Colors.light.text} darkColor={Colors.dark.text} style={{marginRight: 10}}>
+                  <Ionicons name="pencil" size={14} />
+                </ThemedText>
               </Pressable>
               <Pressable onPress={() => setShowModal(true)}>
-                <Text><Ionicons name="trash" size={14} color={Colors.gray[600]}/></Text>
+                <ThemedText lightColor={Colors.light.text} darkColor={Colors.dark.text}>
+                  <Ionicons name="trash" size={14} />
+                </ThemedText>
               </Pressable>
             </View>
-          </View>
+          </ThemedView>
         </Pressable>
       </Link>
 
-        {/* Delete Modal */}
+      {/* Delete Modal */}
       <Modal transparent={true} visible={showModal}>
         <View style={styles.modalOverlay}>
-          <View style={styles.popover}>
-            <Text style={styles.title}>Are you sure you want to delete?</Text>
-            <Text style={styles.body}>
+          <ThemedView lightColor={Colors.light.background} darkColor={Colors.gray[800]} style={styles.popover}>
+            <ThemedText lightColor={Colors.light.text} darkColor={Colors.dark.text} style={styles.title}>Are you sure you want to delete?</ThemedText>
+            <ThemedText lightColor={Colors.light.text} darkColor={Colors.dark.text} style={styles.body}>
               The word will be deleted from the deck and will not be available for review.
-            </Text>
+            </ThemedText>
             <View style={styles.buttonContainer}>
               <Pressable onPress={() => {onDelete(deck.name); setShowModal(false); }}>
-                <Text style={styles.affirmativeButtonText}>Yes, delete</Text>
+                <ThemedText lightColor={Colors.red[600]} darkColor={Colors.red[600]} style={styles.affirmativeButtonText}>Yes, delete</ThemedText>
               </Pressable>
               <Pressable onPress={() => {setShowModal(false); }}>
-                <Text style={styles.cancelText}>No, cancel</Text>
+                <ThemedText lightColor={Colors.light.text} darkColor={Colors.dark.text} style={styles.cancelText}>No, cancel</ThemedText>
               </Pressable>
             </View>
-          </View>
+          </ThemedView>
         </View>
       </Modal>
 
@@ -70,7 +76,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   popover: {
-    backgroundColor: 'white',
     padding: 10,
     borderRadius: 5,
     width: '75%',
@@ -103,7 +108,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 16,
-    backgroundColor: 'white',
     width: '100%',
     borderRadius: 10,
     shadowColor: 'black',
@@ -122,61 +126,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  optionContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: '40%',
-    borderBottomWidth: 1,
-    borderColor: 'gray',
-  },
-  deleteButton: {
-    backgroundColor: Colors.red[500],
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 75,
-    padding: 10,
-    height: '100%',
-  },
-  editButton: {
-    backgroundColor: Colors.blue[500],
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 75,
-    padding: 10,
-    height: '100%',
-  },
-  editButtonText: {
-    color: 'white',
-  },
-  deleteButtonText: {
-    color: 'white',
-    fontSize: 14,
-    
-  },
   affirmativeButtonText: {
-    color: Colors.red[500],
     fontSize: 14,
     marginRight: 10,
   },
   cancelText: {
     fontSize: 14,
   },
-  input: {
-    borderWidth: 1,
-    borderColor: 'gray',
-    padding: 10,
-    marginBottom: 10,
-  },
-  saveButtonText: {
-    color: Colors.blue[500],
-    textAlign: 'center',
-    fontSize: 16,
-    marginBottom: 10,
-  },
-  cancelButtonText: {
-    color: Colors.red[500],
-    textAlign: 'center',
-    fontSize: 14,
-  },
+  // ... other styles remain unchanged
 })
