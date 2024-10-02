@@ -1,32 +1,32 @@
 import { Colors } from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
-import { useState } from "react";
-import { Modal, Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Modal, Pressable, StyleSheet, View } from "react-native";
 import { ThemedInput } from "./ThemedInput";
 import { PrimaryThemedButton } from "./ThemedButton";
+import { ThemedSafeAreaView } from "@/components/ThemedSafeAreaView";
+import { ThemedView } from "@/components/ThemedView";
+import { ThemedText } from "@/components/ThemedText";
 
 export const ModalDeckForm = ({onSubmit, showModal, setShowModal, deckName, setDeckName, title}: {onSubmit: (deckName: string) => void, showModal: boolean, setShowModal: (showModal: boolean) => void, deckName: string, setDeckName: (deckName: string) => void, title: string}) => {
   return (
-    <SafeAreaView style={styles.container}>
       <Modal animationType="slide" transparent={false} visible={showModal}>
-        <View style={styles.modalView}>
-          <View style={styles.header}>
+        <ThemedView lightColor={Colors.light.background} darkColor={Colors.dark.background} style={styles.modalView}>
+          <ThemedView lightColor={Colors.light.background} darkColor={Colors.dark.background} style={styles.header}>
             <Pressable onPress={() => setShowModal(false)}>
               <Ionicons name="close" size={24} color={Colors.gray[700]} />
             </Pressable>
-            <Text style={styles.modalTitle}>{title}</Text>
-          </View>
-          <View style={styles.content}>
-            <ThemedInput placeholder="Nicos weg A2 episode 1" onChangeText={setDeckName} value={deckName} />
-          </View>
-          <View style={styles.footer}>
-            <PrimaryThemedButton onPress={() => {onSubmit(deckName);}} extraStyle={{width: '100%'}}>
-              <Text style={styles.buttonText}>Create</Text>
-            </PrimaryThemedButton>
-          </View>
-        </View>
-      </Modal>
-    </SafeAreaView>
+              <ThemedText lightColor={Colors.light.text} darkColor={Colors.dark.text} style={styles.modalTitle}>{title}</ThemedText>
+            </ThemedView>
+            <ThemedView lightColor={Colors.light.background} darkColor={Colors.dark.background} style={styles.content}>
+              <ThemedInput lightColor={Colors.gray[100]} darkColor={Colors.gray[500]} placeholder="Nicos weg A2 episode 1" onChangeText={setDeckName} value={deckName} />
+            </ThemedView>
+            <ThemedView lightColor={Colors.light.background} darkColor={Colors.dark.background} style={styles.footer}>
+              <PrimaryThemedButton onPress={() => {onSubmit(deckName);}} extraStyle={{width: '100%'}}>
+                <ThemedText lightColor={Colors.light.text} darkColor={Colors.dark.text} style={styles.buttonText}>Create</ThemedText>
+              </PrimaryThemedButton>
+            </ThemedView>
+          </ThemedView>
+        </Modal>
   )
 }
 
@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
   },
   modalView: {
     flex: 1,
-    backgroundColor: 'white',
     paddingTop: 24,
     paddingHorizontal: 16,
     borderWidth: 1,
@@ -72,8 +71,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-    fontWeight: 'bold',
     textAlign: 'center',
+    fontSize: 14
   },
   cancelButtonText: {
     marginTop: 16,

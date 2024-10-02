@@ -77,8 +77,9 @@ export default function HomeScreen() {
               <FlatList data={decks} renderItem={({ item }) => <DeckItem deck={item} onDelete={onDelete} editDeck={onEdit} />} />
             </ThemedView>
           </ThemedView>}
-      </ThemedSafeAreaView>
       {showModal && <ModalDeckForm onSubmit={onSubmit} showModal={showModal} setShowModal={setShowModal} deckName={deckName} setDeckName={setDeckName} title="Create a new Deck" />}
+
+      </ThemedSafeAreaView>
     </GestureHandlerRootView>
   );
 }
