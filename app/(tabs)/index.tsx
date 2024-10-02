@@ -12,6 +12,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
+import { ThemedSafeAreaView } from '@/components/ThemedSafeAreaView';
 
 const NoDeck = ({ openAddModal }: { openAddModal: () => void }) => {
   return (
@@ -20,12 +21,12 @@ const NoDeck = ({ openAddModal }: { openAddModal: () => void }) => {
         <ThemedText lightColor={Colors.light.text} darkColor={Colors.dark.text} style={styles.noTextTitle}>You don't have any decks yet.</ThemedText>
         <ThemedText lightColor={Colors.light.text} darkColor={Colors.dark.text} style={styles.noText}>Create a deck to get started</ThemedText>
         <GrayThemedButton onPress={openAddModal}>
-          <Text style={styles.addDeckButtonText}>Create Deck</Text>
+          <ThemedText lightColor={Colors.light.text} darkColor={Colors.dark.text} style={styles.addDeckButtonText}>Create Deck</ThemedText>
         </GrayThemedButton>
       </ThemedView>
       <ThemedView lightColor={Colors.light.background} darkColor={Colors.dark.background} style={styles.bottomButtonContainer}>
         <PrimaryThemedButton onPress={openAddModal} extraStyle={{width: '100%'}}>
-          <Text style={{ color: Colors.light.background }}>Create Deck</Text>
+          <ThemedText lightColor={Colors.light.text} darkColor={Colors.dark.text} style={styles.addDeckButtonText}>Create Deck</ThemedText>
         </PrimaryThemedButton>
       </ThemedView>
     </ThemedView>
@@ -61,22 +62,22 @@ export default function HomeScreen() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaView style={styles.safeArea}>
-        <Text style={styles.tabTitle}>All decks</Text>
+      <ThemedSafeAreaView lightColor={Colors.light.background} darkColor={Colors.dark.background} style={styles.safeArea}>
+        <ThemedText lightColor={Colors.light.text} darkColor={Colors.dark.text} style={styles.tabTitle}>All decks</ThemedText>
         {decks.length == 0 ?
           <NoDeck openAddModal={openAddModal} />
         : <ThemedView style={styles.container}>
-            <View style={styles.deckListTitleContainer}>
-              <Text style={styles.deckListTitle}>{decks.length} decks</Text>
+            <ThemedView lightColor={Colors.light.background} darkColor={Colors.dark.background} style={styles.deckListTitleContainer}>
+              <ThemedText lightColor={Colors.light.text} darkColor={Colors.dark.text} style={styles.deckListTitle}>{decks.length} decks</ThemedText>
               <GrayThemedButton onPress={openAddModal} extraStyle={{marginTop: 0}}>
-                <Text style={styles.addDeckButtonText}>Create Deck</Text>
+                <ThemedText lightColor={Colors.light.text} darkColor={Colors.dark.text} style={styles.addDeckButtonText}>Create Deck</ThemedText>
               </GrayThemedButton>
-            </View>
-            <View style={styles.deckList}>
+            </ThemedView>
+            <ThemedView lightColor={Colors.light.background} darkColor={Colors.dark.background} style={styles.deckList}>
               <FlatList data={decks} renderItem={({ item }) => <DeckItem deck={item} onDelete={onDelete} editDeck={onEdit} />} />
-            </View>
+            </ThemedView>
           </ThemedView>}
-      </SafeAreaView>
+      </ThemedSafeAreaView>
       {showModal && <ModalDeckForm onSubmit={onSubmit} showModal={showModal} setShowModal={setShowModal} deckName={deckName} setDeckName={setDeckName} title="Create a new Deck" />}
     </GestureHandlerRootView>
   );
@@ -154,7 +155,6 @@ const styles = StyleSheet.create({
   },
   safeArea: {
     flex: 1,
-    backgroundColor: "white",
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
   },
 });
