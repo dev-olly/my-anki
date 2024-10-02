@@ -46,6 +46,11 @@
 
 - Scrape Nico wegs words - done 
 
+Design
+- Light and dark theme for all pages
+- Add logo and splash screen for app
+
+
 - sync deck to server
 - Test on real device
 - deploy on app store
