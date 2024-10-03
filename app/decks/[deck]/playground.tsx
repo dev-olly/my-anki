@@ -1,12 +1,13 @@
 import { Playground } from "@/components/Playground";
 import { useDeck } from "@/hooks/useDeck";
-import { WordData } from "@/types";
 import { Level, updateData } from "@/utils/spaced-repetition";
 import { useLocalSearchParams } from "expo-router";
-import React, { useState, useMemo, useEffect } from "react";
-import { Text, View } from 'react-native';
-
-
+import React, { useState, useEffect } from "react";
+import { StyleSheet } from 'react-native';
+import { Colors } from '@/constants/Colors';
+import { ThemedView } from '@/components/ThemedView';
+import { ThemedText } from '@/components/ThemedText';
+import { ThemedSafeAreaView } from '@/components/ThemedSafeAreaView';
 
 export default function PlaygroundScreen() {
   const [index, setIndex] = useState(0)
@@ -18,20 +19,16 @@ export default function PlaygroundScreen() {
     // This effect will run when the component mounts and whenever currentDeck changes
   }, [deck]);
   
-
-  
   const wordItem = words[index]
   const presentWord = wordItem ? wordItem['word'] : ''
 
-  
-
   if (!deck) {
     return (
-      <View style={{ flex: 1, backgroundColor: 'white', height: '100%' }}>
-        <Text style={{ textAlign: 'center', fontSize: 16, fontWeight: 'semibold', margin: 16 }}>
+      <ThemedView lightColor={Colors.light.background} darkColor={Colors.dark.background} style={styles.container}>
+        <ThemedText lightColor={Colors.light.text} darkColor={Colors.dark.text} style={styles.loadingText}>
           Loading deck...
-        </Text>
-      </View>
+        </ThemedText>
+      </ThemedView>
     );
   }
 
@@ -41,19 +38,47 @@ export default function PlaygroundScreen() {
     const newIndex = index + 1;
     if (newIndex < words.length) {
       setIndex(newIndex);
-    }else {
+    } else {
       setIndex(-1);
     }
   }
 
   return (
-    <View style={{ flex: 1, backgroundColor: 'white', height: '100%' }}>
-      <Text style={{textAlign: 'center', fontSize: 14,  margin: 16 }}>A Step at a time</Text>
-      { wordItem ? <Playground word={presentWord} data={deck.words[presentWord]} next={nextWord}/> : 
-        <Text style={{textAlign: 'center', fontSize: 16, fontWeight: 'semibold', margin: 16 }}>
+    <ThemedSafeAreaView lightColor={Colors.light.background} darkColor={Colors.dark.background} style={styles.container}>
+      <ThemedText lightColor={Colors.light.text} darkColor={Colors.gray[300]} style={styles.headerText}>
+        A Step at a time
+      </ThemedText>
+      { wordItem ? (
+        <Playground word={presentWord} data={deck.words[presentWord]} next={nextWord}/>
+      ) : (
+        <ThemedText lightColor={Colors.light.text} darkColor={Colors.dark.text} style={styles.congratsText}>
           Congratulations! You have finished the deck.
-        </Text>
-      }
-    </View>
+        </ThemedText>
+      )}
+    </ThemedSafeAreaView>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    height: '100%',
+  },
+  loadingText: {
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: 'bold',
+    margin: 16,
+  },
+  headerText: {
+    textAlign: 'center',
+    fontSize: 14,
+    margin: 16,
+  },
+  congratsText: {
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: 'bold',
+    margin: 16,
+  },
+});
