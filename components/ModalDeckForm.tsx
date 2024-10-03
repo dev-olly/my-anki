@@ -51,9 +51,10 @@ const styles = StyleSheet.create({
     paddingTop: 20, // Add some top padding
   },
   content: {
-    flex: 1,
+    // flex: 1,
   },
   footer: {
+    marginTop: 16,
     marginBottom: 16,
   },
   modalTitle: {
