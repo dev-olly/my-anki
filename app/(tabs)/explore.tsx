@@ -61,7 +61,7 @@ export default function TabTwoScreen() {
         headerBackgroundColor={{ light: Colors.light.background, dark: Colors.dark.background }}
         headerChildren={<ThemedView style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
           
-          <ThemedInput placeholder="Enter search" lightColor={Colors.light.background} darkColor={Colors.gray[800]} onChangeText={onSearch} value={search} />
+          <ThemedInput placeholder="Enter search" lightColor={Colors.gray[200]} darkColor={Colors.gray[800]} onChangeText={onSearch} value={search} />
           </ThemedView>}>
           {loading ? <SkeletonLoader /> : <ExternalDeckList decks={filteredDecks} onLevelPress={onLevelPress} level={level} />}
           {error && <ErrorMessage />}

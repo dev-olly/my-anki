@@ -24,7 +24,7 @@ export const DeckItem = ({deck, onDelete, editDeck}: {deck: Deck, onDelete: (dec
     <>
       <Link href={`/decks/${deck.name}` as const} asChild>
         <Pressable>
-          <ThemedView lightColor={Colors.light.background} darkColor={Colors.gray[800]} style={styles.wordItem}>
+          <ThemedView lightColor={Colors.gray[100]} darkColor={Colors.gray[800]} style={styles.wordItem}>
             <ThemedText lightColor={Colors.light.text} darkColor={Colors.dark.text} style={styles.deckName}>{deck.name}</ThemedText>
             <View style={styles.actions}>
               <Pressable onPress={() => setShowEditModal(true)}>

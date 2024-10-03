@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "my-anki",
-    "slug": "my-anki",
+    "name": "mini-anki",
+    "slug": "mini-anki",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",

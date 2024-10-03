@@ -1,18 +1,16 @@
-import { FlatList, Platform, Pressable, SafeAreaView, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Platform, StatusBar, StyleSheet } from 'react-native';
 
 import { useState } from 'react';
 
 import { DeckItem } from '@/components/DeckItem';
 import { ModalDeckForm } from '@/components/ModalDeckForm';
 import { GrayThemedButton, PrimaryThemedButton } from '@/components/ThemedButton';
+import { ThemedSafeAreaView } from '@/components/ThemedSafeAreaView';
+import { ThemedText } from '@/components/ThemedText';
+import { ThemedView } from '@/components/ThemedView';
 import { Colors } from '@/constants/Colors';
 import { useDeck } from '@/hooks/useDeck';
 import { Deck } from '@/types';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedView } from '@/components/ThemedView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedSafeAreaView } from '@/components/ThemedSafeAreaView';
 
 const NoDeck = ({ openAddModal }: { openAddModal: () => void }) => {
   return (
@@ -61,7 +59,6 @@ export default function HomeScreen() {
   }
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
       <ThemedSafeAreaView lightColor={Colors.light.background} darkColor={Colors.dark.background} style={styles.safeArea}>
         <ThemedText lightColor={Colors.light.text} darkColor={Colors.dark.text} style={styles.tabTitle}>All decks</ThemedText>
         {decks.length == 0 ?
@@ -78,9 +75,7 @@ export default function HomeScreen() {
             </ThemedView>
           </ThemedView>}
       {showModal && <ModalDeckForm onSubmit={onSubmit} showModal={showModal} setShowModal={setShowModal} deckName={deckName} setDeckName={setDeckName} title="Create a new Deck" />}
-
       </ThemedSafeAreaView>
-    </GestureHandlerRootView>
   );
 }
 
