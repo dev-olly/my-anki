@@ -49,7 +49,7 @@ export default function ExternalDeckScreen() {
                   <ThemedText lightColor={Colors.light.text} darkColor={Colors.dark.text} style={styles.deckMetaText}>|   {deck.words.length} words</ThemedText>
                 </ThemedView>
                 <GrayThemedButton onPress={() => onSaveDeck(deck)} extraStyle={styles.addButton}>
-                  <ThemedText lightColor={Colors.light.text} darkColor={Colors.dark.text} style={styles.addButtonText}>Add to deck</ThemedText>
+                  <ThemedText lightColor={Colors.light.text} darkColor={Colors.gray[800]} style={styles.addButtonText}>Add to deck</ThemedText>
                 </GrayThemedButton>
               </ThemedView>
             </ThemedView>
@@ -109,21 +109,19 @@ const styles = StyleSheet.create({
   addButton: {
     marginTop: 0,
     width: 100,
-    padding: 8,
+    padding: 4,
     height: 30,
   },
   addButtonText: {
     fontSize: 12,
-    fontWeight: 'bold',
   },
   wordListContainer: {
     paddingHorizontal: 16,
     marginTop: 8,
   },
   wordItem: {
-    padding: 12,
     borderRadius: 10,
-    marginBottom: 8,
+    marginBottom: 16,
   },
   wordGerman: {
     fontSize: 14,
@@ -131,7 +129,7 @@ const styles = StyleSheet.create({
   },
   wordTranslation: {
     fontSize: 12,
-    marginTop: 4,
+    marginTop: 2,
   },
   bottomButtonContainer: {
     padding: 16,
