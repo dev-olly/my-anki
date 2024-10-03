@@ -3,37 +3,44 @@ import { ExternalDeck } from "@/hooks/useFetchDecks";
 import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import React from "react";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, View, Text, useColorScheme } from "react-native";
+import { ThemedView } from '@/components/ThemedView';
+import { ThemedText } from '@/components/ThemedText';
+import { GrayThemedButton } from '@/components/ThemedButton';
 
 const Levels = ["A1", "A2", "B1", "B2", "C1", "C2"]
 
 const LevelTab = ({level, onLevelPress, active}: {level: string, onLevelPress: (level: string) => void, active: boolean}) => {
- return (
-    <Pressable style={({pressed}) => [styles.tabButton, (pressed || active) && styles.tabButtonPressed]} onPress={() => onLevelPress(level)}>
-      {({pressed}) => <Text style={[styles.tabButtonText, (pressed || active) && styles.tabButtonTextActive]}>{level}</Text>}
-    </Pressable>
- )
+  const theme = useColorScheme();
+  const backgroundColor = theme === 'light' ? Colors.light.background : Colors.gray[800];
+  return (
+      <Pressable style={({pressed}) => [styles.tabButton, {backgroundColor: backgroundColor}, (pressed || active) && (theme === 'light' ? styles.tabLightButtonPressed : styles.tabDarkButtonPressed)]} onPress={() => onLevelPress(level)}>
+        {({pressed}) => <Text style={[styles.tabButtonText, (pressed || active) && styles.tabButtonTextActive]}>{level}</Text>}
+      </Pressable>
+  )
 }
 
 const DeckItem = ({deck}: {deck: ExternalDeck}) => {
+  const theme = useColorScheme();
+  const borderColor = theme === 'light' ? Colors.gray[200] : Colors.gray[700];
   return (
     <Link href={`/external/${deck.id}`} asChild>
       <Pressable>
-        <View style={styles.deckItem}>
+        <ThemedView lightColor={Colors.light.background} darkColor={Colors.gray[800]} style={styles.deckItem}>
           <Image source={{uri: 'https://res.cloudinary.com/db5aqdx6s/image/upload/v1725405050/nicos_weg_cr1lj4.webp'}} style={styles.deckItemImage} />
           <View>
-            <Text style={styles.deckItemTitle}>Nicos weg - {deck.title}</Text>
+            <ThemedText lightColor={Colors.light.text} darkColor={Colors.dark.text} style={styles.deckItemTitle}>Nicos weg - {deck.title}</ThemedText>
             <View style={styles.deckItemLevelContainer}>
-              <Text style={styles.deckItemLevel}>{deck.level}</Text>
-              <Text style={styles.deckItemWordsCount}>|  {deck.words.length} words</Text>
+              <ThemedText lightColor={Colors.gray[500]} darkColor={Colors.gray[300]} style={styles.deckItemLevel}>{deck.level}</ThemedText>
+              <ThemedText lightColor={Colors.gray[500]} darkColor={Colors.gray[300]} style={styles.deckItemWordsCount}>|  {deck.words.length} words</ThemedText>
             </View>
           </View>
-          <View style={styles.deckItemActions}>
-            <View style={styles.deckItemAddButton}>
-              <Text><Ionicons name="add" size={16} color="black" /></Text>
-            </View>
-          </View>
-        </View>
+          {/* <View style={styles.deckItemActions}>
+            <ThemedView lightColor={Colors.gray[200]} darkColor={Colors.gray[700]} style={[styles.deckItemAddButton, {borderColor: borderColor}]}>
+              <Ionicons name="add" size={16} color={Colors.light.text} />
+            </ThemedView>
+          </View> */}
+        </ThemedView>
       </Pressable>
     </Link>
   )
@@ -41,8 +48,8 @@ const DeckItem = ({deck}: {deck: ExternalDeck}) => {
 
 export default function ExternalDeckList({decks,  onLevelPress, level}: {decks: ExternalDeck[], onLevelPress: (level: string) => void, level: string }) {
   return (
-    <View style={{marginTop: 6}}>
-      <Text>Deck List</Text>
+    <ThemedView lightColor={Colors.light.background} darkColor={Colors.dark.background} style={{marginTop: 6}}>
+      <ThemedText lightColor={Colors.light.text} darkColor={Colors.dark.text}>Deck List</ThemedText>
       <View style={styles.tabList}>
         {Levels.map((item) => (
           <LevelTab level={item} key={item} onLevelPress={onLevelPress} active={level === item} />
@@ -55,14 +62,14 @@ export default function ExternalDeckList({decks,  onLevelPress, level}: {decks: 
             ))}
           </View>
         ) : (
-          <View style={styles.emptyState}>
-            <View style={styles.emptyCard}>
+          <ThemedView lightColor={Colors.light.background} darkColor={Colors.dark.background} style={styles.emptyState}>
+            <ThemedView lightColor={Colors.light.background} darkColor={Colors.dark.background} style={styles.emptyCard}>
               <Ionicons name="sad-outline" size={48} color={Colors.gray[500]} />
-              <Text style={styles.emptyCardText}>Sorry, we couldn't find any decks at the moment</Text>
-            </View>
-          </View>
+              <ThemedText lightColor={Colors.gray[500]} darkColor={Colors.gray[300]} style={styles.emptyCardText}>Sorry, we couldn't find any decks at the moment</ThemedText>
+            </ThemedView>
+          </ThemedView>
       )}
-    </View>
+    </ThemedView>
   );
 }
 
@@ -83,10 +90,13 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingHorizontal: 14,
     paddingVertical: 4,
-    backgroundColor: 'white',
+    // backgroundColor: 'white',
   },
-  tabButtonPressed: {
+  tabLightButtonPressed: {
     backgroundColor: Colors.gray[500],
+  },
+  tabDarkButtonPressed: {
+    backgroundColor: Colors.gray[600],
   },
   tabButtonText: {
     fontSize: 12,
@@ -103,12 +113,12 @@ const styles = StyleSheet.create({
   },
   deckItem: {
     width: '100%',
-    borderWidth: 1,
-    borderColor: Colors.gray[200], 
+    // borderWidth: 1,
+    // borderColor: Colors.gray[200], 
     borderRadius: 6,
     paddingHorizontal: 8,
     paddingVertical: 8,
-    backgroundColor: Colors.light.background,
+    // backgroundColor: Colors.light.background,
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
@@ -137,7 +147,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-    marginTop: 4,
+    // marginTop: 4,
   },
   deckItemActions: {
     display: 'flex',
@@ -148,11 +158,9 @@ const styles = StyleSheet.create({
   },
   deckItemAddButton: {
     borderWidth: 1,
-    borderColor: Colors.gray[200], 
     borderRadius: 30,
     paddingHorizontal: 8,
     paddingVertical: 8,
-    backgroundColor: Colors.gray[200],
   },
   emptyState: {
     display: 'flex',

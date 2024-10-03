@@ -1,4 +1,4 @@
-import { Platform, SafeAreaView, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 
 import ExternalDeckList from '@/components/ExternalDeckList';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
@@ -8,17 +8,18 @@ import { Colors } from '@/constants/Colors';
 import { ExternalDeck, useFetchDecks } from '@/hooks/useFetchDecks';
 import { Ionicons } from '@expo/vector-icons';
 import { useEffect, useState } from 'react';
-
+import { ThemedView } from '@/components/ThemedView';
+import { ThemedText } from '@/components/ThemedText';
+import { ThemedSafeAreaView } from '@/components/ThemedSafeAreaView';
 
 const ErrorMessage = () => {
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    <ThemedView style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       <Ionicons name="sad-outline" size={48} color={Colors.gray[500]} />
-      <Text style={{fontSize: 20, fontWeight: 'bold'}}>Error, the server is not running</Text>
-    </View>
+      <ThemedText lightColor={Colors.light.text} darkColor={Colors.dark.text} style={{fontSize: 20, fontWeight: 'bold'}}>Error, the server is not running</ThemedText>
+    </ThemedView>
   )
 }
-
 
 export default function TabTwoScreen() {
   const [search, setSearch] = useState('');
@@ -55,24 +56,24 @@ export default function TabTwoScreen() {
   }, [decks]);
 
   return (
-    <SafeAreaView style={styles.AndroidSafeArea}>
+    <ThemedSafeAreaView lightColor={Colors.light.background} darkColor={Colors.dark.background} style={styles.AndroidSafeArea}>
       <ParallaxScrollView
-        headerBackgroundColor={{ light: Colors.light.background, dark: Colors.dark.tint }}
-        headerChildren={<View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+        headerBackgroundColor={{ light: Colors.light.background, dark: Colors.dark.background }}
+        headerChildren={<ThemedView style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
           
-          <ThemedInput placeholder="Enter search" onChangeText={onSearch} value={search} />
-          </View>}>
+          <ThemedInput placeholder="Enter search" lightColor={Colors.light.background} darkColor={Colors.gray[800]} onChangeText={onSearch} value={search} />
+          </ThemedView>}>
           {loading ? <SkeletonLoader /> : <ExternalDeckList decks={filteredDecks} onLevelPress={onLevelPress} level={level} />}
           {error && <ErrorMessage />}
       </ParallaxScrollView>
-    </SafeAreaView>
+    </ThemedSafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   AndroidSafeArea: {
     flex: 1,
-    backgroundColor: "white",
+    // backgroundColor: "white",
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
   },
   headerImage: {
