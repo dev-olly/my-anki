@@ -49,7 +49,7 @@ const DeckItem = ({deck}: {deck: ExternalDeck}) => {
 export default function ExternalDeckList({decks,  onLevelPress, level}: {decks: ExternalDeck[], onLevelPress: (level: string) => void, level: string }) {
   return (
     <ThemedView lightColor={Colors.light.background} darkColor={Colors.dark.background} style={{marginTop: 6}}>
-      <ThemedText lightColor={Colors.light.text} darkColor={Colors.dark.text}>Deck List</ThemedText>
+      <ThemedText lightColor={Colors.light.text} darkColor={Colors.gray[300]}>Deck List</ThemedText>
       <View style={styles.tabList}>
         {Levels.map((item) => (
           <LevelTab level={item} key={item} onLevelPress={onLevelPress} active={level === item} />

@@ -11,6 +11,7 @@ import { LOWER_BOUND } from '@/utils/spaced-repetition';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedSafeAreaView } from '@/components/ThemedSafeAreaView';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 const NoWords = ({openModal}: {openModal: () => void}) => {
   return (
@@ -36,6 +37,8 @@ export default function DeckScreen() {
   const { deck: deckName } = useLocalSearchParams();
 
   const {currentDeck:deck , saveAndSetCurrentDeck} = useDeck(deckName as string)
+
+  const backgroundColor = useThemeColor({ light: Colors.light.background, dark: Colors.dark.background }, 'background');
 
   const words = Object.keys(deck?.words || {})
 
@@ -63,32 +66,36 @@ export default function DeckScreen() {
   }
 
   return (
-    <ThemedSafeAreaView lightColor={Colors.light.background} darkColor={Colors.dark.background} style={styles.AndroidSafeArea}>
-      {words.length == 0 && <NoWords openModal={() => setShowModal(true)} />}
+    // <ThemedSafeAreaView lightColor={Colors.light.background} darkColor={Colors.dark.background} style={styles.AndroidSafeArea}>
+      <SafeAreaView style={{backgroundColor, ...styles.AndroidSafeArea}}>
+        {words.length == 0 && <NoWords openModal={() => setShowModal(true)} />}
+        {words.length > 0 && (
+          <ThemedView lightColor={Colors.light.background} darkColor={Colors.dark.background} style={{ flex: 1, marginHorizontal: 16}}>
+            <ThemedText lightColor={Colors.light.text} darkColor={Colors.dark.text} style={{fontSize: 22, fontWeight: 'bold', marginVertical: 16}}>{deck?.name}</ThemedText>
+            <ThemedView lightColor={Colors.light.background} darkColor={Colors.dark.background} style={styles.listheader}>
+              <ThemedText lightColor={Colors.light.text} darkColor={Colors.dark.text}>{words.length} words.</ThemedText>
+              <GrayThemedButton onPress={() => setShowModal(true)} extraStyle={{marginTop: 0}}>
+                <ThemedText lightColor={Colors.light.text} darkColor={Colors.gray[800]} style={{fontSize: 12, fontWeight: 'bold'}}>Add Word</ThemedText>
+              </GrayThemedButton>
+            </ThemedView>
+            <ThemedView lightColor={Colors.light.background} darkColor={Colors.dark.background} style={{marginTop: 16, height: '80%'}}>
+              {deck && <FlatList data={words} renderItem={({item}) => <WordItem word={item} translation={deck.words[item].translation} onDelete={deleteWord} editWord={editWord(item)} />} />}   
+            </ThemedView>
+            <ThemedView lightColor={Colors.light.background} darkColor={Colors.dark.background} style={{height: '20%'}}>
+              <Link href={`/decks/${deckName}/playground`} asChild>
+                <PrimaryThemedButton onPress={() => undefined} extraStyle={{width: '100%', marginTop: 0}}>
+                  <ThemedText lightColor={Colors.light.background} darkColor={Colors.dark.background}>Start Deck</ThemedText>
+                </PrimaryThemedButton>
+              </Link>
+            </ThemedView>
+          </ThemedView>
+        )}
       
-      {words.length > 0 && (
-        <ThemedView lightColor={Colors.light.background} darkColor={Colors.dark.background} style={{ flex: 1, marginTop: 16, marginHorizontal: 16}}>
-          <ThemedView lightColor={Colors.light.background} darkColor={Colors.dark.background} style={styles.listheader}>
-            <ThemedText lightColor={Colors.light.text} darkColor={Colors.dark.text}>{words.length} words.</ThemedText>
-            <GrayThemedButton onPress={() => setShowModal(true)} extraStyle={{marginTop: 0}}>
-              <ThemedText lightColor={Colors.light.text} darkColor={Colors.gray[800]} style={{fontSize: 12, fontWeight: 'bold'}}>Add Word</ThemedText>
-            </GrayThemedButton>
-          </ThemedView>
-          <ThemedView lightColor={Colors.light.background} darkColor={Colors.dark.background} style={{marginTop: 16, height: '80%'}}>
-            {deck && <FlatList data={words} renderItem={({item}) => <WordItem word={item} translation={deck.words[item].translation} onDelete={deleteWord} editWord={editWord(item)} />} />}   
-          </ThemedView>
-          <ThemedView lightColor={Colors.light.background} darkColor={Colors.dark.background} style={{height: '20%'}}>
-            <Link href={`/decks/${deckName}/playground`} asChild>
-              <PrimaryThemedButton onPress={() => undefined} extraStyle={{width: '100%', marginTop: 0}}>
-                <ThemedText lightColor={Colors.light.background} darkColor={Colors.dark.background}>Start Deck</ThemedText>
-              </PrimaryThemedButton>
-            </Link>
-          </ThemedView>
-        </ThemedView>
-      )}
-    
-      {showModal && <ModalForm word={word} translation={translation} showModal={showModal} setShowModal={setShowModal} setWord={setWord} setTranslation={setTranslation} onSubmit={addWord} title="Add Word" buttonText="Create" />}
-    </ThemedSafeAreaView>
+        {showModal && <ModalForm word={word} translation={translation} showModal={showModal} setShowModal={setShowModal} setWord={setWord} setTranslation={setTranslation} onSubmit={addWord} title="Add Word" buttonText="Create" />}
+
+      </SafeAreaView>
+
+   // </ThemedSafeAreaView>
   );
 }
 
@@ -96,7 +103,9 @@ const styles = StyleSheet.create({
   AndroidSafeArea: {
     flex: 1,
     // backgroundColor: "white",
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0, 
+    // borderWidth: 2, 
+    // borderColor: 'blue'
   },
   tabTitle: {
     fontSize: 16,

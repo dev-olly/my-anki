@@ -14,7 +14,7 @@ export const useDeck = (deckName?: string) => {
     const loadDecksAndGetDeck = async () => {
       const loadedDecks = await loadDecks();
       if (deckName) {
-        const deck = loadedDecks.find((deck: Deck) => deck.name === deckName);
+        const [deck] = loadedDecks.filter((deck: Deck) => deck.name.toLowerCase().includes(deckName.toLowerCase()));
         setCurrentDeck(deck);
       }
     };
@@ -71,11 +71,13 @@ export const useDeck = (deckName?: string) => {
   }
 
   const saveAndSetCurrentDeck = async (words: Deck['words']) => {
+    if (!deckName) return;
     const updatedDecks = decks.map((deck) => 
-      deck.name === deckName ? { ...deck, words } : deck
+      deck.name.includes(deckName) ? { ...deck, words } : deck
     );
+    console.log('updatedDecks', updatedDecks)
     setDecks(updatedDecks);
-    setCurrentDeck(updatedDecks.find(deck => deck.name === deckName));
+    setCurrentDeck(updatedDecks.find(deck => deck.name.includes(deckName)));
     await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updatedDecks));
   }
 
