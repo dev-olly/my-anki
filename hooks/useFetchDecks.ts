@@ -42,7 +42,7 @@ export const useFetchDecks = () => {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 2000)
+    }, 5000)
     fetchDecks().then((decks) => {
       setDecks(decks);
 

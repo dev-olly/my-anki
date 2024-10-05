@@ -15,7 +15,7 @@ export const WordItem = ({word, translation, onDelete, editWord}: {word: string,
 
   return (
     <>
-      <ThemedView lightColor={Colors.light.background} darkColor={Colors.gray[800]} style={styles.wordItem}>
+      <ThemedView lightColor={Colors.gray[100]} darkColor={Colors.gray[800]} style={styles.wordItem}>
         <ThemedText lightColor={Colors.light.text} darkColor={Colors.dark.text} style={{fontSize: 14}}>{word}</ThemedText>
         <View style={styles.actions}>
           <Pressable onPress={() => setShowEditModal(true)}>
