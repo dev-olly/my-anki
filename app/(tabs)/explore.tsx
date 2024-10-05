@@ -14,9 +14,9 @@ import { ThemedSafeAreaView } from '@/components/ThemedSafeAreaView';
 
 const ErrorMessage = () => {
   return (
-    <ThemedView style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    <ThemedView darkColor={Colors.gray[800]} lightColor={Colors.light.background} style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       <Ionicons name="sad-outline" size={48} color={Colors.gray[500]} />
-      <ThemedText lightColor={Colors.light.text} darkColor={Colors.dark.text} style={{fontSize: 20, fontWeight: 'bold'}}>Error, the server is not running</ThemedText>
+      <ThemedText lightColor={Colors.light.text} darkColor={Colors.gray[400]} style={{fontSize: 20, fontWeight: 'bold'}}>Error, the server is not running</ThemedText>
     </ThemedView>
   )
 }
@@ -63,8 +63,9 @@ export default function TabTwoScreen() {
           
           <ThemedInput placeholder="Enter search" lightColor={Colors.gray[200]} darkColor={Colors.gray[800]} onChangeText={onSearch} value={search} />
           </ThemedView>}>
-          {loading ? <SkeletonLoader /> : <ExternalDeckList decks={filteredDecks} onLevelPress={onLevelPress} level={level} />}
           {error && <ErrorMessage />}
+
+          {loading ? <SkeletonLoader /> : <ExternalDeckList decks={filteredDecks} onLevelPress={onLevelPress} level={level} />}
       </ParallaxScrollView>
     </ThemedSafeAreaView>
   );

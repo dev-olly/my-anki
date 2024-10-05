@@ -23,7 +23,7 @@ export const updateData = (data: Deck['words'], word: string, level: Level) => {
     newEase = Math.min(ease + 0.15, UPPER_BOUND);
   }else if (level === Levels.medium) {
     newInterval = 1;
-    newEase = Math.max(ease - 0.1, LOWER_BOUND);
+    newEase = Math.max(ease - 0.15, LOWER_BOUND);
   }else{
     newInterval = 1;
     newEase = Math.max(ease - 0.3, LOWER_BOUND);

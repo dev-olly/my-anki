@@ -47,8 +47,9 @@
 - Scrape Nico wegs words - done 
 
 Design
-- Light and dark theme for all pages
-- Add logo and splash screen for app
+- Light and dark theme for all pages - done
+- Add logo and splash screen for app - done
+- Dark screen for Error card - 
 
 
 - sync deck to server
