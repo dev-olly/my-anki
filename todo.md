@@ -49,7 +49,7 @@
 Design
 - Light and dark theme for all pages - done
 - Add logo and splash screen for app - done
-- Dark screen for Error card - 
+- Dark screen for Error card - done
 
 
 - sync deck to server
